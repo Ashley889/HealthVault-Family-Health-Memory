@@ -1,0 +1,147 @@
+# Nura — Final Functional Polish: Settings, Feedback, Save & Delete Actions
+
+Keep the existing Nura design, layout, colors, navigation, and mobile-first iPhone experience.
+
+Do not redesign the product.
+
+This is a **functional polish and feedback pass**.
+
+The application currently has several actions that work partially but do not clearly tell the user what happened.
+
+For every important action, the user must receive clear confirmation and the data/state must actually be updated.
+
+---
+
+# 1. CONTACT SUPPORT — MAKE IT WORK
+
+Go to:
+
+Profile → Help & support → Contact support
+
+The current Contact Support button is not working.
+
+Make it functional.
+
+Use this dummy support email:
+
+**[noah@support.com](mailto:noah@support.com)**
+
+When the user taps:
+
+**Contact support**
+
+open the user's default email client using a mailto action if supported.
+
+Recipient:
+
+**[noah@support.com](mailto:noah@support.com)**
+
+Subject:
+
+**Nura Support Request**
+
+If opening the device email client is not possible in the Replit environment, show:
+
+### Contact support
+
+Email us at:
+
+**[noah@support.com](mailto:noah@support.com)**
+
+[ Copy email ]
+
+After copying:
+
+**Email copied**
+
+Do not leave the button without an action.
+
+---
+
+# 2. FEEDBACK — ACTUALLY STORE THE FEEDBACK
+
+Current problem:
+
+The user can enter feedback, but there is no clear indication that it was sent or stored.
+
+When the user submits feedback:
+
+1. Validate the feedback.
+2. Save it to the application's feedback/history data.
+3. Show a success confirmation.
+
+Example:
+
+### Feedback sent
+
+Thank you for helping us improve Nura.
+
+Your feedback has been saved successfully.
+
+[ Done ]
+
+The feedback should not disappear without confirmation.
+
+---
+
+# 3. FEEDBACK HISTORY
+
+Keep at least **1–2 sample feedback entries** in the Settings/Feedback history for demonstration purposes.
+
+Example:
+
+### Feedback history
+
+**Suggestion**
+
+"Add support for more report formats."
+
+Sep 18, 2026
+
+---
+
+**Issue**
+
+"The reminder notification was not showing."
+
+Sep 17, 2026
+
+---
+
+New feedback submitted by the user should appear in this history.
+
+Do not overwrite previous feedback.
+
+---
+
+# 4. EDIT PROFILE — SUCCESS MESSAGE
+
+When the user edits:
+
+Name
+
+Phone number
+
+Email address
+
+and taps:
+
+**Save changes**
+
+actually save the information.
+
+Then show:
+
+### Information saved
+
+Your account information has been updated successfully.
+
+[ Done ]
+
+After returning to Profile, the updated information must still be visible.
+
+Do not simply close the form without confirmation.
+
+---
+
+# 5. SAVE HEALTH MEMORY —
