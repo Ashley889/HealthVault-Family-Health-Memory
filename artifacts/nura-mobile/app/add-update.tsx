@@ -61,15 +61,22 @@ export default function AddUpdateScreen() {
          if (followUp.trim()) {
            await createReminder.mutateAsync({ data: { profileId: selectedProfileId, title: `Follow-up: ${title.trim()}`, date: followUp.trim(), detail: provider.trim() ? `With ${provider.trim()}` : 'Review this health update' } });
          }
-         if (params.reminderId) {
+          if (params.reminderId) {
            await completeReminder.mutateAsync({ reminderId: Number(params.reminderId) });
          }
          await queryClient.invalidateQueries();
-         if (params.reminderId) {
-           router.replace('/history');
-         } else {
-           router.back();
-         }
+          Alert.alert('Health memory saved', 'Your health memory has been saved successfully.', [
+            {
+              text: 'Done',
+              onPress: () => {
+                if (params.reminderId) {
+                  router.replace('/history');
+                } else {
+                  router.back();
+                }
+              },
+            },
+          ]);
        } catch {
          Alert.alert('Couldn’t save memory', 'Check the date fields and try again.');
        }
@@ -90,7 +97,7 @@ export default function AddUpdateScreen() {
         <View style={styles.field}><Text style={[styles.label, { color: colors.inkSoft }]}>Upload report</Text><OutlineButton label={reportName ? 'Replace report' : 'Upload report'} icon="paperclip" onPress={() => { void attachReport(); }} />{reportName ? <View style={styles.reportName}><Feather name="file-text" size={15} color={colors.primary} /><Text style={[styles.reportText, { color: colors.inkSoft }]} numberOfLines={2}>{reportName}</Text></View> : null}</View>
         <Field label="Follow-up date" value={followUp} onChangeText={setFollowUp} placeholder="YYYY-MM-DD" colors={colors} />
         <View style={styles.field}><Text style={[styles.label, { color: colors.inkSoft }]}>How long will this need attention?</Text><View style={styles.durationRow}><Text onPress={() => setDuration('short')} style={[styles.duration, { backgroundColor: duration === 'short' ? colors.softBlue : colors.card, borderColor: duration === 'short' ? colors.primary : colors.border, color: colors.foreground }]}><Text style={styles.durationTitle}>Short-term</Text>{'\n'}Something temporary</Text><Text onPress={() => setDuration('long')} style={[styles.duration, { backgroundColor: duration === 'long' ? colors.softBlue : colors.card, borderColor: duration === 'long' ? colors.primary : colors.border, color: colors.foreground }]}><Text style={styles.durationTitle}>Long-term</Text>{'\n'}Ongoing monitoring</Text></View></View>
-         <PrimaryButton label={create.isPending || completeReminder.isPending ? 'Saving to health history…' : params.reminderId ? 'Save to health history' : 'Save health memory'} icon="check" disabled={create.isPending || completeReminder.isPending} onPress={save} testID="button-save-health-memory" />
+          <PrimaryButton label={create.isPending || createReminder.isPending || completeReminder.isPending ? 'Saving to health history…' : params.reminderId ? 'Save to health history' : 'Save health memory'} icon="check" disabled={create.isPending || createReminder.isPending || completeReminder.isPending} onPress={save} testID="button-save-health-memory" />
       </KeyboardAwareScrollViewCompat>
     </Screen>
   );

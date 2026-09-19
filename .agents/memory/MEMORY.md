@@ -2,3 +2,4 @@
 - [Nura mobile layout](nura-mobile-layout.md) — use full-width touch cards for family lists; percentage two-column pressables render inconsistently in the Expo web preview.
 - [Account profile storage](account-profile-storage.md) — account basics are local preview preferences, separate from family health profiles.
 - [Reminder status model](reminder-status-model.md) — reminder status is persisted server-side; Keep for later remains Due and rescheduling updates the existing reminder.
+- [Expo artifact dependencies](expo-artifact-dependencies.md) — target the mobile workspace explicitly when adding an Expo package; generic package installation targets the monorepo root.

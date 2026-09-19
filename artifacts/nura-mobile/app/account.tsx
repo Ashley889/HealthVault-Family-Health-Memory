@@ -11,6 +11,7 @@ export default function AccountScreen() {
   const router = useRouter();
   const [account, setAccount] = useState<AccountPreferences>({ name: '', phone: '', email: '' });
   const [ready, setReady] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     void loadAccountPreferences().then((saved) => {
@@ -28,12 +29,21 @@ export default function AccountScreen() {
       Alert.alert('Add your name', 'Your name is required.');
       return;
     }
-    await saveAccountPreferences({
-      name: account.name.trim(),
-      phone: account.phone.trim(),
-      email: account.email.trim(),
-    });
-    router.back();
+    setSaving(true);
+    try {
+      await saveAccountPreferences({
+        name: account.name.trim(),
+        phone: account.phone.trim(),
+        email: account.email.trim(),
+      });
+      Alert.alert('Information saved', 'Your account information has been updated successfully.', [
+        { text: 'Done', onPress: () => router.back() },
+      ]);
+    } catch {
+      Alert.alert('Couldn’t save information', 'Please try again.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   if (!ready) return <Screen scroll={false}><LoadingState /></Screen>;
@@ -51,7 +61,7 @@ export default function AccountScreen() {
           <Field label="Phone number" value={account.phone} onChangeText={(value) => update('phone', value)} placeholder="Add phone number" keyboardType="phone-pad" colors={colors} />
           <Field label="Email address" value={account.email} onChangeText={(value) => update('email', value)} placeholder="Add email address" keyboardType="email-address" colors={colors} />
         </View>
-        <PrimaryButton label="Save changes" icon="check" onPress={() => { void save(); }} />
+         <PrimaryButton label={saving ? 'Saving…' : 'Save changes'} icon="check" disabled={saving} onPress={() => { void save(); }} />
       </KeyboardAwareScrollViewCompat>
     </Screen>
   );

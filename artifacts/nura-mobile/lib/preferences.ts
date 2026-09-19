@@ -59,3 +59,48 @@ export async function loadAccountPreferences(): Promise<AccountPreferences> {
 export async function saveAccountPreferences(account: AccountPreferences) {
   await AsyncStorage.setItem(accountKey, JSON.stringify(account));
 }
+
+export type FeedbackEntry = {
+  id: string;
+  type: string;
+  message: string;
+  createdAt: string;
+};
+
+const feedbackKey = 'nura.feedback';
+const sampleFeedback: FeedbackEntry[] = [
+  {
+    id: 'sample-suggestion',
+    type: 'Suggestion',
+    message: 'Add support for more report formats.',
+    createdAt: '2026-09-18',
+  },
+  {
+    id: 'sample-issue',
+    type: 'Issue',
+    message: 'The reminder notification was not showing.',
+    createdAt: '2026-09-17',
+  },
+];
+
+export async function loadFeedbackHistory(): Promise<FeedbackEntry[]> {
+  const raw = await AsyncStorage.getItem(feedbackKey);
+  if (!raw) return sampleFeedback;
+  try {
+    const saved = JSON.parse(raw) as FeedbackEntry[];
+    return Array.isArray(saved) && saved.length ? saved : sampleFeedback;
+  } catch {
+    return sampleFeedback;
+  }
+}
+
+export async function saveFeedbackEntry(entry: Omit<FeedbackEntry, 'id' | 'createdAt'>): Promise<FeedbackEntry> {
+  const saved = await loadFeedbackHistory();
+  const created: FeedbackEntry = {
+    ...entry,
+    id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    createdAt: new Date().toISOString().slice(0, 10),
+  };
+  await AsyncStorage.setItem(feedbackKey, JSON.stringify([created, ...saved]));
+  return created;
+}

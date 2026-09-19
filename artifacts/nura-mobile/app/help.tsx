@@ -1,6 +1,7 @@
 import React from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { Alert, Linking, StyleSheet, Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import * as Clipboard from 'expo-clipboard';
 import { Card, Header, OutlineButton, Screen, SectionTitle } from '@/components/NuraUI';
 import { useColors } from '@/hooks/useColors';
 
@@ -14,6 +15,28 @@ const topics = [
 
 export default function HelpScreen() {
   const colors = useColors();
+  const [supportFallback, setSupportFallback] = React.useState(false);
+  const [copied, setCopied] = React.useState(false);
+
+  const contactSupport = async () => {
+    const mailto = 'mailto:noah@support.com?subject=Nura%20Support%20Request';
+    try {
+      if (await Linking.canOpenURL(mailto)) {
+        await Linking.openURL(mailto);
+        return;
+      }
+    } catch {
+      // Fall through to the copyable support address.
+    }
+    setSupportFallback(true);
+  };
+
+  const copySupportEmail = async () => {
+    await Clipboard.setStringAsync('noah@support.com');
+    setCopied(true);
+    Alert.alert('Email copied', 'noah@support.com');
+  };
+
   return (
     <Screen>
       <Header eyebrow="Support" title="Help & support" subtitle="Simple answers for using Nura with your family." />
@@ -21,7 +44,15 @@ export default function HelpScreen() {
         <SectionTitle title="Frequently asked questions" />
         {topics.map(([title, detail]) => <Card key={title} style={styles.topic}><Feather name="help-circle" size={18} color={colors.primary} /><View style={styles.copy}><Text style={[styles.topicTitle, { color: colors.foreground }]}>{title}</Text><Text style={[styles.topicDetail, { color: colors.mutedForeground }]}>{detail}</Text></View></Card>)}
       </View>
-      <OutlineButton label="Contact support" icon="mail" onPress={() => Alert.alert('Contact support', 'Support contact will be connected here in the next release.')} />
+      <OutlineButton label="Contact support" icon="mail" onPress={() => { void contactSupport(); }} />
+      {supportFallback ? (
+        <View style={[styles.supportCard, { backgroundColor: colors.softBlue }]}>
+          <Text style={[styles.supportTitle, { color: colors.foreground }]}>Contact support</Text>
+          <Text style={[styles.supportDetail, { color: colors.mutedForeground }]}>Email us at:</Text>
+          <Text style={[styles.supportEmail, { color: colors.primary }]}>noah@support.com</Text>
+          <OutlineButton label={copied ? 'Email copied' : 'Copy email'} icon="copy" onPress={() => { void copySupportEmail(); }} />
+        </View>
+      ) : null}
     </Screen>
   );
 }
@@ -32,4 +63,8 @@ const styles = StyleSheet.create({
   copy: { flex: 1, minWidth: 0, gap: 5 },
   topicTitle: { fontFamily: 'Inter_700Bold', fontSize: 15 },
   topicDetail: { fontFamily: 'Inter_400Regular', fontSize: 13, lineHeight: 19 },
+  supportCard: { borderRadius: 18, padding: 16, gap: 8 },
+  supportTitle: { fontFamily: 'Inter_700Bold', fontSize: 16 },
+  supportDetail: { fontFamily: 'Inter_400Regular', fontSize: 13 },
+  supportEmail: { fontFamily: 'Inter_700Bold', fontSize: 15, marginBottom: 4 },
 });

@@ -21,8 +21,9 @@ export default function ManageFamilyScreen() {
         text: 'Remove',
         style: 'destructive',
         onPress: () => remove.mutate({ profileId }, {
-          onSuccess: async () => {
+           onSuccess: async () => {
             await queryClient.invalidateQueries();
+             Alert.alert('Family member removed', `${name}'s health history has been removed.`);
           },
           onError: () => Alert.alert('Couldn’t remove member', 'Please try again.'),
         }),
