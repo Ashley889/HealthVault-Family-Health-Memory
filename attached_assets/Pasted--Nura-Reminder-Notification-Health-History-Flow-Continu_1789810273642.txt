@@ -1,0 +1,798 @@
+# Nura — Reminder, Notification & Health History Flow
+
+Continue using the **existing Nura mobile app design system**.
+
+Do not redesign the UI from scratch.
+
+Keep:
+
+* Nura branding
+* Soft blue + white color palette
+* Dark navy typography
+* Rounded cards
+* Existing bottom navigation
+* Existing Home, History, Reminders and Profile structure
+* Existing iPhone/mobile-first layout
+
+The goal is to make the **notification settings and reminder workflow functional and connected to Health History**.
+
+---
+
+## 1. Notification Settings
+
+The current notification preference/reference is not working.
+
+Add a proper notification setting inside:
+
+**Profile → Settings → Notifications & Reminder Preferences**
+
+Create a functional screen:
+
+### Notifications
+
+**Health reminders**
+
+Get notified about upcoming appointments, tests and follow-ups.
+
+[ ON / OFF ]
+
+When enabled:
+
+* Show reminder notifications for upcoming health events.
+* Allow reminder-related notifications to be triggered.
+
+When disabled:
+
+* Do not send reminder notifications.
+* Existing reminders should still remain visible inside the Reminders tab.
+
+The toggle must actually work.
+
+### Reminder notification timing
+
+When notifications are ON, allow:
+
+* 1 day before
+* On the day
+* Both
+
+Example:
+
+**Annual health check**
+
+Reminder:
+Aug 13, 2027 — 9:00 AM
+
+Appointment:
+Aug 14, 2027
+
+Do not create unnecessary notification settings. Keep this simple.
+
+---
+
+# 2. Reminder Lifecycle
+
+The Reminders screen should NOT automatically mark reminders as completed.
+
+Every reminder must have a clear lifecycle:
+
+**Upcoming → Due → Completed / Missed / Rescheduled**
+
+Example:
+
+### Upcoming
+
+Annual wellness check
+
+Aditi Sharma
+
+Aug 14, 2027
+
+[ Upcoming ]
+
+When the date arrives, change the state to:
+
+### Due
+
+Annual wellness check
+
+Aditi Sharma
+
+Today
+
+**Did this appointment happen?**
+
+[ Yes, I went ]
+
+[ No, not yet ]
+
+---
+
+# 3. When User Says "Yes, I Went"
+
+After the user selects:
+
+**Yes, I went**
+
+DO NOT immediately mark the reminder as completed.
+
+Open a simple health-event capture flow.
+
+Screen title:
+
+# What happened?
+
+Subtitle:
+
+"Add a few details so you can remember this visit later."
+
+---
+
+## Step 1 — Basic Visit Information
+
+Show:
+
+### Person
+
+Aditi Sharma
+
+### Date
+
+Aug 14, 2027
+
+Allow the date to be edited.
+
+### Doctor / Hospital
+
+[ Add doctor or hospital ]
+
+Fields:
+
+Doctor name
+
+Hospital / clinic
+
+---
+
+# 4. What was the visit about?
+
+Show:
+
+### Reason for visit
+
+[ Select or enter health issue ]
+
+Examples:
+
+* Routine check-up
+* Fever
+* Cough
+* Follow-up
+* Blood test
+* Medication review
+* Other
+
+Allow free-text input as well.
+
+---
+
+# 5. What happened during the check-up?
+
+Show:
+
+### What did the doctor say?
+
+[ Add notes ]
+
+Example placeholder:
+
+"Doctor said everything looked normal. Continue current medication and repeat blood work in 3 months."
+
+This is optional.
+
+Keep the field large enough for multiple lines.
+
+Do not cut the text.
+
+---
+
+# 6. Medication
+
+Add a section:
+
+## Medication prescribed
+
+[ + Add medication ]
+
+If the user adds medication, show:
+
+### Medication name
+
+[ Enter medication ]
+
+### Dosage
+
+[ Enter dosage ]
+
+### Frequency
+
+[ Once daily / Twice daily / Weekly / Other ]
+
+### Duration
+
+[ Enter duration ]
+
+### Instructions
+
+[ After food / Before food / Other ]
+
+Allow multiple medications.
+
+Example:
+
+Vitamin D3
+
+60,000 IU
+
+Once weekly
+
+8 weeks
+
+After food
+
+The medication should be saved as part of the health event.
+
+---
+
+# 7. Tests
+
+Add:
+
+## Tests
+
+Did the doctor ask for any tests?
+
+[ Yes ] [ No ]
+
+If **No**:
+
+Continue to next step.
+
+If **Yes**:
+
+Show:
+
+### What test was requested?
+
+[ + Add test ]
+
+Examples:
+
+* Blood test
+* CBC
+* Vitamin D
+* Thyroid profile
+* Lipid profile
+* Urine test
+* Other
+
+Allow multiple tests.
+
+---
+
+# 8. Upload Test / Medical Report
+
+If a test was requested, provide:
+
+### Upload report
+
+"Keep the result with this visit."
+
+[ Upload report ]
+
+Allow the user to upload:
+
+* PDF
+* Image
+* JPG
+* PNG
+
+After upload show:
+
+**Report uploaded**
+
+filename.pdf
+
+[ View ]
+
+[ Remove ]
+
+The uploaded report must be associated with:
+
+* Family member
+* Health event
+* Date
+* Test
+
+Do not make the user manually find it again later.
+
+---
+
+# 9. Follow-up
+
+Add:
+
+## Follow-up
+
+Does the doctor want you to follow up?
+
+[ Yes ] [ No ]
+
+If Yes:
+
+Follow-up date
+
+[ Select date ]
+
+Follow-up note
+
+[ Add note ]
+
+Create a new reminder automatically from this information.
+
+Example:
+
+**Vitamin D follow-up**
+
+Meera Sharma
+
+Dec 4, 2026
+
+Repeat Vitamin D test
+
+Status:
+Upcoming
+
+---
+
+# 10. Save Health Event
+
+At the bottom:
+
+**[ Save to health history ]**
+
+When clicked:
+
+1. Save the health event.
+2. Mark the original reminder as **Completed**.
+3. Add the event to the person's History.
+4. Associate medications with the event.
+5. Associate tests with the event.
+6. Associate uploaded reports with the event.
+7. Create any follow-up reminder.
+8. Return the user to the Reminders screen.
+
+Show confirmation:
+
+### Saved to health history
+
+"Your visit and its details are now part of Aditi's health history."
+
+[ View history ]
+
+---
+
+# 11. History Screen
+
+The History screen should become the **complete source of truth for everything the family has recorded**.
+
+The existing timeline design is good.
+
+Keep the timeline.
+
+But history cards should contain richer information.
+
+Example:
+
+### Aug 14, 2027
+
+**Annual wellness check**
+
+Aditi Sharma
+
+Doctor:
+Dr. Priya Rao
+
+Hospital:
+ABC Clinic
+
+### What happened
+
+Routine health check. Doctor recommended continuing current medication.
+
+### Medication
+
+Vitamin D3
+60,000 IU
+Once weekly
+8 weeks
+
+### Tests
+
+Vitamin D blood test
+
+### Report
+
+Vitamin_D_Aug_2027.pdf
+
+[ View report ]
+
+### Follow-up
+
+Dec 4, 2027
+
+Repeat Vitamin D test
+
+---
+
+# 12. History Filters
+
+Keep:
+
+All
+You
+Mother
+Son
+
+Allow additional family members to automatically appear as filters when they are added.
+
+Example:
+
+All | You | Mother | Son | Father
+
+The user should be able to see:
+
+* Doctor visits
+* Health issues
+* Medications
+* Tests
+* Reports
+* Follow-ups
+* Other health memories
+
+in one chronological timeline.
+
+---
+
+# 13. History Detail Screen
+
+When a user taps a history card, open a detailed page.
+
+Example:
+
+# Annual wellness check
+
+Aditi Sharma
+
+Aug 14, 2027
+
+---
+
+### Visit
+
+Doctor:
+Dr. Priya Rao
+
+Hospital:
+ABC Clinic
+
+Reason:
+Annual wellness check
+
+---
+
+### Notes
+
+Doctor said everything looked normal.
+
+---
+
+### Medication
+
+Vitamin D3
+60,000 IU
+Once weekly
+8 weeks
+
+---
+
+### Tests
+
+Vitamin D blood test
+
+---
+
+### Reports
+
+Vitamin_D_Aug_2027.pdf
+
+[ View report ]
+
+---
+
+### Follow-up
+
+Dec 4, 2027
+
+Repeat Vitamin D test
+
+[ View reminder ]
+
+Everything captured during the reminder-completion flow must be visible here.
+
+---
+
+# 14. Missed Reminder
+
+If the user selects:
+
+**No, not yet**
+
+Do NOT mark it completed.
+
+Show:
+
+### Not completed yet
+
+Would you like to:
+
+[ Reschedule ]
+
+[ Keep as due ]
+
+The user can select a new date.
+
+---
+
+# 15. Rescheduled Reminder
+
+If rescheduled:
+
+Original reminder:
+
+Aug 14, 2027
+
+New date:
+
+Aug 21, 2027
+
+Status:
+
+**Rescheduled**
+
+The new date should appear in the Reminders screen.
+
+---
+
+# 16. Important Data Relationship
+
+The prototype should behave as though these are connected records:
+
+**Family Member**
+↓
+**Reminder**
+↓
+**Completed Health Event**
+↓
+**Doctor / Visit**
+↓
+**Medication**
+↓
+**Tests**
+↓
+**Reports**
+↓
+**Follow-up Reminder**
+↓
+**History**
+
+Do not create disconnected dummy screens.
+
+If a user adds information in the reminder completion flow, that information must appear in History.
+
+---
+
+# 17. Example Demo Flow
+
+Make sure this exact demo flow works:
+
+### Step 1
+
+Open:
+
+**Reminders**
+
+See:
+
+Annual wellness check
+
+Aditi Sharma
+
+Aug 14, 2027
+
+Upcoming
+
+---
+
+### Step 2
+
+Simulate the reminder becoming due.
+
+Show:
+
+**Did this happen?**
+
+[ Yes, I went ]
+
+---
+
+### Step 3
+
+Tap:
+
+**Yes, I went**
+
+---
+
+### Step 4
+
+Enter:
+
+Doctor:
+Dr. Priya Rao
+
+Reason:
+Annual wellness check
+
+Notes:
+"Doctor said everything looked normal."
+
+---
+
+### Step 5
+
+Add medication:
+
+Vitamin D3
+
+60,000 IU
+
+Once weekly
+
+8 weeks
+
+---
+
+### Step 6
+
+Add test:
+
+Vitamin D blood test
+
+---
+
+### Step 7
+
+Upload:
+
+Vitamin_D_Report.pdf
+
+---
+
+### Step 8
+
+Add follow-up:
+
+Dec 4, 2027
+
+Repeat Vitamin D test
+
+---
+
+### Step 9
+
+Tap:
+
+**Save to health history**
+
+---
+
+### Step 10
+
+Show:
+
+**Completed**
+
+Then navigate to:
+
+**History**
+
+---
+
+### Step 11
+
+History should now contain the complete event.
+
+The user should be able to open it and see:
+
+Doctor
+Visit reason
+Notes
+Medication
+Test
+Uploaded report
+Follow-up
+
+---
+
+# 18. Mobile / iPhone Requirements
+
+This must remain a **real mobile-first iPhone experience**.
+
+Do not design fixed-size web layouts.
+
+All screens must:
+
+* Fit within the iPhone safe area.
+* Respect the Dynamic Island.
+* Respect the bottom Home Indicator.
+* Scroll vertically when content is long.
+* Never clip text.
+* Never hide buttons.
+* Never hide medication information.
+* Never hide uploaded reports.
+* Never allow content to disappear underneath the bottom navigation.
+
+Cards must use **auto height**.
+
+Long content should make the card taller rather than cutting content.
+
+---
+
+# 19. Prototype Quality Requirement
+
+The prototype should feel like one connected product.
+
+Do not just create static screens.
+
+The following interactions must work:
+
+Notification toggle
+↓
+Reminder
+↓
+Due state
+↓
+"Yes, I went"
+↓
+Health event form
+↓
+Medication
+↓
+Tests
+↓
+Report upload
+↓
+Follow-up
+↓
+Save
+↓
+Completed reminder
+↓
+History
+↓
+History detail
+
+Use realistic sample data so the entire journey can be demonstrated during the hackathon.
+
+Keep the existing Nura visual design system. Focus on making the **workflow functional, connected, and mobile-friendly**.
