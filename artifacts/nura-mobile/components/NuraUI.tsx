@@ -108,7 +108,7 @@ export function Card({ children, style, onPress, testID }: { children: ReactNode
         void Haptics.selectionAsync();
         onPress();
       }}
-      style={({ pressed }) => [style, pressed && styles.pressed]}
+      style={({ pressed }) => [styles.pressableCard, style, pressed && styles.pressed]}
     >
       {content}
     </Pressable>
@@ -221,7 +221,8 @@ const styles = StyleSheet.create({
   eyebrow: { fontSize: 12, fontFamily: 'Inter_700Bold', letterSpacing: 1.2, textTransform: 'uppercase' },
   title: { fontSize: 30, lineHeight: 36, fontFamily: 'Inter_700Bold', letterSpacing: -0.7, flexShrink: 1 },
   subtitle: { fontSize: 15, lineHeight: 22, fontFamily: 'Inter_400Regular', flexShrink: 1 },
-  card: { borderWidth: 1, borderRadius: 20, padding: 16 },
+  card: { width: '100%', borderWidth: 1, borderRadius: 20, padding: 16 },
+  pressableCard: { width: '100%' },
   avatar: { alignItems: 'center', justifyContent: 'center' },
   avatarText: { fontFamily: 'Inter_700Bold' },
   primaryButton: { minHeight: 52, borderRadius: 18, paddingHorizontal: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10 },

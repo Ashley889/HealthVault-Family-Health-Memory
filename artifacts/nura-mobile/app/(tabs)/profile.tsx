@@ -1,11 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { Card, Header, OutlineButton, Screen, SectionTitle } from '@/components/NuraUI';
 import { useColors } from '@/hooks/useColors';
 
 export default function ProfileScreen() {
   const colors = useColors();
+  const router = useRouter();
   return (
     <Screen>
       <Header eyebrow="Your Nura" title="Profile & settings" subtitle="Make Nura feel like a calm place to return to." />
@@ -20,9 +22,15 @@ export default function ProfileScreen() {
         <Card style={styles.preference}><Feather name="shield" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Keeping family health history clear and together.</Text></Card>
       </View>
       <View style={styles.section}>
-        <SectionTitle title="About this app" />
-        <OutlineButton label="Privacy and data" icon="lock" onPress={() => undefined} />
-        <OutlineButton label="Help and feedback" icon="message-circle" onPress={() => undefined} />
+        <SectionTitle title="Family" />
+        <OutlineButton label="Manage family" icon="users" onPress={() => router.push('/manage-family')} />
+        <OutlineButton label="Add family member" icon="plus" onPress={() => router.push('/add-member')} />
+      </View>
+      <View style={styles.section}>
+        <SectionTitle title="Settings" />
+        <Card style={styles.preference}><Feather name="bell" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Notifications and reminder preferences</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>
+        <Card style={styles.preference}><Feather name="help-circle" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Help, feedback, and support</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>
+        <Card style={styles.preference}><Feather name="info" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>About Nura</Text><Text style={[styles.version, { color: colors.mutedForeground }]}>v1.0</Text></Card>
       </View>
     </Screen>
   );
@@ -38,4 +46,5 @@ const styles = StyleSheet.create({
   section: { gap: 12 },
   preference: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   preferenceText: { flex: 1, fontFamily: 'Inter_600SemiBold', fontSize: 14, lineHeight: 20 },
+  version: { fontFamily: 'Inter_600SemiBold', fontSize: 12 },
 });

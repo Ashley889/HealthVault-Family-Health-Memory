@@ -27,6 +27,8 @@ function RootLayoutNav() {
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="family/[id]" options={{ title: 'Family member', presentation: 'card' }} />
       <Stack.Screen name="journey/[id]" options={{ title: 'Health journey', presentation: 'card' }} />
+      <Stack.Screen name="medication/[id]" options={{ title: 'Medication details', presentation: 'card' }} />
+      <Stack.Screen name="manage-family" options={{ title: 'Manage family', presentation: 'card' }} />
       <Stack.Screen name="add-update" options={{ title: 'Add health memory', presentation: 'modal' }} />
       <Stack.Screen name="add-member" options={{ title: 'Add family member', presentation: 'modal' }} />
     </Stack>

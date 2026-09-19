@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useGetDashboard } from '@workspace/api-client-react';
+import { useListReminders } from '@workspace/api-client-react';
 import { Avatar, Card, ErrorState, Header, LoadingState, OutlineButton, PrimaryButton, Screen, SectionTitle } from '@/components/NuraUI';
 import { formatShortDate } from '@/lib/format';
 import { useColors } from '@/hooks/useColors';
@@ -11,11 +12,13 @@ export default function HomeScreen() {
   const colors = useColors();
   const router = useRouter();
   const dashboard = useGetDashboard();
+  const reminders = useListReminders();
 
   if (dashboard.isLoading) return <Screen scroll={false}><LoadingState /></Screen>;
   if (dashboard.isError || !dashboard.data) return <Screen scroll={false}><ErrorState onRetry={() => void dashboard.refetch()} /></Screen>;
 
   const { profiles, recentEvents } = dashboard.data;
+  const upcomingReminders = reminders.data?.filter((item) => !item.completed).slice(0, 2) ?? [];
   return (
     <Screen>
       <Header
@@ -63,6 +66,19 @@ export default function HomeScreen() {
           );
         })}
       </View>
+      <View style={styles.section}>
+        <SectionTitle title="Upcoming reminders" action="See all" onAction={() => router.push('/reminders')} />
+        {upcomingReminders.length ? upcomingReminders.map((reminder) => {
+          const profile = profiles.find((item) => item.id === reminder.profileId);
+          return (
+            <Card key={reminder.id} onPress={() => router.push('/reminders')} style={styles.reminderCard}>
+              <View style={[styles.reminderIcon, { backgroundColor: colors.accent }]}><Feather name="calendar" size={16} color={colors.primary} /></View>
+              <View style={styles.memoryCopy}><Text style={[styles.memoryTitle, { color: colors.foreground }]}>{reminder.title}</Text><Text style={[styles.memoryMeta, { color: colors.mutedForeground }]}>{profile?.name || 'Family member'} · {formatShortDate(reminder.date)}</Text></View>
+              <Feather name="chevron-right" size={16} color={colors.mutedForeground} />
+            </Card>
+          );
+        }) : <Card><Text style={[styles.memoryTitle, { color: colors.foreground }]}>No upcoming reminders</Text><Text style={[styles.memoryMeta, { color: colors.mutedForeground }]}>Add follow-ups after a visit or test.</Text></Card>}
+      </View>
     </Screen>
   );
 }
@@ -78,12 +94,14 @@ const styles = StyleSheet.create({
   section: { gap: 12 },
   peopleGrid: { gap: 10 },
   personCard: { width: '100%', minHeight: 76, flexDirection: 'row', alignItems: 'center', gap: 10, padding: 12 },
-  personCopy: { flex: 1, gap: 4 },
+  personCopy: { flex: 1, minWidth: 0, gap: 4 },
   personName: { fontFamily: 'Inter_700Bold', fontSize: 13 },
   personMeta: { fontFamily: 'Inter_400Regular', fontSize: 12 },
   memoryCard: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 13 },
   memoryDot: { width: 38, height: 38, borderRadius: 19, alignItems: 'center', justifyContent: 'center' },
-  memoryCopy: { flex: 1, gap: 4 },
+  memoryCopy: { flex: 1, minWidth: 0, gap: 4 },
   memoryTitle: { fontFamily: 'Inter_600SemiBold', fontSize: 14 },
   memoryMeta: { fontFamily: 'Inter_400Regular', fontSize: 12 },
+  reminderCard: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 13 },
+  reminderIcon: { width: 38, height: 38, borderRadius: 19, alignItems: 'center', justifyContent: 'center' },
 });
