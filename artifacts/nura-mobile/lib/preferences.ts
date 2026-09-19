@@ -28,7 +28,7 @@ export async function saveNotificationPreferences(preferences: NotificationPrefe
   ]);
 }
 
-export type LocalReminderStatus = 'missed' | 'rescheduled';
+export type LocalReminderStatus = 'missed' | 'rescheduled' | 'pending';
 const reminderStatusKey = 'nura.reminder.statuses';
 
 export async function loadReminderStatuses(): Promise<Record<string, LocalReminderStatus>> {
@@ -45,4 +45,36 @@ export async function saveReminderStatus(reminderId: number, status: LocalRemind
   const statuses = await loadReminderStatuses();
   statuses[String(reminderId)] = status;
   await AsyncStorage.setItem(reminderStatusKey, JSON.stringify(statuses));
+}
+
+export type AccountPreferences = {
+  name: string;
+  phone: string;
+  email: string;
+};
+
+const accountKey = 'nura.account';
+const defaultAccount: AccountPreferences = {
+  name: 'Bhuvaneswari',
+  phone: '',
+  email: '',
+};
+
+export async function loadAccountPreferences(): Promise<AccountPreferences> {
+  const raw = await AsyncStorage.getItem(accountKey);
+  if (!raw) return defaultAccount;
+  try {
+    const saved = JSON.parse(raw) as Partial<AccountPreferences>;
+    return {
+      name: saved.name?.trim() || defaultAccount.name,
+      phone: saved.phone?.trim() || '',
+      email: saved.email?.trim() || '',
+    };
+  } catch {
+    return defaultAccount;
+  }
+}
+
+export async function saveAccountPreferences(account: AccountPreferences) {
+  await AsyncStorage.setItem(accountKey, JSON.stringify(account));
 }

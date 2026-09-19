@@ -6,9 +6,9 @@ import { useColors } from '@/hooks/useColors';
 import { loadNotificationPreferences, saveNotificationPreferences, type NotificationTiming } from '@/lib/preferences';
 
 const timingOptions: { value: NotificationTiming; label: string; detail: string }[] = [
-  { value: 'day-before', label: '1 day before', detail: 'A calm heads-up the day before.' },
   { value: 'same-day', label: 'On the day', detail: 'A reminder on the appointment date.' },
-  { value: 'both', label: 'Both', detail: 'The day before and on the day.' },
+  { value: 'day-before', label: '1 day before', detail: 'A calm heads-up the day before.' },
+  { value: 'both', label: 'On the day + 1 day before', detail: 'The day before and on the day.' },
 ];
 
 export default function NotificationsScreen() {
@@ -38,13 +38,12 @@ export default function NotificationsScreen() {
     <Screen>
       <View style={styles.header}>
         <Text style={[styles.eyebrow, { color: colors.primary }]}>Profile · Settings</Text>
-        <Text style={[styles.title, { color: colors.foreground }]}>Notifications</Text>
-        <Text style={[styles.subtitle, { color: colors.mutedForeground }]}>Choose how Nura should remind you about upcoming care.</Text>
+        <Text style={[styles.title, { color: colors.foreground }]}>Notifications & reminder preferences</Text>
       </View>
       <View style={[styles.preferenceCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-        <View style={[styles.icon, { backgroundColor: colors.softBlue }]}><Feather name="bell" size={19} color={colors.primary} /></View>
-        <View style={styles.copy}><Text style={[styles.cardTitle, { color: colors.foreground }]}>Health reminders</Text><Text style={[styles.cardDetail, { color: colors.mutedForeground }]}>Get notified about upcoming appointments, tests, and follow-ups.</Text></View>
-        <Switch value={enabled} onValueChange={(value) => update({ enabled: value })} trackColor={{ false: colors.border, true: colors.primary }} thumbColor={colors.card} accessibilityLabel="Health reminders" />
+         <View style={[styles.icon, { backgroundColor: colors.softBlue }]}><Feather name="bell" size={19} color={colors.primary} /></View>
+         <View style={styles.copy}><Text style={[styles.cardTitle, { color: colors.foreground }]}>Reminder notifications</Text><Text style={[styles.cardDetail, { color: colors.mutedForeground }]}>Allow reminder notifications.</Text></View>
+        <Switch value={enabled} onValueChange={(value) => update({ enabled: value })} trackColor={{ false: colors.border, true: colors.primary }} thumbColor={colors.card} accessibilityLabel="Reminder notifications" />
       </View>
       <View style={styles.section}>
         <SectionTitle title="Reminder notification timing" />

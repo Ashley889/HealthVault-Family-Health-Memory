@@ -33,7 +33,7 @@ function RootLayoutNav() {
       <Stack.Screen name="help" options={{ title: 'Help & support', presentation: 'card' }} />
       <Stack.Screen name="account" options={{ title: 'Account information', presentation: 'card' }} />
       <Stack.Screen name="about" options={{ title: 'About Nura', presentation: 'card' }} />
-      <Stack.Screen name="notifications" options={{ title: 'Notifications', presentation: 'card' }} />
+      <Stack.Screen name="notifications" options={{ title: 'Notifications & reminder preferences', presentation: 'card' }} />
       <Stack.Screen name="reminder/[id]" options={{ title: 'Reschedule reminder', presentation: 'card' }} />
       <Stack.Screen name="event/[id]" options={{ title: 'Health history detail', presentation: 'card' }} />
       <Stack.Screen name="add-update" options={{ title: 'Add health memory', presentation: 'modal' }} />
