@@ -28,9 +28,10 @@ export default function ProfileScreen() {
       </View>
       <View style={styles.section}>
         <SectionTitle title="Settings" />
-        <Card style={styles.preference}><Feather name="bell" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Notifications and reminder preferences</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>
-        <Card style={styles.preference}><Feather name="help-circle" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Help, feedback, and support</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>
-        <Card style={styles.preference}><Feather name="info" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>About Nura</Text><Text style={[styles.version, { color: colors.mutedForeground }]}>v1.0</Text></Card>
+        <Card onPress={() => router.push('/account')} style={styles.preference}><Feather name="user" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Account information</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>
+        <Card onPress={() => router.push('/help')} style={styles.preference}><Feather name="help-circle" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Help & support</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>
+        <Card onPress={() => router.push('/feedback')} style={styles.preference}><Feather name="message-circle" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Feedback</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>
+        <Card onPress={() => router.push('/about')} style={styles.preference}><Feather name="info" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>About Nura</Text><Text style={[styles.version, { color: colors.mutedForeground }]}>v1.0</Text></Card>
       </View>
     </Screen>
   );

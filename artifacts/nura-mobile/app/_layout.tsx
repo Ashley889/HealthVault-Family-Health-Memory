@@ -29,6 +29,10 @@ function RootLayoutNav() {
       <Stack.Screen name="journey/[id]" options={{ title: 'Health journey', presentation: 'card' }} />
       <Stack.Screen name="medication/[id]" options={{ title: 'Medication details', presentation: 'card' }} />
       <Stack.Screen name="manage-family" options={{ title: 'Manage family', presentation: 'card' }} />
+      <Stack.Screen name="feedback" options={{ title: 'Feedback', presentation: 'card' }} />
+      <Stack.Screen name="help" options={{ title: 'Help & support', presentation: 'card' }} />
+      <Stack.Screen name="account" options={{ title: 'Account information', presentation: 'card' }} />
+      <Stack.Screen name="about" options={{ title: 'About Nura', presentation: 'card' }} />
       <Stack.Screen name="add-update" options={{ title: 'Add health memory', presentation: 'modal' }} />
       <Stack.Screen name="add-member" options={{ title: 'Add family member', presentation: 'modal' }} />
     </Stack>

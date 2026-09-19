@@ -1,0 +1,691 @@
+# Nura — iPhone Mobile Layout & Responsiveness Fix
+
+Keep the **existing Nura visual design system exactly as it is** — soft sky blue, white cards, dark navy typography, blue primary actions, rounded cards, calm healthcare aesthetic.
+
+Do NOT redesign the product from scratch.
+
+The current screens look good visually, but they are behaving like fixed-size desktop/web compositions placed inside an iPhone frame. Convert the entire prototype into a **true mobile-first iOS application layout**.
+
+## 1. Primary requirement
+
+Nura must be designed as a real **Apple iPhone mobile application**, not a web page or desktop dashboard.
+
+Every screen must:
+
+* Fit completely inside the iPhone viewport.
+* Respect the Dynamic Island / top safe area.
+* Respect the bottom Home Indicator safe area.
+* Never allow text, buttons, cards, icons, or navigation to be clipped.
+* Never depend on a fixed screen height.
+* Never position important content based on absolute coordinates.
+* Adapt vertically when content becomes longer.
+* Allow the user to scroll naturally.
+* Keep the bottom tab bar fixed within the iOS safe area.
+* Work on both smaller and larger iPhone screen sizes.
+
+Use responsive/adaptive layout principles rather than scaling the entire screen as one image.
+
+Apple's guidance is to keep foreground interactive content within safe areas and use adaptive layouts rather than assuming a particular screen size.
+
+---
+
+# 2. Target devices
+
+Optimize the prototype for modern iPhones including:
+
+* iPhone SE / smaller viewport
+* iPhone 15 / 16
+* iPhone 15 Pro / 16 Pro
+* iPhone 15 Pro Max / 16 Pro Max
+
+The UI must remain usable across different heights and widths.
+
+Do not create separate designs that simply stretch or shrink.
+
+Use responsive constraints, flexible vertical stacks, intrinsic content height, and scrollable content.
+
+---
+
+# 3. Safe-area requirements
+
+Create a proper iOS safe-area structure.
+
+### Top
+
+Do not place:
+
+* NURA logo
+* page title
+* profile icon
+* buttons
+* cards
+* text
+
+under the Dynamic Island.
+
+Maintain appropriate top spacing automatically.
+
+### Bottom
+
+The bottom navigation must sit above the iPhone Home Indicator.
+
+Content must never disappear behind the tab bar.
+
+The final card/item on every scrolling screen must have enough bottom padding so the user can see and interact with it.
+
+---
+
+# 4. Navigation
+
+Keep the existing four-tab navigation:
+
+Home
+History
+Reminders
+Profile
+
+Use a native-looking iOS bottom tab bar.
+
+Each tab should have:
+
+* icon
+* short label
+* active state
+* inactive state
+
+The tab bar should remain fixed while the page content scrolls.
+
+Do not allow page content to overlap the navigation bar.
+
+---
+
+# 5. Home screen
+
+Keep the current design.
+
+However, make the page vertically scrollable.
+
+Structure:
+
+NURA
+
+Your family's
+health,
+remembered.
+
+Good morning. Keep the small details close.
+
+[ What happened? ]
+
+People to care for
+
+[ You ]
+[ Mother ]
+[ Son ]
+[ + Add family member ]
+
+Active health journeys
+
+[ Health journey cards ]
+
+Recent health activity
+
+[ Recent events ]
+
+The screen should continue naturally below the viewport.
+
+Do NOT force all sections to fit on one screen.
+
+The user should scroll to access lower sections.
+
+---
+
+# 6. History screen
+
+Keep the existing timeline design.
+
+Make the timeline fully scrollable.
+
+Filters:
+
+All
+You
+Mother
+Son
+
+* additional family members
+
+Each event card must have enough height to display all information.
+
+Example:
+
+Sep 10, 2026
+
+Pediatrician visit
+
+Exam was clear. Recommended fluids, rest, and observation.
+
+Doctor
+Medication
+Tests
+Notes
+Follow-up
+
+If additional information exists, the card can expand.
+
+Never truncate important medical information simply to preserve card height.
+
+Use "View details" where necessary.
+
+---
+
+# 7. Reminders screen — IMPORTANT
+
+The current reminder design is too simplistic.
+
+Create a complete reminder lifecycle.
+
+### Upcoming
+
+Show:
+
+Annual wellness check
+
+Aditi Sharma
+
+Aug 14, 2027
+
+[ Upcoming ]
+
+When the reminder date arrives, the reminder must move into a state requiring confirmation.
+
+### On/after reminder date
+
+Show:
+
+Did this happen?
+
+Annual wellness check
+
+Aug 14, 2027
+
+[ Yes, I went ]
+[ No, not yet ]
+
+If the user selects:
+
+### Yes, I went
+
+Open:
+
+## What happened?
+
+Person:
+Aditi Sharma
+
+Date:
+Aug 14, 2027
+
+Doctor / hospital
+[ Add doctor ]
+
+Reason for visit
+[ Add health issue ]
+
+What did the doctor say?
+[ Notes ]
+
+Medication prescribed
+[ Add medication ]
+
+For every medication allow:
+
+Medication name
+Dosage
+Frequency
+Duration
+Instructions
+
+Example:
+
+Vitamin D3
+60,000 IU
+Once weekly
+8 weeks
+After food
+
+Tests ordered
+[ Add test ]
+
+Reports
+[ Upload report ]
+
+Follow-up
+[ Add follow-up ]
+
+[ Save to health history ]
+
+After saving:
+
+Reminder status = Completed
+
+And the completed visit must automatically appear in the person's Health History timeline.
+
+---
+
+# 8. Reminder states
+
+Every reminder must support:
+
+Upcoming
+Due
+Completed
+Missed
+Rescheduled
+
+Do not automatically mark reminders as Completed.
+
+The user must explicitly confirm what happened.
+
+For missed reminders:
+
+Show:
+
+You missed this reminder.
+
+[ Reschedule ]
+[ Mark as missed ]
+
+For rescheduled reminders:
+
+Show the new date clearly.
+
+---
+
+# 9. Medication information
+
+Medication must be a first-class part of Nura.
+
+Never reduce medication to only the medication name.
+
+Every medication record should support:
+
+* Medication name
+* Dosage
+* Frequency
+* Start date
+* End date
+* Duration
+* Instructions
+* Prescribed by
+* Related health issue
+* Status
+
+Status:
+
+Current
+Completed
+Stopped
+
+Example:
+
+### Vitamin D3
+
+60,000 IU
+Once weekly
+Started Sep 4, 2026
+8-week course
+
+Prescribed by:
+Dr. [Name]
+
+Related to:
+Vitamin D follow-up
+
+This information should be visible in the Health Journey and Health History.
+
+---
+
+# 10. Health Journey
+
+For long-term conditions or ongoing health situations, create a dedicated Health Journey.
+
+Example:
+
+## Vitamin D Journey
+
+Started:
+Sep 4, 2026
+
+### Current medication
+
+Vitamin D3
+60,000 IU
+Once weekly
+
+### Recent tests
+
+Vitamin D
+24.4 ng/mL
+
+### Doctors
+
+Dr. [Name]
+
+### Timeline
+
+Sep 4
+Medication started
+
+Sep 10
+Doctor follow-up
+
+Dec 4
+Repeat Vitamin D test
+
+The journey should be vertically scrollable.
+
+---
+
+# 11. Profile & Settings
+
+Keep the existing profile design but simplify it.
+
+Remove:
+
+Data Privacy
+
+Do NOT show a dedicated "Data Privacy" section.
+
+Instead create normal settings:
+
+## Settings
+
+Notifications & reminder preferences
+
+Account information
+
+Manage family
+
+Add family member
+
+Help & support
+
+Feedback
+
+About Nura
+
+Log out
+
+Each item must open a functional-looking mobile screen.
+
+---
+
+# 12. Add family member
+
+The user should be able to add more people from Profile.
+
+Flow:
+
+Add family member
+
+Name
+Relationship
+Date of birth
+Gender
+Phone number — optional
+
+Relationship examples:
+
+Mother
+Father
+Spouse
+Child
+Sibling
+Other
+
+[ Add family member ]
+
+After saving, the person appears under:
+
+People to care for
+
+and becomes available throughout:
+
+History
+Reminders
+Health Journeys
+Health Memories
+
+Design the flow for potentially 5–10 family members.
+
+---
+
+# 13. Feedback
+
+Make Feedback functional.
+
+Screen:
+
+## Feedback
+
+How can we improve Nura?
+
+Select type:
+
+Issue
+Suggestion
+Feature request
+Other
+
+Tell us more
+
+[ Text input ]
+
+[ Submit feedback ]
+
+After submission:
+
+Thank you.
+
+Your feedback has been received.
+
+[ Done ]
+
+Do not leave Feedback as a dead-end button.
+
+---
+
+# 14. Account information
+
+Create a simple iOS-style account page.
+
+Name
+
+Email
+
+Phone
+
+Profile information
+
+[ Edit profile ]
+
+Avoid unnecessary complexity.
+
+---
+
+# 15. Help & support
+
+Create:
+
+## Help & support
+
+Frequently asked questions
+
+How Nura works
+
+Managing family members
+
+Adding health records
+
+Managing reminders
+
+Contact support
+
+---
+
+# 16. About Nura
+
+Show:
+
+NURA
+
+Your family's health, remembered.
+
+A short explanation:
+
+"Nura helps families remember the health details that are easy to lose — visits, medications, tests, follow-ups and health journeys."
+
+Version
+
+Terms
+Support
+
+Keep it simple.
+
+---
+
+# 17. Typography
+
+Do not allow typography to cause clipping.
+
+Use:
+
+* responsive text containers
+* natural text wrapping
+* intrinsic height
+* appropriate line spacing
+* maximum readable line lengths
+
+Never force text into a fixed-height card.
+
+If text becomes longer, the card becomes taller.
+
+---
+
+# 18. Cards
+
+Cards must use:
+
+Auto height
+
+Not fixed height.
+
+Content should determine the card height.
+
+For example:
+
+Short content → short card
+
+Long notes → taller card
+
+Multiple medications → taller card
+
+Multiple tests → taller card
+
+Never cut text with hard clipping.
+
+If content is intentionally collapsed, use:
+
+View more
+
+instead of cutting content.
+
+---
+
+# 19. Scrolling
+
+Every major page should use vertical scrolling:
+
+Home
+History
+Reminders
+Profile
+Health Journey
+Health Memory details
+Reminder details
+Doctor visit details
+Medication details
+Family member details
+
+Scrolling should begin below the safe-area header and continue above the bottom tab bar.
+
+---
+
+# 20. Mobile interaction
+
+All primary actions must be comfortable for touch.
+
+Buttons should have sufficient touch area.
+
+Avoid tiny text links or tiny icon-only controls for important actions.
+
+Use familiar iOS interaction patterns where appropriate:
+
+* sheets
+* cards
+* navigation stacks
+* confirmation dialogs
+* segmented controls
+* bottom sheets
+
+Keep the interface calm and simple.
+
+---
+
+# 21. Do NOT change
+
+Do not change:
+
+* Nura branding
+* "Your family's health, remembered."
+* current blue/white color system
+* current typography style
+* current card style
+* current overall visual personality
+* current navigation concept
+* overall calm healthcare aesthetic
+
+The goal is to **fix the mobile implementation, not redesign the product.**
+
+---
+
+# 22. Critical prototype QA
+
+Before considering the prototype complete, test every screen at multiple iPhone viewport sizes.
+
+Check:
+
+1. Is anything hidden behind the Dynamic Island?
+2. Is anything hidden behind the Home Indicator?
+3. Is any text clipped?
+4. Are buttons fully visible?
+5. Are cards allowed to grow vertically?
+6. Can the user scroll to every piece of information?
+7. Does the bottom navigation remain accessible?
+8. Does the last item have sufficient bottom spacing?
+9. Does long medication information fit?
+10. Does the reminder completion flow work?
+11. Does completed reminder information enter History?
+12. Can additional family members be added?
+13. Does Feedback submit successfully?
+14. Does Logout exist?
+15. Are there any desktop/web-style fixed-width layouts?
+
+### Final requirement
+
+Nura should look and behave like a **real native iPhone health app**, not a website placed inside an iPhone mockup.
+
+Prioritize **responsive layout + safe areas + scrolling + complete information visibility** over fitting more content onto a single screen.
+
+No important information should ever be cut just to make a screen look visually compact.
