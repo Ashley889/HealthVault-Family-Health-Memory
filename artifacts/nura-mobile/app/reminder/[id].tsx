@@ -4,8 +4,8 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useUpdateReminder, useListProfiles, useListReminders } from '@workspace/api-client-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { KeyboardAwareScrollViewCompat } from '@/components/KeyboardAwareScrollViewCompat';
-import { OutlineButton, PrimaryButton, Screen, SectionTitle } from '@/components/NuraUI';
-import { formatDate } from '@/lib/format';
+import { ActionDialog, OutlineButton, PrimaryButton, Screen, SectionTitle } from '@/components/NuraUI';
+import { formatDate, todayIso } from '@/lib/format';
 import { loadNotificationPreferences } from '@/lib/preferences';
 import { useColors } from '@/hooks/useColors';
 
@@ -23,6 +23,7 @@ export default function RescheduleReminderScreen() {
   const [time, setTime] = useState('09:00');
   const [reason, setReason] = useState('');
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [savedDate, setSavedDate] = useState<string | null>(null);
 
   useEffect(() => {
     if (reminder) {
@@ -55,12 +56,16 @@ export default function RescheduleReminderScreen() {
       Alert.alert('Check the time', 'Please enter the time as HH:MM.');
       return;
     }
+    if (date <= todayIso() || date === reminder.date.slice(0, 10)) {
+      Alert.alert('Choose a future date', 'Move this reminder to a new date after today.');
+      return;
+    }
     try {
       const baseDetail = reminder.detail.split(' · Time:')[0];
       const detail = [baseDetail, `Time: ${time}`, reason.trim() ? `Reason: ${reason.trim()}` : '', notificationsEnabled ? 'Notification ON' : 'Notification OFF'].filter(Boolean).join(' · ');
       await updateReminder.mutateAsync({ reminderId: reminder.id, data: { date, detail, status: 'rescheduled' } });
       await queryClient.invalidateQueries();
-      router.back();
+      setSavedDate(date);
     } catch {
       Alert.alert('Couldn’t reschedule', 'Please check the date and try again.');
     }
@@ -83,6 +88,7 @@ export default function RescheduleReminderScreen() {
         <PrimaryButton label={updateReminder.isPending ? 'Rescheduling…' : 'Reschedule'} icon="calendar" disabled={updateReminder.isPending} onPress={() => { void save(); }} />
         <OutlineButton label="Keep current date" icon="arrow-left" onPress={() => router.back()} />
       </KeyboardAwareScrollViewCompat>
+      <ActionDialog visible={Boolean(savedDate)} title="Reminder rescheduled" message={`Your reminder has been moved to ${formatDate(savedDate)}.`} primaryLabel="Done" onPrimary={() => { setSavedDate(null); router.back(); }} testID="reminder-rescheduled-dialog" />
     </Screen>
   );
 }

@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import {
   ActivityIndicator,
+  Modal,
   Pressable,
   StyleSheet,
   Text,
@@ -167,6 +168,50 @@ export function OutlineButton({ label, onPress, icon = 'plus', testID }: { label
   );
 }
 
+export function ActionDialog({
+  visible,
+  title,
+  message,
+  primaryLabel,
+  onPrimary,
+  secondaryLabel,
+  onSecondary,
+  destructive = false,
+  testID = 'action-dialog',
+}: {
+  visible: boolean;
+  title: string;
+  message: string;
+  primaryLabel: string;
+  onPrimary: () => void;
+  secondaryLabel?: string;
+  onSecondary?: () => void;
+  destructive?: boolean;
+  testID?: string;
+}) {
+  const colors = useColors();
+  return (
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onSecondary ?? onPrimary}>
+      <View style={styles.dialogBackdrop}>
+        <View testID={testID} accessibilityViewIsModal style={[styles.dialogCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
+          <Text style={[styles.dialogTitle, { color: colors.foreground }]}>{title}</Text>
+          <Text style={[styles.dialogMessage, { color: colors.mutedForeground }]}>{message}</Text>
+          <View style={styles.dialogActions}>
+            {secondaryLabel && onSecondary ? (
+              <Pressable testID={`${testID}-secondary`} onPress={onSecondary} style={({ pressed }) => [styles.dialogButton, { borderColor: colors.border }, pressed && styles.pressed]}>
+                <Text style={[styles.dialogSecondaryText, { color: colors.inkSoft }]}>{secondaryLabel}</Text>
+              </Pressable>
+            ) : null}
+            <Pressable testID={`${testID}-primary`} onPress={onPrimary} style={({ pressed }) => [styles.dialogButton, { backgroundColor: destructive ? colors.destructive : colors.primary, borderColor: destructive ? colors.destructive : colors.primary }, pressed && styles.pressed]}>
+              <Text style={[styles.dialogPrimaryText, { color: colors.primaryForeground }]}>{primaryLabel}</Text>
+            </Pressable>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+}
+
 export function SectionTitle({ title, action, onAction }: { title: string; action?: string; onAction?: () => void }) {
   const colors = useColors();
   return (
@@ -231,6 +276,14 @@ const styles = StyleSheet.create({
   outlineButtonText: { fontFamily: 'Inter_600SemiBold', fontSize: 14, flexShrink: 1, textAlign: 'center' },
   pressed: { opacity: 0.75, transform: [{ scale: 0.985 }] },
   disabled: { opacity: 0.5 },
+  dialogBackdrop: { flex: 1, backgroundColor: 'rgba(14, 32, 48, 0.38)', alignItems: 'center', justifyContent: 'center', padding: 24 },
+  dialogCard: { width: '100%', maxWidth: 420, borderWidth: 1, borderRadius: 22, padding: 20, gap: 12 },
+  dialogTitle: { fontFamily: 'Inter_700Bold', fontSize: 21, lineHeight: 27 },
+  dialogMessage: { fontFamily: 'Inter_400Regular', fontSize: 14, lineHeight: 21 },
+  dialogActions: { flexDirection: 'row', justifyContent: 'flex-end', gap: 10, flexWrap: 'wrap', marginTop: 4 },
+  dialogButton: { minHeight: 44, minWidth: 104, borderWidth: 1, borderRadius: 14, paddingHorizontal: 16, alignItems: 'center', justifyContent: 'center' },
+  dialogPrimaryText: { fontFamily: 'Inter_700Bold', fontSize: 14 },
+  dialogSecondaryText: { fontFamily: 'Inter_700Bold', fontSize: 14 },
   sectionTitle: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   sectionTitleText: { fontFamily: 'Inter_700Bold', fontSize: 19, letterSpacing: -0.25, flexShrink: 1 },
   sectionAction: { fontFamily: 'Inter_700Bold', fontSize: 13 },

@@ -200,7 +200,8 @@ export const CreateEventBody = zod.object({
   "location": zod.string().nullish(),
   "medications": zod.array(zod.string()).optional(),
   "tags": zod.array(zod.string()).optional(),
-  "followUp": zod.string().nullish()
+  "followUp": zod.string().nullish(),
+  "sourceReminderId": zod.number().int().optional()
 })
 
 export const CreateEventResponse = zod.object({

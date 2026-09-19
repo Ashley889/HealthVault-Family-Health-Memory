@@ -8,7 +8,7 @@ import { loadNotificationPreferences, saveNotificationPreferences, type Notifica
 const timingOptions: { value: NotificationTiming; label: string; detail: string }[] = [
   { value: 'same-day', label: 'On the day', detail: 'A reminder on the appointment date.' },
   { value: 'day-before', label: '1 day before', detail: 'A calm heads-up the day before.' },
-  { value: 'both', label: 'On the day and 1 day before', detail: 'The day before and on the day.' },
+  { value: 'both', label: 'On the day + 1 day before', detail: 'The day before and on the day.' },
 ];
 
 export default function NotificationsScreen() {
@@ -38,11 +38,11 @@ export default function NotificationsScreen() {
     <Screen>
       <View style={styles.header}>
         <Text style={[styles.eyebrow, { color: colors.primary }]}>Profile · Settings</Text>
-        <Text style={[styles.title, { color: colors.foreground }]}>Notifications & reminder preferences</Text>
+        <Text style={[styles.title, { color: colors.foreground }]}>Notifications</Text>
       </View>
       <View style={[styles.preferenceCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
          <View style={[styles.icon, { backgroundColor: colors.softBlue }]}><Feather name="bell" size={19} color={colors.primary} /></View>
-         <View style={styles.copy}><Text style={[styles.cardTitle, { color: colors.foreground }]}>Health reminders</Text><Text style={[styles.cardDetail, { color: colors.mutedForeground }]}>Get reminders about upcoming appointments, tests, and follow-ups.</Text></View>
+         <View style={styles.copy}><Text style={[styles.cardTitle, { color: colors.foreground }]}>Reminder notifications</Text><Text style={[styles.cardDetail, { color: colors.mutedForeground }]}>{enabled ? 'On' : 'Off'} · Get reminders about appointments, tests, and follow-ups.</Text></View>
         <Switch value={enabled} onValueChange={(value) => update({ enabled: value })} trackColor={{ false: colors.border, true: colors.primary }} thumbColor={colors.card} accessibilityLabel="Reminder notifications" />
       </View>
       <View style={styles.section}>

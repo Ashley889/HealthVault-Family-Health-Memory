@@ -93,6 +93,7 @@ export interface EventInput {
   tags?: string[];
   /** @nullable */
   followUp?: string | null;
+  sourceReminderId?: number;
 }
 
 export interface EventUpdate {

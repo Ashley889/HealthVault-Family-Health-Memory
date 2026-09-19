@@ -3,3 +3,4 @@
 - [Account profile storage](account-profile-storage.md) — account basics are local preview preferences, separate from family health profiles.
 - [Reminder status model](reminder-status-model.md) — reminder status is persisted server-side; Keep for later remains Due and rescheduling updates the existing reminder.
 - [Expo artifact dependencies](expo-artifact-dependencies.md) — target the mobile workspace explicitly when adding an Expo package; generic package installation targets the monorepo root.
+- [Expo web confirmations](expo-web-confirmations.md) — callback-dependent native alerts are unreliable in Expo web; use in-app dialogs for data-changing actions.

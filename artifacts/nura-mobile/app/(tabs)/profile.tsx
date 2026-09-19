@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import { Card, Header, OutlineButton, Screen, SectionTitle } from '@/components/NuraUI';
+import { useFocusEffect, useRouter } from 'expo-router';
+import { ActionDialog, Card, Header, OutlineButton, Screen, SectionTitle } from '@/components/NuraUI';
 import { useColors } from '@/hooks/useColors';
 import { loadAccountPreferences, type AccountPreferences } from '@/lib/preferences';
 
@@ -10,10 +10,12 @@ export default function ProfileScreen() {
   const colors = useColors();
   const router = useRouter();
   const [account, setAccount] = useState<AccountPreferences>({ name: 'Bhuvaneswari', phone: '', email: '' });
+  const [confirmingLogout, setConfirmingLogout] = useState(false);
+  const [loggedOut, setLoggedOut] = useState(false);
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     void loadAccountPreferences().then(setAccount);
-  }, []);
+  }, []));
 
   return (
     <Screen>
@@ -29,13 +31,15 @@ export default function ProfileScreen() {
       </View>
       <View style={styles.section}>
         <SectionTitle title="Settings" />
-        <Card onPress={() => router.push('/notifications')} style={styles.preference}><Feather name="bell" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Notifications & reminder preferences</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>
+        <Card onPress={() => router.push('/notifications')} style={styles.preference}><Feather name="bell" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Notifications</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>
         <Card onPress={() => router.push('/account')} style={styles.preference}><Feather name="user" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Account information</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>
         <Card onPress={() => router.push('/help')} style={styles.preference}><Feather name="help-circle" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Help & support</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>
         <Card onPress={() => router.push('/feedback')} style={styles.preference}><Feather name="message-circle" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Feedback</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>
         <Card onPress={() => router.push('/about')} style={styles.preference}><Feather name="info" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>About Nura</Text><Text style={[styles.version, { color: colors.mutedForeground }]}>v1.0</Text></Card>
       </View>
-      <OutlineButton label="Log out" icon="log-out" onPress={() => Alert.alert('Log out?', 'Are you sure you want to log out?', [{ text: 'Cancel', style: 'cancel' }, { text: 'Log out', style: 'destructive', onPress: () => Alert.alert('Logged out', 'You are using Nura in local preview mode.') }])} />
+      <OutlineButton label="Log out" icon="log-out" onPress={() => setConfirmingLogout(true)} />
+      <ActionDialog visible={confirmingLogout} title="Log out?" message="Are you sure you want to log out?" primaryLabel="Log out" onPrimary={() => { setConfirmingLogout(false); setLoggedOut(true); }} secondaryLabel="Cancel" onSecondary={() => setConfirmingLogout(false)} destructive testID="logout-dialog" />
+      <ActionDialog visible={loggedOut} title="Logged out" message="You are using Nura in local preview mode." primaryLabel="Done" onPrimary={() => setLoggedOut(false)} testID="logged-out-dialog" />
     </Screen>
   );
 }

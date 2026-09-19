@@ -1,0 +1,818 @@
+# Nura — Final Functional Polish: Settings, Feedback, Save & Delete Actions
+
+Keep the existing Nura design, layout, colors, navigation, and mobile-first iPhone experience.
+
+Do not redesign the product.
+
+This is a **functional polish and feedback pass**.
+
+The application currently has several actions that work partially but do not clearly tell the user what happened.
+
+For every important action, the user must receive clear confirmation and the data/state must actually be updated.
+
+---
+
+# 1. CONTACT SUPPORT — MAKE IT WORK
+
+Go to:
+
+Profile → Help & support → Contact support
+
+The current Contact Support button is not working.
+
+Make it functional.
+
+Use this dummy support email:
+
+**[noah@support.com](mailto:noah@support.com)**
+
+When the user taps:
+
+**Contact support**
+
+open the user's default email client using a mailto action if supported.
+
+Recipient:
+
+**[noah@support.com](mailto:noah@support.com)**
+
+Subject:
+
+**Nura Support Request**
+
+If opening the device email client is not possible in the Replit environment, show:
+
+### Contact support
+
+Email us at:
+
+**[noah@support.com](mailto:noah@support.com)**
+
+[ Copy email ]
+
+After copying:
+
+**Email copied**
+
+Do not leave the button without an action.
+
+---
+
+# 2. FEEDBACK — ACTUALLY STORE THE FEEDBACK
+
+Current problem:
+
+The user can enter feedback, but there is no clear indication that it was sent or stored.
+
+When the user submits feedback:
+
+1. Validate the feedback.
+2. Save it to the application's feedback/history data.
+3. Show a success confirmation.
+
+Example:
+
+### Feedback sent
+
+Thank you for helping us improve Nura.
+
+Your feedback has been saved successfully.
+
+[ Done ]
+
+The feedback should not disappear without confirmation.
+
+---
+
+# 3. FEEDBACK HISTORY
+
+Keep at least **1–2 sample feedback entries** in the Settings/Feedback history for demonstration purposes.
+
+Example:
+
+### Feedback history
+
+**Suggestion**
+
+"Add support for more report formats."
+
+Sep 18, 2026
+
+---
+
+**Issue**
+
+"The reminder notification was not showing."
+
+Sep 17, 2026
+
+---
+
+New feedback submitted by the user should appear in this history.
+
+Do not overwrite previous feedback.
+
+---
+
+# 4. EDIT PROFILE — SUCCESS MESSAGE
+
+When the user edits:
+
+Name
+
+Phone number
+
+Email address
+
+and taps:
+
+**Save changes**
+
+actually save the information.
+
+Then show:
+
+### Information saved
+
+Your account information has been updated successfully.
+
+[ Done ]
+
+After returning to Profile, the updated information must still be visible.
+
+Do not simply close the form without confirmation.
+
+---
+
+# 5. SAVE HEALTH MEMORY — SUCCESS MESSAGE
+
+When the user creates a health memory and taps:
+
+**Save health memory**
+
+show:
+
+### Health memory saved
+
+Your health memory has been added to your history.
+
+[ View history ]
+
+The memory must actually appear in History.
+
+---
+
+# 6. SAVE FAMILY MEMBER — SUCCESS MESSAGE
+
+When adding a family member:
+
+After:
+
+**Add family member**
+
+show:
+
+### Family member added
+
+Bhuvaneswari has been added to your family.
+
+[ Done ]
+
+The family member must immediately appear in:
+
+* Your family
+* Manage family
+* Reminder creation
+* History filters
+
+---
+
+# 7. DELETE FAMILY MEMBER
+
+Go to:
+
+Profile → Manage family
+
+Every family member except the account owner should have a delete option.
+
+Example:
+
+Bhuvaneswari
+
+Mother
+
+[ Delete ]
+
+When Delete is tapped:
+
+### Remove family member?
+
+Are you sure you want to remove Bhuvaneswari from your family?
+
+[ Cancel ]
+
+[ Remove ]
+
+Use a destructive action style for Remove.
+
+After confirmation:
+
+### Family member removed
+
+Bhuvaneswari has been removed from your family.
+
+[ Done ]
+
+The person should disappear from:
+
+* Home family list
+* Manage family
+* Reminder creation
+* History filters
+
+---
+
+# 8. IMPORTANT DELETE RULE
+
+Do not accidentally delete the account owner's profile.
+
+The current signed-in user cannot be deleted through:
+
+Manage family.
+
+Only additional family members can be removed.
+
+---
+
+# 9. DELETE HEALTH HISTORY
+
+Users should be able to delete a health memory/history event if they entered incorrect information.
+
+Example:
+
+History
+
+→ Open health event
+
+Show:
+
+**Delete**
+
+When selected:
+
+### Delete this health memory?
+
+This will remove this health memory from your history.
+
+[ Cancel ]
+
+[ Delete ]
+
+After confirmation:
+
+### Health memory deleted
+
+The health memory has been removed from your history.
+
+[ Done ]
+
+Then return to History.
+
+The deleted event must no longer appear.
+
+---
+
+# 10. DELETE RULE FOR HEALTH EVENTS
+
+Deleting a health event should remove the event from the user's History.
+
+If that event contains:
+
+Medication
+Test
+Report
+Follow-up
+
+show a clear confirmation that associated information will also be removed from that health event.
+
+Example:
+
+### Delete this health memory?
+
+This will remove the visit and the information saved with it from your history.
+
+[ Cancel ]
+
+[ Delete ]
+
+Do not silently delete medical information.
+
+---
+
+# 11. REMINDER — RESCHEDULE SUCCESS
+
+Current issue:
+
+The reminder can be rescheduled, but there is no success message.
+
+After the user successfully reschedules:
+
+### Reminder rescheduled
+
+Your reminder has been moved to Sep 30, 2026.
+
+[ Done ]
+
+Then show:
+
+**Rescheduled**
+
+on the reminder card.
+
+The new date must be visible.
+
+---
+
+# 12. REMINDER — KEEP FOR LATER
+
+Current issue:
+
+When the user selects:
+
+**Keep for later**
+
+there is no visible status.
+
+Fix this.
+
+After selecting:
+
+Keep for later
+
+show:
+
+### Reminder kept for later
+
+You can come back to this reminder when you're ready.
+
+[ Done ]
+
+The reminder should remain active.
+
+Its status should be:
+
+**Due**
+
+or:
+
+**Pending**
+
+Use one consistent status.
+
+Preferred:
+
+**Due**
+
+The reminder card should show:
+
+### Annual wellness check
+
+Bhuvaneswari
+
+Sep 25, 2026
+
+**Due**
+
+When the user opens it again:
+
+Did this happen?
+
+[ Yes, I went ]
+
+[ Not yet ]
+
+---
+
+# 13. REMINDER — MISSED STATUS
+
+If the user chooses:
+
+Not yet
+
+→ Mark as missed
+
+→ Confirm
+
+then immediately show:
+
+### Reminder marked as missed
+
+This reminder has been recorded as missed.
+
+[ Done ]
+
+The reminder card must show:
+
+**Missed**
+
+It must move into the:
+
+### Missed
+
+section.
+
+Do not leave it looking like an Upcoming or Due reminder.
+
+---
+
+# 14. REMINDER — COMPLETED STATUS
+
+Keep the existing "I went" flow.
+
+After the user completes:
+
+Doctor
+
+Notes
+
+Medication
+
+Tests
+
+Report
+
+Follow-up
+
+and selects:
+
+**Save to health history**
+
+show:
+
+### Visit saved
+
+The visit has been added to your health history.
+
+[ View history ]
+
+Reminder status:
+
+**Completed**
+
+The event must appear in History.
+
+---
+
+# 15. REMINDER STATUS SUMMARY
+
+Use exactly these statuses:
+
+### Upcoming
+
+The date has not arrived.
+
+### Due
+
+The date has arrived but the user has not completed the reminder.
+
+### Rescheduled
+
+The user moved the reminder to a new date.
+
+### Completed
+
+The user confirmed they went and saved the visit.
+
+### Missed
+
+The user explicitly marked the reminder as missed.
+
+Never show a reminder as Completed unless the user actually completes the "I went" flow.
+
+---
+
+# 16. NOTIFICATION SETTING — MAKE LABEL SMALLER
+
+The current:
+
+**Notifications & reminder preferences**
+
+label/button is too large.
+
+Keep the meaning but make the visual presentation more compact.
+
+Use:
+
+### Notifications
+
+Then inside the page:
+
+**Reminder notifications**
+
+ON / OFF
+
+**Remind me**
+
+On the day
+
+1 day before
+
+On the day + 1 day before
+
+This keeps the navigation label short and easier to read on mobile.
+
+---
+
+# 17. SUCCESS MESSAGE CONSISTENCY
+
+Use the same pattern throughout Nura.
+
+After an important action:
+
+### Short title
+
+One clear sentence explaining what happened.
+
+[ Done ]
+
+Examples:
+
+**Information saved**
+
+Your account information has been updated successfully.
+
+---
+
+**Health memory saved**
+
+Your health memory has been added to your history.
+
+---
+
+**Family member added**
+
+Your family member has been added successfully.
+
+---
+
+**Reminder rescheduled**
+
+Your reminder has been moved to the new date.
+
+---
+
+**Reminder kept for later**
+
+You can come back to this reminder when you're ready.
+
+---
+
+**Reminder marked as missed**
+
+This reminder has been recorded as missed.
+
+---
+
+**Feedback sent**
+
+Thank you for helping us improve Nura.
+
+---
+
+**Health memory deleted**
+
+The health memory has been removed from your history.
+
+---
+
+# 18. DO NOT USE SUCCESS MESSAGES EVERYWHERE
+
+Do not show unnecessary confirmations for simple navigation.
+
+Use confirmation only after actions that change data or state:
+
+Save
+Create
+Edit
+Delete
+Submit
+Reschedule
+Complete
+Mark as missed
+Upload
+
+---
+
+# 19. DATA MUST ACTUALLY CHANGE
+
+Do not only show a success message.
+
+Every action must update the underlying application state/data.
+
+For example:
+
+### Add family member
+
+Before:
+
+2 family members
+
+After:
+
+3 family members
+
+---
+
+### Delete family member
+
+Before:
+
+Bhuvaneswari visible
+
+After:
+
+Bhuvaneswari removed
+
+---
+
+### Save health memory
+
+Before:
+
+No event
+
+After:
+
+Event appears in History
+
+---
+
+### Delete health memory
+
+Before:
+
+Event exists
+
+After:
+
+Event no longer exists
+
+---
+
+### Reschedule
+
+Before:
+
+Sep 25
+
+After:
+
+Sep 30
+
+Status:
+
+Rescheduled
+
+---
+
+### Keep for later
+
+Before:
+
+Due
+
+After:
+
+Due
+
+But user sees confirmation:
+
+Reminder kept for later
+
+---
+
+### Mark as missed
+
+Before:
+
+Due
+
+After:
+
+Missed
+
+---
+
+### Submit feedback
+
+Before:
+
+Feedback not present
+
+After:
+
+Feedback appears in Feedback history
+
+---
+
+# 20. FINAL QA TEST
+
+After implementing these changes, test every action.
+
+### Settings
+
+Contact support → works
+
+Feedback → submits → stored → visible in history
+
+Account edit → saves → success message
+
+Notifications → ON/OFF works
+
+Help → works
+
+About → works
+
+Logout → works
+
+---
+
+### Family
+
+Add family member → saved → success message
+
+Manage family → visible
+
+Delete family member → confirmation → deleted
+
+---
+
+### Health memory
+
+Add memory → saved → appears in History
+
+Open memory → details visible
+
+Delete memory → confirmation → deleted
+
+---
+
+### Reminders
+
+Create reminder → saved
+
+Upcoming → visible
+
+Due → visible
+
+Yes, I went → Completed
+
+Not yet → Keep for later → Due
+
+Not yet → Reschedule → Rescheduled
+
+Not yet → Mark as missed → Missed
+
+---
+
+# 21. FINAL MOBILE CHECK
+
+All confirmation messages, dialogs, and bottom sheets must work correctly on iPhone-sized screens.
+
+Make sure:
+
+* No text is clipped.
+* No buttons are hidden.
+* Modal buttons are tappable.
+* Bottom sheets can scroll if required.
+* Confirmation messages are readable.
+* Success messages do not disappear too quickly.
+* The user always knows what happened after an action.
+
+---
+
+# FINAL PRINCIPLE
+
+Every important user action in Nura should answer one simple question:
+
+**"Did Nura actually do what I asked?"**
+
+The interface should make that obvious.
+
+Save → Saved
+
+Submit → Sent
+
+Reschedule → Rescheduled
+
+Keep for later → Due
+
+Miss → Missed
+
+Complete → Completed
+
+Delete → Deleted
+
+Add family member → Added
+
+This should be reflected both in the UI **and in the underlying application state/data**.

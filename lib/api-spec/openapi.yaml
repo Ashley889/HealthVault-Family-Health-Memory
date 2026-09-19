@@ -359,6 +359,7 @@ components:
           type: array
           items: { type: string }
         followUp: { type: ["string", "null"] }
+        sourceReminderId: { type: integer }
     EventUpdate:
       type: object
       properties:

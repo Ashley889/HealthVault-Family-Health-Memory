@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { useCreateProfile } from '@workspace/api-client-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { KeyboardAwareScrollViewCompat } from '@/components/KeyboardAwareScrollViewCompat';
-import { PrimaryButton, Screen, SectionTitle } from '@/components/NuraUI';
+import { ActionDialog, PrimaryButton, Screen, SectionTitle } from '@/components/NuraUI';
 import { useColors } from '@/hooks/useColors';
 
 export default function AddMemberScreen() {
@@ -15,6 +15,7 @@ export default function AddMemberScreen() {
   const [name, setName] = useState('');
   const [relationship, setRelationship] = useState('Mother');
   const [dateOfBirth, setDateOfBirth] = useState('');
+  const [addedName, setAddedName] = useState<string | null>(null);
   const relationships = ['Mother', 'Father', 'Spouse', 'Child', 'Sibling', 'Other'];
   const save = () => {
     if (!name.trim()) {
@@ -22,9 +23,9 @@ export default function AddMemberScreen() {
       return;
     }
     create.mutate({ data: { name: name.trim(), relationship, dateOfBirth: dateOfBirth || null, color: colors.softBlue } }, {
-      onSuccess: async () => {
+      onSuccess: async (profile) => {
         await queryClient.invalidateQueries();
-        router.back();
+        setAddedName(profile.name);
       },
       onError: () => Alert.alert('Couldn’t add member', 'Please try again.'),
     });
@@ -37,8 +38,9 @@ export default function AddMemberScreen() {
         <View style={styles.choiceGrid}>{relationships.map((item) => <Text key={item} onPress={() => setRelationship(item)} style={[styles.choice, { color: relationship === item ? colors.primaryForeground : colors.inkSoft, backgroundColor: relationship === item ? colors.primary : colors.card, borderColor: relationship === item ? colors.primary : colors.border }]}>{item}</Text>)}</View>
         <Field label="Name" value={name} onChangeText={setName} placeholder="e.g. Meera Sharma" colors={colors} />
         <Field label="Date of birth" value={dateOfBirth} onChangeText={setDateOfBirth} placeholder="YYYY-MM-DD" colors={colors} />
-        <PrimaryButton label={create.isPending ? 'Adding member…' : 'Add member'} icon="check" disabled={create.isPending} onPress={save} testID="button-save-family-member" />
+        <PrimaryButton label={create.isPending ? 'Adding family member…' : 'Add family member'} icon="check" disabled={create.isPending} onPress={save} testID="button-save-family-member" />
       </KeyboardAwareScrollViewCompat>
+      <ActionDialog visible={Boolean(addedName)} title="Family member added" message={`${addedName ?? 'Your family member'} has been added to your family.`} primaryLabel="Done" onPrimary={() => { setAddedName(null); router.back(); }} testID="family-member-added-dialog" />
     </Screen>
   );
 }

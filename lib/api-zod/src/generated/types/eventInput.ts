@@ -21,4 +21,5 @@ export interface EventInput {
   tags?: string[];
   /** @nullable */
   followUp?: string | null;
+  sourceReminderId?: number;
 }

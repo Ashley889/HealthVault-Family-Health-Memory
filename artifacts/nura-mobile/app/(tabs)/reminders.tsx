@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import { useQueryClient } from '@tanstack/react-query';
 import { useListProfiles, useListReminders, useUpdateReminder } from '@workspace/api-client-react';
 import type { Reminder, ReminderStatus } from '@workspace/api-client-react';
-import { Card, ErrorState, Header, LoadingState, PrimaryButton, Screen, SectionTitle } from '@/components/NuraUI';
+import { ActionDialog, Card, ErrorState, Header, LoadingState, PrimaryButton, Screen, SectionTitle } from '@/components/NuraUI';
 import { formatDate } from '@/lib/format';
 import { loadNotificationPreferences } from '@/lib/preferences';
 import { reminderStateForDate } from '@/lib/reminder-status';
@@ -23,6 +23,8 @@ export default function RemindersScreen() {
   const updateReminder = useUpdateReminder();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [notYetReminder, setNotYetReminder] = useState<ReminderItem | null>(null);
+  const [missedReminderId, setMissedReminderId] = useState<number | null>(null);
+  const [notice, setNotice] = useState<{ title: string; message: string } | null>(null);
 
   useEffect(() => {
     void loadNotificationPreferences().then((preferences) => setNotificationsEnabled(preferences.enabled));
@@ -37,11 +39,12 @@ export default function RemindersScreen() {
   const today = new Date().toISOString().slice(0, 10);
   reminders.data.forEach((reminder) => grouped[reminderStateForDate(reminder.status, reminder.date.slice(0, 10), today)].push(reminder));
 
-  const updateStatus = async (reminderId: number, status: ReminderStatus) => {
+  const updateStatus = async (reminderId: number, status: ReminderStatus, success?: { title: string; message: string }) => {
     try {
       await updateReminder.mutateAsync({ reminderId, data: { status } });
       await queryClient.invalidateQueries();
       setNotYetReminder(null);
+      if (success) setNotice(success);
     } catch {
       Alert.alert('Couldn’t update reminder', 'Please try again.');
     }
@@ -69,12 +72,14 @@ export default function RemindersScreen() {
             <Text style={[styles.sheetTitle, { color: colors.foreground }]}>Not completed yet</Text>
             <Text style={[styles.sheetSubtitle, { color: colors.mutedForeground }]}>What would you like to do?</Text>
             <ActionSheetButton title="Reschedule" detail="Move this reminder to another date." icon="calendar" colors={colors} onPress={() => { if (notYetReminder) router.push({ pathname: '/reminder/[id]', params: { id: String(notYetReminder.id) } }); setNotYetReminder(null); }} />
-            <ActionSheetButton title="Keep for later" detail="Keep the reminder due so you can come back to it." icon="clock" colors={colors} onPress={() => { if (notYetReminder) void updateStatus(notYetReminder.id, 'due'); }} />
-            <ActionSheetButton title="Mark as missed" detail="Record that this reminder was not completed." icon="x-circle" colors={colors} destructive onPress={() => { if (!notYetReminder) return; const reminderId = notYetReminder.id; setNotYetReminder(null); Alert.alert('Mark reminder as missed?', 'This reminder will be recorded as not completed.', [{ text: 'Cancel', style: 'cancel' }, { text: 'Mark as missed', style: 'destructive', onPress: () => { void updateStatus(reminderId, 'missed'); } }]); }} />
+            <ActionSheetButton title="Keep for later" detail="Keep the reminder due so you can come back to it." icon="clock" colors={colors} onPress={() => { if (notYetReminder) void updateStatus(notYetReminder.id, 'due', { title: 'Reminder kept for later', message: "You can come back to this reminder when you're ready." }); }} />
+            <ActionSheetButton title="Mark as missed" detail="Record that this reminder was not completed." icon="x-circle" colors={colors} destructive onPress={() => { if (!notYetReminder) return; setMissedReminderId(notYetReminder.id); setNotYetReminder(null); }} />
             <Pressable onPress={() => setNotYetReminder(null)} style={[styles.cancelSheetButton, { borderColor: colors.border }]}><Text style={[styles.cancelSheetText, { color: colors.inkSoft }]}>Cancel</Text></Pressable>
           </View>
         </View>
       </Modal>
+      <ActionDialog visible={missedReminderId !== null} title="Mark reminder as missed?" message="This reminder will be recorded as not completed." primaryLabel="Mark as missed" onPrimary={() => { if (missedReminderId !== null) { const id = missedReminderId; setMissedReminderId(null); void updateStatus(id, 'missed', { title: 'Reminder marked as missed', message: 'This reminder has been recorded as missed.' }); } }} secondaryLabel="Cancel" onSecondary={() => setMissedReminderId(null)} destructive testID="mark-reminder-missed-dialog" />
+      <ActionDialog visible={Boolean(notice)} title={notice?.title ?? ''} message={notice?.message ?? ''} primaryLabel="Done" onPrimary={() => setNotice(null)} testID="reminder-success-dialog" />
     </Screen>
   );
 }

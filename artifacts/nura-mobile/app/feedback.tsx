@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 import { KeyboardAwareScrollViewCompat } from '@/components/KeyboardAwareScrollViewCompat';
-import { Card, LoadingState, PrimaryButton, Screen, SectionTitle } from '@/components/NuraUI';
+import { ActionDialog, Card, LoadingState, PrimaryButton, Screen, SectionTitle } from '@/components/NuraUI';
 import { useColors } from '@/hooks/useColors';
 import { formatDate } from '@/lib/format';
 import { loadFeedbackHistory, saveFeedbackEntry, type FeedbackEntry } from '@/lib/preferences';
@@ -14,6 +14,7 @@ export default function FeedbackScreen() {
   const [message, setMessage] = useState('');
   const [history, setHistory] = useState<FeedbackEntry[]>([]);
   const [ready, setReady] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     void loadFeedbackHistory().then((entries) => {
@@ -30,9 +31,7 @@ export default function FeedbackScreen() {
     try {
       const entry = await saveFeedbackEntry({ type, message: message.trim() });
       setHistory((current) => [entry, ...current]);
-      Alert.alert('Feedback sent', 'Thank you for helping us improve Nura.\n\nYour feedback has been saved successfully.', [
-        { text: 'Done', onPress: () => setMessage('') },
-      ]);
+      setSubmitted(true);
     } catch {
       Alert.alert('Couldn’t save feedback', 'Please try again.');
     }
@@ -58,6 +57,7 @@ export default function FeedbackScreen() {
           ))}
         </View>
       </KeyboardAwareScrollViewCompat>
+      <ActionDialog visible={submitted} title="Feedback sent" message={'Thank you for helping us improve Nura.\n\nYour feedback has been saved successfully.'} primaryLabel="Done" onPrimary={() => { setSubmitted(false); setMessage(''); }} testID="feedback-sent-dialog" />
     </Screen>
   );
 }

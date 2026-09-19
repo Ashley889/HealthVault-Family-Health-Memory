@@ -3,10 +3,10 @@ import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
-import { useCompleteReminder, useCreateEvent, useCreateReminder, useGetDashboard } from '@workspace/api-client-react';
+import { useCreateEvent, useGetDashboard } from '@workspace/api-client-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { KeyboardAwareScrollViewCompat } from '@/components/KeyboardAwareScrollViewCompat';
-import { OutlineButton, PrimaryButton, Screen, SectionTitle } from '@/components/NuraUI';
+import { ActionDialog, OutlineButton, PrimaryButton, Screen, SectionTitle } from '@/components/NuraUI';
 import { todayIso } from '@/lib/format';
 import { useColors } from '@/hooks/useColors';
 
@@ -25,8 +25,6 @@ export default function AddUpdateScreen() {
   const dashboard = useGetDashboard();
   const queryClient = useQueryClient();
   const create = useCreateEvent();
-  const createReminder = useCreateReminder();
-  const completeReminder = useCompleteReminder();
   const [profileId, setProfileId] = useState<number | undefined>(params.profileId ? Number(params.profileId) : undefined);
   const selectedProfileId = profileId ?? dashboard.data?.activeProfileId ?? dashboard.data?.profiles[0]?.id;
   const [type, setType] = useState<typeof eventOptions[number]['type']>(() => {
@@ -41,6 +39,7 @@ export default function AddUpdateScreen() {
   const [testResult, setTestResult] = useState('');
   const [reportName, setReportName] = useState('');
   const [followUp, setFollowUp] = useState('');
+  const [saved, setSaved] = useState(false);
   const attachReport = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ['images'], quality: 0.8 });
     if (!result.canceled) {
@@ -57,26 +56,9 @@ export default function AddUpdateScreen() {
        try {
          const tags = [duration, ...(testResult.trim() ? [`test:${testResult.trim()}`] : []), ...(reportName ? [`report:${reportName}`] : [])];
          const detailParts = [description.trim() || 'Visit details captured in Nura.', testResult.trim() ? `Test result: ${testResult.trim()}` : '', reportName ? `Report attached: ${reportName}` : '', duration === 'short' ? 'Short-term attention' : 'Long-term attention'].filter(Boolean);
-         await create.mutateAsync({ profileId: selectedProfileId, data: { type, title: title.trim(), description: detailParts.join(' · '), date: todayIso(), provider: provider.trim() || null, medications: medications.split(',').map((item) => item.trim()).filter(Boolean), followUp: followUp.trim() || null, tags } });
-         if (followUp.trim()) {
-           await createReminder.mutateAsync({ data: { profileId: selectedProfileId, title: `Follow-up: ${title.trim()}`, date: followUp.trim(), detail: provider.trim() ? `With ${provider.trim()}` : 'Review this health update' } });
-         }
-          if (params.reminderId) {
-           await completeReminder.mutateAsync({ reminderId: Number(params.reminderId) });
-         }
+          await create.mutateAsync({ profileId: selectedProfileId, data: { type, title: title.trim(), description: detailParts.join(' · '), date: todayIso(), provider: provider.trim() || null, medications: medications.split(',').map((item) => item.trim()).filter(Boolean), followUp: followUp.trim() || null, tags, sourceReminderId: params.reminderId ? Number(params.reminderId) : undefined } });
          await queryClient.invalidateQueries();
-          Alert.alert('Health memory saved', 'Your health memory has been saved successfully.', [
-            {
-              text: 'Done',
-              onPress: () => {
-                if (params.reminderId) {
-                  router.replace('/history');
-                } else {
-                  router.back();
-                }
-              },
-            },
-          ]);
+          setSaved(true);
        } catch {
          Alert.alert('Couldn’t save memory', 'Check the date fields and try again.');
        }
@@ -97,8 +79,9 @@ export default function AddUpdateScreen() {
         <View style={styles.field}><Text style={[styles.label, { color: colors.inkSoft }]}>Upload report</Text><OutlineButton label={reportName ? 'Replace report' : 'Upload report'} icon="paperclip" onPress={() => { void attachReport(); }} />{reportName ? <View style={styles.reportName}><Feather name="file-text" size={15} color={colors.primary} /><Text style={[styles.reportText, { color: colors.inkSoft }]} numberOfLines={2}>{reportName}</Text></View> : null}</View>
         <Field label="Follow-up date" value={followUp} onChangeText={setFollowUp} placeholder="YYYY-MM-DD" colors={colors} />
         <View style={styles.field}><Text style={[styles.label, { color: colors.inkSoft }]}>How long will this need attention?</Text><View style={styles.durationRow}><Text onPress={() => setDuration('short')} style={[styles.duration, { backgroundColor: duration === 'short' ? colors.softBlue : colors.card, borderColor: duration === 'short' ? colors.primary : colors.border, color: colors.foreground }]}><Text style={styles.durationTitle}>Short-term</Text>{'\n'}Something temporary</Text><Text onPress={() => setDuration('long')} style={[styles.duration, { backgroundColor: duration === 'long' ? colors.softBlue : colors.card, borderColor: duration === 'long' ? colors.primary : colors.border, color: colors.foreground }]}><Text style={styles.durationTitle}>Long-term</Text>{'\n'}Ongoing monitoring</Text></View></View>
-          <PrimaryButton label={create.isPending || createReminder.isPending || completeReminder.isPending ? 'Saving to health history…' : params.reminderId ? 'Save to health history' : 'Save health memory'} icon="check" disabled={create.isPending || createReminder.isPending || completeReminder.isPending} onPress={save} testID="button-save-health-memory" />
+          <PrimaryButton label={create.isPending ? 'Saving to health history…' : params.reminderId ? 'Save to health history' : 'Save health memory'} icon="check" disabled={create.isPending} onPress={save} testID="button-save-health-memory" />
       </KeyboardAwareScrollViewCompat>
+      <ActionDialog visible={saved} title={params.reminderId ? 'Visit saved' : 'Health memory saved'} message={params.reminderId ? 'The visit has been added to your health history.' : 'Your health memory has been added to your history.'} primaryLabel="View history" onPrimary={() => { setSaved(false); router.replace('/history'); }} testID="health-memory-saved-dialog" />
     </Screen>
   );
 }

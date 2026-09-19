@@ -32,6 +32,7 @@ export type AccountPreferences = {
   name: string;
   phone: string;
   email: string;
+  ownerProfileId?: number;
 };
 
 const accountKey = 'nura.account';
@@ -50,6 +51,7 @@ export async function loadAccountPreferences(): Promise<AccountPreferences> {
       name: saved.name?.trim() || defaultAccount.name,
       phone: saved.phone?.trim() || '',
       email: saved.email?.trim() || '',
+      ownerProfileId: typeof saved.ownerProfileId === 'number' ? saved.ownerProfileId : undefined,
     };
   } catch {
     return defaultAccount;

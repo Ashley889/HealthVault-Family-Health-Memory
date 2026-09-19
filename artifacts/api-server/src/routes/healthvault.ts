@@ -225,18 +225,35 @@ router.post("/profiles/:profileId/events", async (req, res): Promise<void> => {
     res.status(400).json({ error: body.error.message });
     return;
   }
-  const [event] = await db.insert(healthEventsTable).values({
-    profileId: params.data.profileId,
-    type: body.data.type,
-    title: body.data.title,
-    date: body.data.date.toISOString().slice(0, 10),
-    description: body.data.description,
-    provider: body.data.provider ?? null,
-    location: body.data.location ?? null,
-    medications: body.data.medications ?? [],
-    tags: body.data.tags ?? [],
-    followUp: body.data.followUp ?? null,
-  }).returning();
+  const event = await db.transaction(async (tx) => {
+    const [created] = await tx.insert(healthEventsTable).values({
+      profileId: params.data.profileId,
+      type: body.data.type,
+      title: body.data.title,
+      date: body.data.date.toISOString().slice(0, 10),
+      description: body.data.description,
+      provider: body.data.provider ?? null,
+      location: body.data.location ?? null,
+      medications: body.data.medications ?? [],
+      tags: body.data.tags ?? [],
+      followUp: body.data.followUp ?? null,
+    }).returning();
+    if (body.data.followUp) {
+      await tx.insert(remindersTable).values({
+        profileId: params.data.profileId,
+        title: `Follow-up: ${body.data.title}`,
+        date: body.data.followUp,
+        detail: body.data.provider ? `With ${body.data.provider}` : "Review this health update",
+        status: reminderStatusForDate(body.data.followUp),
+        completed: false,
+      });
+    }
+    if (body.data.sourceReminderId) {
+      const [completed] = await tx.update(remindersTable).set({ completed: true, status: "completed" }).where(eq(remindersTable.id, body.data.sourceReminderId)).returning();
+      if (!completed) throw new Error("Source reminder not found");
+    }
+    return created;
+  });
   res.status(201).json(CreateEventResponse.parse(eventView(event)));
 });
 

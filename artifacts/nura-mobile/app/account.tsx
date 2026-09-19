@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { KeyboardAwareScrollViewCompat } from '@/components/KeyboardAwareScrollViewCompat';
-import { Card, LoadingState, PrimaryButton, Screen, SectionTitle } from '@/components/NuraUI';
+import { ActionDialog, Card, LoadingState, PrimaryButton, Screen, SectionTitle } from '@/components/NuraUI';
 import { loadAccountPreferences, saveAccountPreferences, type AccountPreferences } from '@/lib/preferences';
 import { useColors } from '@/hooks/useColors';
 
@@ -12,6 +12,7 @@ export default function AccountScreen() {
   const [account, setAccount] = useState<AccountPreferences>({ name: '', phone: '', email: '' });
   const [ready, setReady] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     void loadAccountPreferences().then((saved) => {
@@ -20,7 +21,7 @@ export default function AccountScreen() {
     });
   }, []);
 
-  const update = (field: keyof AccountPreferences, value: string) => {
+  const update = (field: keyof Omit<AccountPreferences, 'ownerProfileId'>, value: string) => {
     setAccount((current) => ({ ...current, [field]: value }));
   };
 
@@ -35,10 +36,9 @@ export default function AccountScreen() {
         name: account.name.trim(),
         phone: account.phone.trim(),
         email: account.email.trim(),
+        ownerProfileId: account.ownerProfileId,
       });
-      Alert.alert('Information saved', 'Your account information has been updated successfully.', [
-        { text: 'Done', onPress: () => router.back() },
-      ]);
+      setSaved(true);
     } catch {
       Alert.alert('Couldn’t save information', 'Please try again.');
     } finally {
@@ -63,6 +63,7 @@ export default function AccountScreen() {
         </View>
          <PrimaryButton label={saving ? 'Saving…' : 'Save changes'} icon="check" disabled={saving} onPress={() => { void save(); }} />
       </KeyboardAwareScrollViewCompat>
+      <ActionDialog visible={saved} title="Information saved" message="Your account information has been updated successfully." primaryLabel="Done" onPrimary={() => { setSaved(false); router.back(); }} testID="information-saved-dialog" />
     </Screen>
   );
 }
