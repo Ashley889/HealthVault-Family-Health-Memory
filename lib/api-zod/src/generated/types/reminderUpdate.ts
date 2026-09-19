@@ -7,12 +7,8 @@
  */
 import type { ReminderStatus } from './reminderStatus';
 
-export interface Reminder {
-  id: number;
-  profileId: number;
-  title: string;
-  date: Date;
-  detail: string;
+export interface ReminderUpdate {
+  date?: Date;
+  detail?: string;
   status: ReminderStatus;
-  completed: boolean;
 }

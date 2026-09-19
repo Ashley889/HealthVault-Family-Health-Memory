@@ -5,10 +5,11 @@ import { Card, Header, OutlineButton, Screen, SectionTitle } from '@/components/
 import { useColors } from '@/hooks/useColors';
 
 const topics = [
-  ['How Nura works', 'Save visits, medications, tests, and follow-ups as one connected family health story.'],
-  ['Managing family members', 'Add people from Home or Profile → Manage family, then tap a person to see their history.'],
-  ['Adding health records', 'Use Add health memory to capture the small details while they are still fresh.'],
-  ['Managing reminders', 'Complete a reminder when the visit happens, then add the visit details to the timeline.'],
+  ['How do I add a family member?', 'Choose Add family member from Home or Profile.'],
+  ['How do reminders work?', 'Open a due reminder and choose what happened next.'],
+  ['How do I add a health memory?', 'Choose Add health memory to save a visit, question, report, or update.'],
+  ['How do I upload a medical report?', 'Add a health memory, then choose Upload report.'],
+  ['How do I manage notifications?', 'Open Notifications & reminder preferences from Profile.'],
 ];
 
 export default function HelpScreen() {

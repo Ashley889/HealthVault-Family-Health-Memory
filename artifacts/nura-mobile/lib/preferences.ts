@@ -28,25 +28,6 @@ export async function saveNotificationPreferences(preferences: NotificationPrefe
   ]);
 }
 
-export type LocalReminderStatus = 'missed' | 'rescheduled' | 'pending';
-const reminderStatusKey = 'nura.reminder.statuses';
-
-export async function loadReminderStatuses(): Promise<Record<string, LocalReminderStatus>> {
-  const raw = await AsyncStorage.getItem(reminderStatusKey);
-  if (!raw) return {};
-  try {
-    return JSON.parse(raw) as Record<string, LocalReminderStatus>;
-  } catch {
-    return {};
-  }
-}
-
-export async function saveReminderStatus(reminderId: number, status: LocalReminderStatus) {
-  const statuses = await loadReminderStatuses();
-  statuses[String(reminderId)] = status;
-  await AsyncStorage.setItem(reminderStatusKey, JSON.stringify(statuses));
-}
-
 export type AccountPreferences = {
   name: string;
   phone: string;

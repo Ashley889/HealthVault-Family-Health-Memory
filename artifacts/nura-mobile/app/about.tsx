@@ -12,7 +12,7 @@ export default function AboutScreen() {
       <Card style={[styles.brandCard, { backgroundColor: colors.softBlue }]}>
         <View style={[styles.brandMark, { backgroundColor: colors.card }]}><Feather name="heart" size={22} color={colors.primary} /></View>
         <Text style={[styles.brandTitle, { color: colors.foreground }]}>Nura</Text>
-        <Text style={[styles.brandText, { color: colors.inkSoft }]}>Nura helps families remember the health details that are easy to lose — visits, medications, tests, follow-ups, and health journeys.</Text>
+        <Text style={[styles.brandText, { color: colors.inkSoft }]}>Nura helps families keep track of visits, medications, tests, reports, and follow-ups in one place.</Text>
       </Card>
       <View style={styles.section}>
         <SectionTitle title="App information" />

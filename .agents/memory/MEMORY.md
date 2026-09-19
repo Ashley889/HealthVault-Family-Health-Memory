@@ -1,3 +1,4 @@
 - [OpenAPI client generation](openapi-client-generation.md) — avoid combining a path parameter and query parameter on one operation when generated Zod names collide.
 - [Nura mobile layout](nura-mobile-layout.md) — use full-width touch cards for family lists; percentage two-column pressables render inconsistently in the Expo web preview.
 - [Account profile storage](account-profile-storage.md) — account basics are local preview preferences, separate from family health profiles.
+- [Reminder status model](reminder-status-model.md) — reminder status is persisted server-side; Keep for later remains Due and rescheduling updates the existing reminder.

@@ -30,7 +30,8 @@ import type {
   ProfileInput,
   ProfileUpdate,
   Reminder,
-  ReminderInput
+  ReminderInput,
+  ReminderUpdate
 } from './api.schemas';
 
 import { customFetch } from '../custom-fetch';
@@ -1186,6 +1187,95 @@ export const useCompleteReminder = <TError = ErrorType<unknown>,
         TContext
       > => {
       return useMutation(getCompleteReminderMutationOptions(options));
+    }
+
+export const getUpdateReminderUrl = (reminderId: number,) => {
+
+
+
+
+  return `/api/reminders/${reminderId}`
+}
+
+/**
+ * @summary Update a follow-up reminder
+ */
+export const updateReminder = async (reminderId: number,
+    reminderUpdate: ReminderUpdate, options?: Parameters<typeof customFetch>[1]): Promise<Reminder> => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return customFetch<Reminder>(getUpdateReminderUrl(reminderId),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(reminderUpdate)
+  }
+);}
+
+
+
+
+
+export const getUpdateReminderMutationKey = () => ['updateReminder'] as const;
+
+export const getUpdateReminderMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateReminder>>, TError,UpdateReminderMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateReminder>>, TError,UpdateReminderMutationVariables, TContext> => {
+
+const mutationKey = getUpdateReminderMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateReminder>>, UpdateReminderMutationVariables> = (props) => {
+          const {reminderId,data} = props ?? {};
+
+          return  updateReminder(reminderId,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateReminderMutationResult = NonNullable<Awaited<ReturnType<typeof updateReminder>>>
+    export type UpdateReminderMutationBody = BodyType<ReminderUpdate>
+    export type UpdateReminderMutationError = ErrorType<unknown>
+    export type UpdateReminderMutationVariables = {reminderId: number;data: BodyType<ReminderUpdate>}
+
+    /**
+ * @summary Update a follow-up reminder
+ */
+export const useUpdateReminder = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateReminder>>, TError,UpdateReminderMutationVariables, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof updateReminder>>,
+        TError,
+        UpdateReminderMutationVariables,
+        TContext
+      > => {
+      return useMutation(getUpdateReminderMutationOptions(options));
     }
 
 export const getGetProfileSummaryUrl = (profileId: number,) => {

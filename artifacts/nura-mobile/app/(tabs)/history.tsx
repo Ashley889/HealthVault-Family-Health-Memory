@@ -21,7 +21,7 @@ export default function HistoryScreen() {
 
   return (
     <Screen>
-      <Header eyebrow="Family history" title="What happened over time?" subtitle="One clear view of the moments your family has saved." />
+       <Header eyebrow="History" title="What happened over time?" subtitle="See your family's health memories in one place." />
       <View style={styles.filterRow}>
         {filters.map((item) => (
           <Pressable key={item} onPress={() => setFilter(item)} style={[styles.filter, { backgroundColor: filter === item ? colors.primary : colors.card, borderColor: filter === item ? colors.primary : colors.border }]}>
@@ -51,7 +51,7 @@ export default function HistoryScreen() {
           );
         })}
       </View>
-      {!events.length ? <Card><SectionTitle title="No memories yet" /><Text style={[styles.eventDescription, { color: colors.mutedForeground }]}>Start with a small update from the home screen.</Text></Card> : null}
+       {!events.length ? <Card><SectionTitle title="No health memories yet" /><Text style={[styles.eventDescription, { color: colors.mutedForeground }]}>Add your first health memory to start building your family's health history.</Text></Card> : null}
     </Screen>
   );
 }

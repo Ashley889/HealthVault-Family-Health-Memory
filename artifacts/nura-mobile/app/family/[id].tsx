@@ -30,7 +30,7 @@ export default function FamilyMemberScreen() {
       <Header
         eyebrow={item.relationship}
         title={item.name}
-        subtitle="A living health history, kept in context."
+        subtitle="See health memories, reminders, and journeys in one place."
         right={<Avatar initials={item.initials} color={item.color} size={54} />}
       />
       <Card style={[styles.overview, { backgroundColor: colors.softBlue }]}>
@@ -38,7 +38,7 @@ export default function FamilyMemberScreen() {
         <View style={styles.overviewStats}><View><Text style={[styles.statNumber, { color: colors.foreground }]}>{events.data.length}</Text><Text style={[styles.statLabel, { color: colors.inkSoft }]}>memories</Text></View><View><Text style={[styles.statNumber, { color: colors.foreground }]}>{recentTests.length}</Text><Text style={[styles.statLabel, { color: colors.inkSoft }]}>tests saved</Text></View><View><Text style={[styles.statNumber, { color: colors.foreground }]}>{item.bloodGroup || '—'}</Text><Text style={[styles.statLabel, { color: colors.inkSoft }]}>blood group</Text></View></View>
       </Card>
       <View style={styles.section}>
-        <SectionTitle title="Active health journeys" />
+         <SectionTitle title="Health journeys" />
         <Card onPress={() => router.push({ pathname: '/journey/[id]', params: { id: String(item.id), title: events.data?.[0]?.title || 'Health journey' } })} style={styles.journeyCard}>
           <View style={[styles.journeyIcon, { backgroundColor: colors.accent }]}><Feather name="activity" size={19} color={colors.primary} /></View>
           <View style={styles.journeyCopy}><Text style={[styles.journeyTitle, { color: colors.foreground }]}>{events.data[0]?.title || 'Start a health journey'}</Text><Text style={[styles.journeyDetail, { color: colors.mutedForeground }]}>{events.data[0]?.description || 'Keep updates, tests, and doctors together.'}</Text></View>
@@ -79,7 +79,7 @@ export default function FamilyMemberScreen() {
           <Text style={[styles.summaryText, { color: colors.inkSoft }]}>{summary.data?.overview || 'A clear summary will appear here as this family member’s health history grows.'}</Text>
           <PrimaryButton label="View doctor summary" icon="arrow-up-right" onPress={() => router.push({ pathname: '/journey/[id]', params: { id: String(item.id), title: 'Doctor summary' } })} />
         </Card>
-        <OutlineButton label="Add health update" icon="plus" onPress={() => router.push({ pathname: '/add-update', params: { profileId: String(item.id) } })} />
+         <OutlineButton label="Add health memory" icon="plus" onPress={() => router.push({ pathname: '/add-update', params: { profileId: String(item.id) } })} />
       </View>
     </Screen>
   );

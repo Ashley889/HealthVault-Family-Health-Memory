@@ -31,6 +31,7 @@ export const remindersTable = pgTable("health_reminders", {
   title: text("title").notNull(),
   date: date("date", { mode: "string" }).notNull(),
   detail: text("detail").notNull(),
+  status: text("status").notNull().default("upcoming"),
   completed: boolean("completed").notNull().default(false),
 });
 

@@ -27,26 +27,26 @@ export default function EventDetailScreen() {
       <Header eyebrow={`${profile.data.name} · ${event.type}`} title={event.title} subtitle={formatDate(event.date)} />
       <Card style={[styles.summary, { backgroundColor: colors.softBlue }]}><Feather name="heart" size={18} color={colors.primary} /><Text style={[styles.summaryText, { color: colors.inkSoft }]}>This memory is part of {profile.data.name}’s connected health history.</Text></Card>
       <View style={styles.section}>
-        <SectionTitle title="Visit details" />
-        <DetailRow label="Doctor or provider" value={event.provider || 'Not added'} colors={colors} />
-        <DetailRow label="Visit reason" value={event.title} colors={colors} />
-        <DetailRow label="Notes" value={event.description} colors={colors} />
+        <SectionTitle title="What happened" />
+        <DetailRow label="Doctor or hospital" value={event.provider || 'Not added'} colors={colors} />
+        <DetailRow label="Reason for visit" value={event.title} colors={colors} />
+        <DetailRow label="What did the doctor say?" value={event.description} colors={colors} />
       </View>
       <View style={styles.section}>
         <SectionTitle title="Medication" />
         {event.medications.length ? event.medications.map((medication) => <Card key={medication} style={styles.detailCard}><Feather name="clock" size={16} color={colors.primary} /><Text style={[styles.detailValue, { color: colors.foreground }]}>{medication}</Text></Card>) : <Text style={[styles.empty, { color: colors.mutedForeground }]}>No medication was added.</Text>}
       </View>
       <View style={styles.section}>
-        <SectionTitle title="Test" />
-        <DetailRow label="Result" value={testResult || 'No test result was added.'} colors={colors} />
+        <SectionTitle title="Tests" />
+        <DetailRow label="Test result" value={testResult || 'No test was added.'} colors={colors} />
       </View>
       <View style={styles.section}>
-        <SectionTitle title="Uploaded report" />
-        <Card style={styles.detailCard}><Feather name="file-text" size={16} color={colors.primary} /><Text style={[styles.detailValue, { color: colors.foreground }]}>{reportName || 'No report attached.'}</Text></Card>
+        <SectionTitle title="Report" />
+        <Card style={styles.detailCard}><Feather name="file-text" size={16} color={colors.primary} /><Text style={[styles.detailValue, { color: colors.foreground }]}>{reportName || 'No report uploaded.'}</Text></Card>
       </View>
       <View style={styles.section}>
         <SectionTitle title="Follow-up" />
-        <DetailRow label="Next step" value={event.followUp ? formatDate(event.followUp) : 'No follow-up scheduled.'} colors={colors} />
+        <DetailRow label="Follow-up date" value={event.followUp ? formatDate(event.followUp) : 'No follow-up scheduled.'} colors={colors} />
       </View>
     </Screen>
   );

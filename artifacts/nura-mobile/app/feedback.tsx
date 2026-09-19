@@ -26,7 +26,7 @@ export default function FeedbackScreen() {
         <SectionTitle title="How can we improve Nura?" />
         <Text style={[styles.helper, { color: colors.mutedForeground }]}>Your feedback helps us keep Nura calm, useful, and family-first.</Text>
         <View style={styles.choices}>{feedbackTypes.map((item) => <Text key={item} onPress={() => setType(item)} style={[styles.choice, { color: type === item ? colors.primaryForeground : colors.inkSoft, backgroundColor: type === item ? colors.primary : colors.card, borderColor: type === item ? colors.primary : colors.border }]}>{item}</Text>)}</View>
-        <View style={styles.field}><Text style={[styles.label, { color: colors.inkSoft }]}>Tell us more</Text><TextInput value={message} onChangeText={setMessage} multiline placeholder="What would you like to share?" placeholderTextColor={colors.mutedForeground} style={[styles.input, { color: colors.foreground, backgroundColor: colors.card, borderColor: colors.border }]} /></View>
+        <View style={styles.field}><Text style={[styles.label, { color: colors.inkSoft }]}>Tell us more</Text><TextInput value={message} onChangeText={setMessage} multiline placeholder="Tell us more" placeholderTextColor={colors.mutedForeground} style={[styles.input, { color: colors.foreground, backgroundColor: colors.card, borderColor: colors.border }]} /></View>
         <PrimaryButton label="Submit feedback" icon="send" onPress={submit} />
       </KeyboardAwareScrollViewCompat>
     </Screen>

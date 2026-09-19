@@ -228,6 +228,26 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Reminder"
+  /reminders/{reminderId}:
+    patch:
+      operationId: updateReminder
+      tags: [reminders]
+      summary: Update a follow-up reminder
+      parameters:
+        - $ref: "#/components/parameters/ReminderId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReminderUpdate"
+      responses:
+        "200":
+          description: Updated reminder
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reminder"
   /profiles/{profileId}/summary:
     get:
       operationId: getProfileSummary
@@ -357,14 +377,18 @@ components:
         followUp: { type: ["string", "null"] }
     Reminder:
       type: object
-      required: [id, profileId, title, date, detail, completed]
+      required: [id, profileId, title, date, detail, status, completed]
       properties:
         id: { type: integer }
         profileId: { type: integer }
         title: { type: string }
         date: { type: string, format: date }
         detail: { type: string }
+        status: { $ref: "#/components/schemas/ReminderStatus" }
         completed: { type: boolean }
+    ReminderStatus:
+      type: string
+      enum: [upcoming, due, completed, rescheduled, missed]
     ReminderInput:
       type: object
       required: [profileId, title, date, detail]
@@ -373,6 +397,13 @@ components:
         title: { type: string, minLength: 1 }
         date: { type: string, format: date }
         detail: { type: string }
+    ReminderUpdate:
+      type: object
+      required: [status]
+      properties:
+        date: { type: string, format: date }
+        detail: { type: string }
+        status: { $ref: "#/components/schemas/ReminderStatus" }
     Dashboard:
       type: object
       required: [profiles, eventsThisMonth, upcomingReminders, recentEvents, activeProfileId]

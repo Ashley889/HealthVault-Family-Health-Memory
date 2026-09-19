@@ -8,7 +8,7 @@ import { loadNotificationPreferences, saveNotificationPreferences, type Notifica
 const timingOptions: { value: NotificationTiming; label: string; detail: string }[] = [
   { value: 'same-day', label: 'On the day', detail: 'A reminder on the appointment date.' },
   { value: 'day-before', label: '1 day before', detail: 'A calm heads-up the day before.' },
-  { value: 'both', label: 'On the day + 1 day before', detail: 'The day before and on the day.' },
+  { value: 'both', label: 'On the day and 1 day before', detail: 'The day before and on the day.' },
 ];
 
 export default function NotificationsScreen() {
@@ -42,11 +42,11 @@ export default function NotificationsScreen() {
       </View>
       <View style={[styles.preferenceCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
          <View style={[styles.icon, { backgroundColor: colors.softBlue }]}><Feather name="bell" size={19} color={colors.primary} /></View>
-         <View style={styles.copy}><Text style={[styles.cardTitle, { color: colors.foreground }]}>Reminder notifications</Text><Text style={[styles.cardDetail, { color: colors.mutedForeground }]}>Allow reminder notifications.</Text></View>
+         <View style={styles.copy}><Text style={[styles.cardTitle, { color: colors.foreground }]}>Health reminders</Text><Text style={[styles.cardDetail, { color: colors.mutedForeground }]}>Get reminders about upcoming appointments, tests, and follow-ups.</Text></View>
         <Switch value={enabled} onValueChange={(value) => update({ enabled: value })} trackColor={{ false: colors.border, true: colors.primary }} thumbColor={colors.card} accessibilityLabel="Reminder notifications" />
       </View>
       <View style={styles.section}>
-        <SectionTitle title="Reminder notification timing" />
+         <SectionTitle title="Remind me" />
         {!enabled ? <View style={[styles.offNotice, { backgroundColor: colors.muted }]}><Feather name="bell-off" size={16} color={colors.mutedForeground} /><Text style={[styles.offText, { color: colors.inkSoft }]}>Notifications are off. Your reminders will still remain visible in the Reminders tab.</Text></View> : null}
         {timingOptions.map((option) => <Pressable key={option.value} disabled={!enabled} onPress={() => update({ timing: option.value })} style={[styles.timingRow, { backgroundColor: colors.card, borderColor: timing === option.value && enabled ? colors.primary : colors.border, opacity: enabled ? 1 : 0.55 }]}><View style={[styles.radio, { borderColor: timing === option.value && enabled ? colors.primary : colors.border }]}>{timing === option.value && enabled ? <View style={[styles.radioDot, { backgroundColor: colors.primary }]} /> : null}</View><View style={styles.copy}><Text style={[styles.timingLabel, { color: colors.foreground }]}>{option.label}</Text><Text style={[styles.timingDetail, { color: colors.mutedForeground }]}>{option.detail}</Text></View></Pressable>)}
       </View>

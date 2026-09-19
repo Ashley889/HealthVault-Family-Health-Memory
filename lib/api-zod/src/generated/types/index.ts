@@ -18,3 +18,5 @@ export * from './profileInput';
 export * from './profileUpdate';
 export * from './reminder';
 export * from './reminderInput';
+export * from './reminderStatus';
+export * from './reminderUpdate';

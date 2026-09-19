@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useCreateReminder, useListProfiles, useListReminders } from '@workspace/api-client-react';
+import { useUpdateReminder, useListProfiles, useListReminders } from '@workspace/api-client-react';
 import { useQueryClient } from '@tanstack/react-query';
 import { KeyboardAwareScrollViewCompat } from '@/components/KeyboardAwareScrollViewCompat';
 import { OutlineButton, PrimaryButton, Screen, SectionTitle } from '@/components/NuraUI';
 import { formatDate } from '@/lib/format';
-import { loadNotificationPreferences, saveReminderStatus } from '@/lib/preferences';
+import { loadNotificationPreferences } from '@/lib/preferences';
 import { useColors } from '@/hooks/useColors';
 
 export default function RescheduleReminderScreen() {
@@ -17,7 +17,7 @@ export default function RescheduleReminderScreen() {
   const reminderId = Number(id);
   const reminders = useListReminders();
   const profiles = useListProfiles();
-  const createReminder = useCreateReminder();
+  const updateReminder = useUpdateReminder();
   const reminder = reminders.data?.find((item) => item.id === reminderId);
   const [date, setDate] = useState('');
   const [time, setTime] = useState('09:00');
@@ -27,13 +27,17 @@ export default function RescheduleReminderScreen() {
   useEffect(() => {
     if (reminder) {
       setDate(reminder.date.slice(0, 10));
-      setTime('09:00');
+      setTime(reminder.detail.match(/Time: ([0-2]\d:[0-5]\d)/)?.[1] || '09:00');
+      setReason(reminder.detail.match(/Reason: (.*?)(?: · Notification|$)/)?.[1] || '');
+      setNotificationsEnabled(!reminder.detail.includes('Notification OFF'));
     }
-  }, [reminder?.id, reminder?.date]);
+  }, [reminder?.id, reminder?.date, reminder?.detail]);
 
   useEffect(() => {
-    void loadNotificationPreferences().then((preferences) => setNotificationsEnabled(preferences.enabled));
-  }, []);
+    void loadNotificationPreferences().then((preferences) => {
+      if (!reminder?.detail.includes('Notification ')) setNotificationsEnabled(preferences.enabled);
+    });
+  }, [reminder?.detail]);
 
   if (reminders.isLoading || profiles.isLoading) {
     return <Screen scroll={false}><ActivityIndicator color={colors.primary} /></Screen>;
@@ -44,17 +48,17 @@ export default function RescheduleReminderScreen() {
 
   const save = async () => {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-      Alert.alert('Check the date', 'Use the format YYYY-MM-DD.');
+      Alert.alert('Check the date', 'Please enter the date as YYYY-MM-DD.');
       return;
     }
     if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(time)) {
-      Alert.alert('Check the time', 'Use the format HH:MM.');
+      Alert.alert('Check the time', 'Please enter the time as HH:MM.');
       return;
     }
     try {
-      const detail = [reminder.detail, `Time: ${time}`, reason.trim() ? `Reason: ${reason.trim()}` : '', notificationsEnabled ? 'Notification ON' : 'Notification OFF'].filter(Boolean).join(' · ');
-      await createReminder.mutateAsync({ data: { profileId: reminder.profileId, title: reminder.title, date, detail } });
-      await saveReminderStatus(reminder.id, 'rescheduled');
+      const baseDetail = reminder.detail.split(' · Time:')[0];
+      const detail = [baseDetail, `Time: ${time}`, reason.trim() ? `Reason: ${reason.trim()}` : '', notificationsEnabled ? 'Notification ON' : 'Notification OFF'].filter(Boolean).join(' · ');
+      await updateReminder.mutateAsync({ reminderId: reminder.id, data: { date, detail, status: 'rescheduled' } });
       await queryClient.invalidateQueries();
       router.back();
     } catch {
@@ -74,9 +78,9 @@ export default function RescheduleReminderScreen() {
         </View>
         <View style={styles.field}><Text style={[styles.label, { color: colors.inkSoft }]}>New date</Text><TextInput value={date} onChangeText={setDate} placeholder="YYYY-MM-DD" placeholderTextColor={colors.mutedForeground} style={[styles.input, { color: colors.foreground, backgroundColor: colors.card, borderColor: colors.border }]} /></View>
         <View style={styles.field}><Text style={[styles.label, { color: colors.inkSoft }]}>New time</Text><TextInput value={time} onChangeText={setTime} placeholder="HH:MM" placeholderTextColor={colors.mutedForeground} keyboardType="numbers-and-punctuation" style={[styles.input, { color: colors.foreground, backgroundColor: colors.card, borderColor: colors.border }]} /></View>
-        <View style={styles.field}><Text style={[styles.label, { color: colors.inkSoft }]}>Reason — optional</Text><TextInput value={reason} onChangeText={setReason} placeholder="Add a note" placeholderTextColor={colors.mutedForeground} multiline style={[styles.input, styles.multiline, { color: colors.foreground, backgroundColor: colors.card, borderColor: colors.border }]} /></View>
-        <View style={[styles.notificationRow, { borderColor: colors.border, backgroundColor: colors.card }]}><View style={styles.notificationCopy}><Text style={[styles.label, { color: colors.foreground }]}>Notification</Text><Text style={[styles.detail, { color: colors.mutedForeground }]}>{notificationsEnabled ? 'Reminder notifications are on.' : 'Reminder notifications are off.'}</Text></View><Switch value={notificationsEnabled} onValueChange={setNotificationsEnabled} trackColor={{ false: colors.border, true: colors.primary }} thumbColor={colors.card} accessibilityLabel="Reminder notification" /></View>
-        <PrimaryButton label={createReminder.isPending ? 'Rescheduling…' : 'Reschedule'} icon="calendar" disabled={createReminder.isPending} onPress={() => { void save(); }} />
+        <View style={styles.field}><Text style={[styles.label, { color: colors.inkSoft }]}>Note — optional</Text><TextInput value={reason} onChangeText={setReason} placeholder="Add a note" placeholderTextColor={colors.mutedForeground} multiline style={[styles.input, styles.multiline, { color: colors.foreground, backgroundColor: colors.card, borderColor: colors.border }]} /></View>
+        <View style={[styles.notificationRow, { borderColor: colors.border, backgroundColor: colors.card }]}><View style={styles.notificationCopy}><Text style={[styles.label, { color: colors.foreground }]}>Notifications</Text><Text style={[styles.detail, { color: colors.mutedForeground }]}>{notificationsEnabled ? 'Notifications are on.' : 'Notifications are off.'}</Text></View><Switch value={notificationsEnabled} onValueChange={setNotificationsEnabled} trackColor={{ false: colors.border, true: colors.primary }} thumbColor={colors.card} accessibilityLabel="Reminder notifications" /></View>
+        <PrimaryButton label={updateReminder.isPending ? 'Rescheduling…' : 'Reschedule'} icon="calendar" disabled={updateReminder.isPending} onPress={() => { void save(); }} />
         <OutlineButton label="Keep current date" icon="arrow-left" onPress={() => router.back()} />
       </KeyboardAwareScrollViewCompat>
     </Screen>

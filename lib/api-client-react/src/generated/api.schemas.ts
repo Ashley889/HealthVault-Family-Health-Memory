@@ -111,12 +111,24 @@ export interface EventUpdate {
   followUp?: string | null;
 }
 
+export type ReminderStatus = typeof ReminderStatus[keyof typeof ReminderStatus];
+
+
+export const ReminderStatus = {
+  upcoming: 'upcoming',
+  due: 'due',
+  completed: 'completed',
+  rescheduled: 'rescheduled',
+  missed: 'missed',
+} as const;
+
 export interface Reminder {
   id: number;
   profileId: number;
   title: string;
   date: string;
   detail: string;
+  status: ReminderStatus;
   completed: boolean;
 }
 
@@ -126,6 +138,12 @@ export interface ReminderInput {
   title: string;
   date: string;
   detail: string;
+}
+
+export interface ReminderUpdate {
+  date?: string;
+  detail?: string;
+  status: ReminderStatus;
 }
 
 export interface Dashboard {

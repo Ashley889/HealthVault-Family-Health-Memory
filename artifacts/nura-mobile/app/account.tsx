@@ -41,7 +41,7 @@ export default function AccountScreen() {
   return (
     <Screen scroll={false}>
       <KeyboardAwareScrollViewCompat contentContainerStyle={styles.content} bottomOffset={80} keyboardShouldPersistTaps="handled">
-        <SectionTitle title="Edit profile" />
+         <SectionTitle title="Account information" />
         <Card style={[styles.identity, { backgroundColor: colors.softBlue }]}>
           <View style={[styles.identityMark, { backgroundColor: colors.card }]}><Text style={[styles.identityInitials, { color: colors.primary }]}>{account.name.split(' ').map((part) => part[0]).join('').slice(0, 2).toUpperCase()}</Text></View>
           <View style={styles.copy}><Text style={[styles.name, { color: colors.foreground }]}>{account.name}</Text><Text style={[styles.detail, { color: colors.inkSoft }]}>Family organizer</Text></View>

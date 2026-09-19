@@ -27,6 +27,10 @@ import {
   ListRemindersResponse,
   Profile,
   Reminder,
+  ReminderStatus,
+  UpdateReminderBody,
+  UpdateReminderParams,
+  UpdateReminderResponse,
   UpdateEventBody,
   UpdateEventParams,
   UpdateEventResponse,
@@ -79,13 +83,25 @@ function eventView(event: typeof healthEventsTable.$inferSelect): HealthEvent {
   };
 }
 
+function reminderStatusForDate(date: string): ReminderStatus {
+  return date <= new Date().toISOString().slice(0, 10) ? "due" : "upcoming";
+}
+
 function reminderView(reminder: typeof remindersTable.$inferSelect): Reminder {
+  const status = reminder.completed
+    ? "completed"
+    : reminder.status === "missed"
+      ? "missed"
+      : reminder.status === "rescheduled" && reminder.date > new Date().toISOString().slice(0, 10)
+        ? "rescheduled"
+        : reminderStatusForDate(reminder.date);
   return {
     id: reminder.id,
     profileId: reminder.profileId,
     title: reminder.title,
     date: new Date(`${reminder.date}T00:00:00Z`),
     detail: reminder.detail,
+    status,
     completed: reminder.completed,
   };
 }
@@ -282,9 +298,31 @@ router.post("/reminders", async (req, res): Promise<void> => {
     title: parsed.data.title,
     date: parsed.data.date.toISOString().slice(0, 10),
     detail: parsed.data.detail,
+    status: reminderStatusForDate(parsed.data.date.toISOString().slice(0, 10)),
     completed: false,
   }).returning();
   res.status(201).json(CreateReminderResponse.parse(reminderView(reminder)));
+});
+
+router.patch("/reminders/:reminderId", async (req, res): Promise<void> => {
+  const parsedParams = UpdateReminderParams.safeParse(req.params);
+  const parsedBody = UpdateReminderBody.safeParse(req.body);
+  if (!parsedParams.success || !parsedBody.success) {
+    res.status(400).json({ error: "Invalid reminder update." });
+    return;
+  }
+  const [existing] = await db.select().from(remindersTable).where(eq(remindersTable.id, parsedParams.data.reminderId));
+  if (!existing) {
+    res.status(404).json({ error: "Reminder not found" });
+    return;
+  }
+  const [reminder] = await db.update(remindersTable).set({
+    ...(parsedBody.data.date ? { date: parsedBody.data.date.toISOString().slice(0, 10) } : {}),
+    ...(parsedBody.data.detail !== undefined ? { detail: parsedBody.data.detail } : {}),
+    status: parsedBody.data.status,
+    completed: parsedBody.data.status === "completed",
+  }).where(eq(remindersTable.id, parsedParams.data.reminderId)).returning();
+  res.json(UpdateReminderResponse.parse(reminderView(reminder)));
 });
 
 router.patch("/reminders/:reminderId/complete", async (req, res): Promise<void> => {
@@ -293,7 +331,7 @@ router.patch("/reminders/:reminderId/complete", async (req, res): Promise<void> 
     res.status(400).json({ error: parsed.error.message });
     return;
   }
-  const [reminder] = await db.update(remindersTable).set({ completed: true }).where(eq(remindersTable.id, parsed.data.reminderId)).returning();
+  const [reminder] = await db.update(remindersTable).set({ completed: true, status: "completed" }).where(eq(remindersTable.id, parsed.data.reminderId)).returning();
   if (!reminder) {
     res.status(404).json({ error: "Reminder not found" });
     return;

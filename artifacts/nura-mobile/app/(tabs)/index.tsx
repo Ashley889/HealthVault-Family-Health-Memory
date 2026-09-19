@@ -21,7 +21,7 @@ export default function HomeScreen() {
   return (
     <Screen>
       <Header
-        eyebrow="Nura"
+         eyebrow="NURA"
         title="Your family’s health, remembered."
         subtitle="Good morning. Keep the small details close."
         right={
@@ -40,7 +40,7 @@ export default function HomeScreen() {
       </Card>
       <View style={styles.section}>
         <SectionTitle title="Your family" />
-        <Text style={[styles.sectionIntro, { color: colors.mutedForeground }]}>See what each person has going on.</Text>
+         <Text style={[styles.sectionIntro, { color: colors.mutedForeground }]}>See each person's health memories and upcoming reminders.</Text>
         <View style={styles.peopleGrid}>
           {profiles.map((profile) => {
             const reminderCount = openReminders.filter((reminder) => reminder.profileId === profile.id).length;

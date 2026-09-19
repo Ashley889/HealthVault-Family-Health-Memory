@@ -274,6 +274,7 @@ export const ListRemindersResponseItem = zod.object({
   "title": zod.string(),
   "date": zod.coerce.date(),
   "detail": zod.string(),
+  "status": zod.enum(['upcoming', 'due', 'completed', 'rescheduled', 'missed']),
   "completed": zod.boolean()
 })
 export const ListRemindersResponse = zod.array(ListRemindersResponseItem)
@@ -298,6 +299,7 @@ export const CreateReminderResponse = zod.object({
   "title": zod.string(),
   "date": zod.coerce.date(),
   "detail": zod.string(),
+  "status": zod.enum(['upcoming', 'due', 'completed', 'rescheduled', 'missed']),
   "completed": zod.boolean()
 })
 
@@ -315,6 +317,31 @@ export const CompleteReminderResponse = zod.object({
   "title": zod.string(),
   "date": zod.coerce.date(),
   "detail": zod.string(),
+  "status": zod.enum(['upcoming', 'due', 'completed', 'rescheduled', 'missed']),
+  "completed": zod.boolean()
+})
+
+
+/**
+ * @summary Update a follow-up reminder
+ */
+export const UpdateReminderParams = zod.object({
+  "reminderId": zod.coerce.number().int()
+})
+
+export const UpdateReminderBody = zod.object({
+  "date": zod.coerce.date().optional(),
+  "detail": zod.string().optional(),
+  "status": zod.enum(['upcoming', 'due', 'completed', 'rescheduled', 'missed'])
+})
+
+export const UpdateReminderResponse = zod.object({
+  "id": zod.number().int(),
+  "profileId": zod.number().int(),
+  "title": zod.string(),
+  "date": zod.coerce.date(),
+  "detail": zod.string(),
+  "status": zod.enum(['upcoming', 'due', 'completed', 'rescheduled', 'missed']),
   "completed": zod.boolean()
 })
 
