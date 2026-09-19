@@ -1,0 +1,883 @@
+# Nura — Fix Reminder "Not Yet" Flow + Final Settings Cleanup
+
+Keep the existing Nura design system, colors, typography, cards, navigation, and mobile-first iPhone layout.
+
+Do NOT redesign the application.
+
+The "I went" reminder completion flow is already working well. **Do not break or replace that flow.**
+
+The main task is to make the **"Not yet" / rejected reminder flow work correctly**, and make a few final cleanup changes to Settings.
+
+---
+
+# 1. REMINDER — "I WENT" IS ALREADY WORKING
+
+The existing flow:
+
+Reminder
+→ Due
+→ Did this happen?
+→ Yes, I went
+→ What happened?
+→ Doctor
+→ Notes
+→ Medication
+→ Tests
+→ Report
+→ Follow-up
+→ Save to health history
+→ Completed
+→ History
+
+is working correctly.
+
+### IMPORTANT
+
+Do not modify or break this flow.
+
+Only integrate the new "Not yet" behavior alongside it.
+
+---
+
+# 2. FIX "NOT YET"
+
+Currently, when the user selects:
+
+**Not yet**
+
+nothing useful happens.
+
+This must become a functional flow.
+
+When a reminder becomes due, show:
+
+## Did this happen?
+
+**[ Yes, I went ]**
+
+**[ Not yet ]**
+
+---
+
+# 3. USER SELECTS "NOT YET"
+
+When the user taps:
+
+**Not yet**
+
+open a small action sheet/modal.
+
+Title:
+
+## Not completed yet
+
+Subtitle:
+
+"No worries. What would you like to do with this reminder?"
+
+Show three actions:
+
+### Reschedule
+
+Move this reminder to another date.
+
+### Keep for later
+
+Keep the reminder active so the user can come back to it.
+
+### Mark as missed
+
+Record that the appointment/check-up did not happen.
+
+Do not automatically mark anything as completed.
+
+---
+
+# 4. RESCHEDULE FLOW
+
+If the user selects:
+
+**Reschedule**
+
+open:
+
+## Reschedule reminder
+
+Current reminder:
+
+Annual wellness check
+
+Bhuvaneswari
+
+Current date:
+
+Sep 25, 2026
+
+New date:
+
+[ Select date ]
+
+New time:
+
+[ Select time ]
+
+Reason — optional:
+
+[ Add note ]
+
+Notification:
+
+[ ON / OFF ]
+
+Then:
+
+**[ Reschedule ]**
+
+After saving:
+
+Status:
+
+**Rescheduled**
+
+The new date must immediately appear in the Reminders screen.
+
+Example:
+
+### Annual wellness check
+
+Bhuvaneswari
+
+Sep 30, 2026
+
+**Rescheduled**
+
+🔔 Notification ON
+
+---
+
+# 5. KEEP FOR LATER
+
+If the user selects:
+
+**Keep for later**
+
+do NOT mark the reminder as completed.
+
+Keep it in the Reminders screen.
+
+Status:
+
+**Due**
+
+or
+
+**Pending**
+
+Show:
+
+### Annual wellness check
+
+Bhuvaneswari
+
+Sep 25, 2026
+
+**Still pending**
+
+The user should be able to tap it again later.
+
+When they return, they should again see:
+
+Did this happen?
+
+[ Yes, I went ]
+
+[ Not yet ]
+
+This allows the user to complete the visit later.
+
+---
+
+# 6. MARK AS MISSED
+
+If the user selects:
+
+**Mark as missed**
+
+show a confirmation:
+
+## Mark reminder as missed?
+
+"This will record that this reminder was not completed."
+
+[ Cancel ]
+
+[ Mark as missed ]
+
+After confirmation:
+
+Status:
+
+**Missed**
+
+The reminder should move from:
+
+Upcoming / Due
+
+to:
+
+Missed
+
+Do NOT create a health history event.
+
+Do NOT create medication information.
+
+Do NOT create a test.
+
+Do NOT create a report.
+
+Because the appointment did not happen.
+
+---
+
+# 7. MISSED REMINDER ACTIONS
+
+When a missed reminder is opened, show:
+
+## Annual wellness check
+
+Bhuvaneswari
+
+Sep 25, 2026
+
+**Missed**
+
+Then:
+
+[ Reschedule ]
+
+This allows the user to create a new date if they want.
+
+---
+
+# 8. REMINDER STATUS SYSTEM
+
+Make sure every reminder supports these states:
+
+### Upcoming
+
+The reminder date is in the future.
+
+### Due
+
+The reminder date has arrived and the user has not confirmed what happened.
+
+### Completed
+
+The user selected "Yes, I went" and saved the health event.
+
+### Rescheduled
+
+The user moved the reminder to another date.
+
+### Missed
+
+The user explicitly marked it as missed.
+
+Never automatically mark a reminder as Completed.
+
+---
+
+# 9. REMINDER NOTIFICATION SETTINGS
+
+The user mentioned that the notification preference is important.
+
+Keep:
+
+Profile
+→ Settings
+→ Notifications & reminder preferences
+
+The user must be able to:
+
+**Enable notifications**
+
+or
+
+**Disable notifications**
+
+When enabled:
+
+[ ON ]
+
+Allow reminder notifications.
+
+When disabled:
+
+[ OFF ]
+
+Do not send reminder notifications.
+
+But reminders must continue to exist inside the application.
+
+---
+
+# 10. "DAY BEFORE" NOTIFICATION
+
+Add a simple preference:
+
+## Reminder notifications
+
+[ ON ]
+
+### Notify me
+
+○ On the day
+
+○ 1 day before
+
+○ On the day + 1 day before
+
+Keep this simple.
+
+If the user chooses:
+
+**1 day before**
+
+the reminder should use that preference.
+
+If actual device notification scheduling is not available in the Replit preview environment, implement the application state and scheduling logic correctly and clearly separate that from OS-level notification testing.
+
+---
+
+# 11. FAMILY MEMBER DETAIL
+
+The current family member flow is good.
+
+Keep it.
+
+When the user taps a family member:
+
+Example:
+
+# Bhuvaneswari
+
+show:
+
+Health memories
+
+Upcoming reminders
+
+Health journeys
+
+Recent health activity
+
+The family member should be the central place for that person's information.
+
+Do not duplicate unnecessary information elsewhere.
+
+---
+
+# 12. HISTORY
+
+The current History navigation is working.
+
+Keep the current History design.
+
+However, make sure completed reminders actually appear there with the information collected during:
+
+"I went"
+
+Example:
+
+## Annual health check
+
+Bhuvaneswari
+
+Sep 25, 2026
+
+Doctor:
+Dr. Priya Rao
+
+Hospital:
+ABC Hospital
+
+### What happened
+
+Doctor reviewed the patient's recent results and recommended continuing the current plan.
+
+### Medication
+
+Vitamin D3
+60,000 IU
+Once weekly
+
+### Tests
+
+Vitamin D blood test
+
+### Report
+
+Vitamin_D_Report.pdf
+
+[ View report ]
+
+### Follow-up
+
+Dec 25, 2026
+
+Repeat Vitamin D test
+
+[ View reminder ]
+
+The History screen should represent what actually happened.
+
+---
+
+# 13. SETTINGS — FINAL CLEANUP
+
+The current Settings functionality is good.
+
+Keep the current working flows for:
+
+* Account information
+* About
+* Help & support
+* Feedback
+* Notifications
+* Family management
+* Logout
+
+Do NOT redesign these.
+
+However, remove the unnecessary explanatory statements from the Settings screen.
+
+---
+
+# 14. REMOVE "NURA IS FOR" CONTENT
+
+Remove sections like:
+
+"Nura is for"
+
+"Remembering the details that are easy to lose."
+
+"Keeping family health history clear and together."
+
+These statements are useful for onboarding/marketing, but they do not belong inside Settings.
+
+Settings should feel like a normal application settings page.
+
+Do not put product philosophy inside the settings menu.
+
+---
+
+# 15. SETTINGS SHOULD LOOK LIKE THIS
+
+## Profile & Settings
+
+Bhuvaneswari
+
+Family organizer
+
+[ Edit ]
+
+---
+
+## Family
+
+Manage family
+
+Add family member
+
+---
+
+## Settings
+
+Notifications & reminder preferences
+
+Account information
+
+Help & support
+
+Feedback
+
+About Nura
+
+---
+
+Log out
+
+Keep the screen simple.
+
+No unnecessary descriptions.
+
+No "Nura is for" section.
+
+No motivational statements.
+
+No "remembering your details" messaging.
+
+No duplicate product explanation.
+
+---
+
+# 16. ACCOUNT INFORMATION
+
+The profile pencil/edit button should ONLY edit basic account information.
+
+Allow:
+
+Name
+
+Phone number
+
+Email address
+
+Profile photo if implemented
+
+Save changes.
+
+Do NOT make health information editable through this profile edit screen.
+
+---
+
+# 17. ABOUT NURA
+
+The About page can contain the Nura explanation.
+
+Keep the Nura branding here instead of repeating it inside Settings.
+
+Example:
+
+# About Nura
+
+**Nura**
+
+Your family's health, remembered.
+
+"Nura helps families keep track of visits, medications, tests, reports and follow-ups in one place."
+
+Version
+
+Support
+
+Terms
+
+Keep this page simple.
+
+---
+
+# 18. HELP & SUPPORT
+
+The current Help & Support flow is good.
+
+Keep the FAQ questions.
+
+For example:
+
+How do I add a family member?
+
+How do reminders work?
+
+How do I add a health memory?
+
+How do I upload a medical report?
+
+How do I manage notifications?
+
+Contact support
+
+Do not remove this functionality.
+
+---
+
+# 19. FEEDBACK
+
+The current Feedback flow is good.
+
+Keep:
+
+Issue
+
+Suggestion
+
+Feature request
+
+Other
+
+Text input
+
+Submit
+
+Confirmation
+
+Do not replace it with generic static questions.
+
+---
+
+# 20. PROFILE EDIT TEST
+
+When the user taps the pencil:
+
+Open:
+
+Edit profile
+
+Name
+
+Phone number
+
+Email
+
+Save
+
+Verify that the changes are saved.
+
+Nothing related to medical history should appear here.
+
+---
+
+# 21. FINAL END-TO-END REMINDER TEST
+
+Automatically test this exact flow:
+
+### Test A — Completed
+
+Create reminder
+
+↓
+
+Reminder = Upcoming
+
+↓
+
+Reminder becomes Due
+
+↓
+
+Tap "Yes, I went"
+
+↓
+
+Enter visit information
+
+↓
+
+Add medication
+
+↓
+
+Add test
+
+↓
+
+Upload report
+
+↓
+
+Add follow-up
+
+↓
+
+Save
+
+↓
+
+Reminder = Completed
+
+↓
+
+Health event appears in History
+
+---
+
+### Test B — Not yet / Keep for later
+
+Create reminder
+
+↓
+
+Reminder = Upcoming
+
+↓
+
+Reminder becomes Due
+
+↓
+
+Tap "Not yet"
+
+↓
+
+Select "Keep for later"
+
+↓
+
+Reminder remains active
+
+↓
+
+Reminder is NOT Completed
+
+↓
+
+Tap reminder again
+
+↓
+
+"I went" is still available
+
+---
+
+### Test C — Not yet / Reschedule
+
+Create reminder
+
+↓
+
+Due
+
+↓
+
+Not yet
+
+↓
+
+Reschedule
+
+↓
+
+Select new date
+
+↓
+
+Save
+
+↓
+
+Reminder = Rescheduled
+
+↓
+
+New date appears
+
+↓
+
+Notification preference remains respected
+
+---
+
+### Test D — Not yet / Missed
+
+Create reminder
+
+↓
+
+Due
+
+↓
+
+Not yet
+
+↓
+
+Mark as missed
+
+↓
+
+Confirm
+
+↓
+
+Reminder = Missed
+
+↓
+
+No health event is created
+
+↓
+
+No medication/test/report is created
+
+↓
+
+Reschedule option remains available
+
+---
+
+# 22. FINAL QA REQUIREMENT
+
+After implementing these changes, automatically test:
+
+Home
+
+Family member
+
+Health memory
+
+History
+
+History detail
+
+Create reminder
+
+Upcoming reminder
+
+Due reminder
+
+Yes, I went
+
+Not yet
+
+Keep for later
+
+Reschedule
+
+Mark as missed
+
+Notification ON
+
+Notification OFF
+
+Account information
+
+Help & support
+
+Feedback
+
+About Nura
+
+Add family member
+
+Logout
+
+Test all flows on iPhone-sized viewports.
+
+Do not only test whether buttons can be clicked.
+
+Verify that the correct **data/state changes after every action**.
+
+---
+
+# FINAL PRODUCT PRINCIPLE
+
+Nura should follow this simple logic:
+
+**Something needs to happen**
+→ Reminder
+
+**Did it happen?**
+→ Yes / Not yet
+
+**Yes**
+→ Capture what happened
+→ Save to History
+
+**Not yet**
+→ Keep pending / Reschedule / Mark missed
+
+This should be the core reminder behavior.
+
+Keep everything else that is already working well.
+
+Do not add unnecessary new product concepts or redesign the existing Nura experience.
