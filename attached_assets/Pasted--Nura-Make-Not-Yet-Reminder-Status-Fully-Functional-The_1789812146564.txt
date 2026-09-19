@@ -1,0 +1,699 @@
+# Nura — Make "Not Yet" Reminder Status Fully Functional
+
+The current **"Not completed yet"** bottom sheet/modal is displaying correctly, but the actions inside it are not actually changing the reminder status.
+
+Fix the underlying reminder state and make the complete flow functional.
+
+Do NOT redesign the existing UI.
+
+Keep the current Nura design system.
+
+---
+
+# 1. CURRENT SCREEN
+
+The modal currently shows:
+
+## Not completed yet
+
+No worries. What would you like to do with this reminder?
+
+[ Reschedule ]
+
+[ Keep for later ]
+
+[ Mark as missed ]
+
+[ Cancel ]
+
+The UI is good.
+
+The problem is:
+
+**Clicking these actions does not correctly update the reminder status.**
+
+Fix the functionality.
+
+---
+
+# 2. REMINDER STATUS MODEL
+
+Every reminder must have exactly one current status:
+
+```text
+upcoming
+due
+completed
+rescheduled
+missed
+```
+
+Do not use different text internally for the same state.
+
+---
+
+# 3. UPCOMING
+
+Before the reminder date:
+
+Status:
+
+**Upcoming**
+
+Example:
+
+Annual wellness check
+
+Bhuvaneswari
+
+Sep 25, 2026
+
+**Upcoming**
+
+---
+
+# 4. DUE
+
+When the reminder date is reached:
+
+Status:
+
+**Due**
+
+Show:
+
+Annual wellness check
+
+Bhuvaneswari
+
+Sep 25, 2026
+
+**Due**
+
+When the user opens the reminder:
+
+Did this happen?
+
+[ Yes, I went ]
+
+[ Not yet ]
+
+Do NOT automatically change Due to Completed.
+
+---
+
+# 5. NOT YET → KEEP FOR LATER
+
+When the user clicks:
+
+**Not yet**
+
+and then:
+
+**Keep for later**
+
+the system MUST:
+
+1. Close the bottom sheet.
+2. Keep the reminder in the reminders database/state.
+3. Change the reminder status to:
+
+**Due**
+
+Do NOT mark it Completed.
+
+Do NOT mark it Missed.
+
+Do NOT remove it.
+
+On the Reminders screen show a clear status:
+
+**Still due**
+
+or simply:
+
+**Due**
+
+Preferred display:
+
+### Annual wellness check
+
+Bhuvaneswari
+
+Sep 25, 2026
+
+**Due**
+
+When the user taps the reminder again, it must reopen:
+
+Did this happen?
+
+[ Yes, I went ]
+
+[ Not yet ]
+
+This action must actually persist.
+
+---
+
+# 6. NOT YET → RESCHEDULE
+
+When the user clicks:
+
+**Reschedule**
+
+open the existing reschedule flow.
+
+Allow:
+
+New date
+
+New time
+
+Optional note
+
+Notification ON/OFF
+
+When the user saves:
+
+1. Update the existing reminder.
+2. Change status to:
+
+**Rescheduled**
+
+3. Save the new date/time.
+4. Close the modal/form.
+5. Return to the Reminders screen.
+6. Immediately show the updated reminder.
+
+Example:
+
+### Annual wellness check
+
+Bhuvaneswari
+
+Sep 30, 2026
+
+**Rescheduled**
+
+When the new date arrives:
+
+Status should automatically become:
+
+**Due**
+
+The reminder must then show:
+
+Did this happen?
+
+[ Yes, I went ]
+
+[ Not yet ]
+
+---
+
+# 7. NOT YET → MARK AS MISSED
+
+When the user clicks:
+
+**Mark as missed**
+
+open the confirmation dialog.
+
+## Mark reminder as missed?
+
+This reminder will be recorded as not completed.
+
+[ Cancel ]
+
+[ Mark as missed ]
+
+When the user confirms:
+
+**Mark as missed**
+
+the system MUST:
+
+1. Update the reminder status to:
+
+**Missed**
+
+2. Save that state.
+3. Close all dialogs.
+4. Return to the Reminders screen.
+5. Show the reminder under:
+
+## Missed
+
+Example:
+
+### Annual wellness check
+
+Bhuvaneswari
+
+Sep 25, 2026
+
+**Missed**
+
+Do NOT create a health history event.
+
+Do NOT create a medication record.
+
+Do NOT create a test.
+
+Do NOT create a report.
+
+Because the appointment did not happen.
+
+---
+
+# 8. MISSED REMINDER ACTION
+
+When the user taps a Missed reminder:
+
+Show:
+
+## Annual wellness check
+
+Bhuvaneswari
+
+Sep 25, 2026
+
+**Missed**
+
+Then provide:
+
+[ Reschedule ]
+
+The user should be able to schedule it again.
+
+If rescheduled:
+
+Missed
+
+→ Rescheduled
+
+→ New date
+
+→ Due
+
+---
+
+# 9. COMPLETED STATUS
+
+Keep the existing working:
+
+**Yes, I went**
+
+flow.
+
+When the user finishes:
+
+What happened?
+
+Doctor
+
+Notes
+
+Medication
+
+Tests
+
+Report
+
+Follow-up
+
+and clicks:
+
+**Save to health history**
+
+then:
+
+Reminder status becomes:
+
+**Completed**
+
+The reminder should move into:
+
+## Completed
+
+And the completed health event should appear in:
+
+**History**
+
+---
+
+# 10. REMINDERS SCREEN SECTIONS
+
+The Reminders screen should clearly separate statuses.
+
+Use:
+
+## Upcoming
+
+Future reminders.
+
+## Due
+
+Reminders that are due and still need a response.
+
+## Rescheduled
+
+Reminders moved to a new date.
+
+## Completed
+
+Reminders that actually happened.
+
+## Missed
+
+Reminders explicitly marked as missed.
+
+Do not automatically show everything under Completed.
+
+---
+
+# 11. STATUS BADGES
+
+Use consistent status labels.
+
+### Upcoming
+
+Upcoming
+
+### Due
+
+Due
+
+### Rescheduled
+
+Rescheduled
+
+### Completed
+
+Completed
+
+### Missed
+
+Missed
+
+Do not use multiple different words for the same state.
+
+---
+
+# 12. IMPORTANT — IMMEDIATE UI UPDATE
+
+After the user takes any action:
+
+Reschedule
+
+Keep for later
+
+Mark as missed
+
+Yes, I went
+
+the Reminders screen must immediately reflect the new state without requiring the user to refresh the page.
+
+Use the same underlying reminder object/state throughout the application.
+
+Do NOT create a duplicate reminder.
+
+---
+
+# 13. PERSISTENCE
+
+The reminder status must persist when the user:
+
+* Changes tabs.
+* Goes to Home.
+* Opens History.
+* Goes to Profile.
+* Returns to Reminders.
+* Refreshes the app, where persistence is supported.
+
+Example:
+
+User selects:
+
+Mark as missed
+
+↓
+
+Status becomes Missed
+
+↓
+
+Navigate to Home
+
+↓
+
+Navigate back to Reminders
+
+↓
+
+Reminder still shows:
+
+Missed
+
+---
+
+# 14. CANCEL
+
+When the user clicks:
+
+**Cancel**
+
+simply close the bottom sheet.
+
+Do not change the reminder status.
+
+Example:
+
+Before:
+
+Due
+
+After Cancel:
+
+Due
+
+---
+
+# 15. BACK BUTTON
+
+If the user closes the sheet using the back gesture or close action:
+
+Do not modify the reminder.
+
+The existing status must remain unchanged.
+
+---
+
+# 16. TEST THESE EXACT CASES
+
+### Case 1 — Keep for later
+
+Due
+
+→ Not yet
+
+→ Keep for later
+
+Expected:
+
+Due
+
+---
+
+### Case 2 — Reschedule
+
+Due
+
+→ Not yet
+
+→ Reschedule
+
+→ New date
+
+Expected:
+
+Rescheduled
+
+---
+
+### Case 3 — Mark as missed
+
+Due
+
+→ Not yet
+
+→ Mark as missed
+
+→ Confirm
+
+Expected:
+
+Missed
+
+---
+
+### Case 4 — Cancel
+
+Due
+
+→ Not yet
+
+→ Cancel
+
+Expected:
+
+Due
+
+---
+
+### Case 5 — Completed
+
+Due
+
+→ Yes, I went
+
+→ Enter visit information
+
+→ Save
+
+Expected:
+
+Completed
+
+and event appears in History.
+
+---
+
+# 17. AUTOMATED STATUS TEST
+
+Add automated tests for the reminder state transitions.
+
+Test:
+
+```text
+upcoming → due
+due → completed
+due → rescheduled
+due → missed
+due → due
+```
+
+Where:
+
+```text
+due → due
+```
+
+represents:
+
+**Not yet → Keep for later**
+
+Also test:
+
+```text
+rescheduled → due
+```
+
+when the new reminder date is reached.
+
+---
+
+# 18. DO NOT FAKE STATUS
+
+Do not simply change the text shown on screen.
+
+The actual reminder object/state must change.
+
+For example, do not do:
+
+```text
+statusLabel = "Missed"
+```
+
+while the stored reminder remains Due.
+
+Instead update the actual reminder state:
+
+```text
+reminder.status = "missed"
+```
+
+and render the UI from that state.
+
+The same principle applies to:
+
+completed
+
+rescheduled
+
+due
+
+upcoming
+
+---
+
+# 19. FINAL ACCEPTANCE CRITERIA
+
+The following must work from the actual UI:
+
+Reminder
+
+→ Due
+
+→ Not yet
+
+→ Keep for later
+
+→ Reminder shows Due
+
+OR
+
+Reminder
+
+→ Due
+
+→ Not yet
+
+→ Reschedule
+
+→ Reminder shows Rescheduled
+
+OR
+
+Reminder
+
+→ Due
+
+→ Not yet
+
+→ Mark as missed
+
+→ Reminder shows Missed
+
+OR
+
+Reminder
+
+→ Due
+
+→ Yes, I went
+
+→ Save
+
+→ Reminder shows Completed
+
+→ Event appears in History
+
+The user should always be able to clearly understand:
+
+**What happened to this reminder?**
+
+The status must always be visible and accurate.
+
+Do not mark a reminder Completed unless the user explicitly completes the "I went" flow.

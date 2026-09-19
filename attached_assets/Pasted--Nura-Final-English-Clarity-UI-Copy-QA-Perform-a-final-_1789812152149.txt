@@ -1,0 +1,769 @@
+# Nura — Final English, Clarity & UI Copy QA
+
+Perform a final **English language and content-quality review across the entire Nura mobile application**.
+
+Do not redesign the application.
+
+Do not change the existing functionality that is already working.
+
+Do not change the current Nura visual design system.
+
+This is a final **English, wording, clarity, consistency, and usability pass**.
+
+---
+
+# 1. REMOVE PROFILE PENCIL ICON
+
+On the Profile / Settings screen, remove the pencil/edit icon completely.
+
+The profile card should simply show:
+
+**Bhuvaneswari**
+
+Family organizer
+
+No pencil icon.
+
+Do not provide editing through this card.
+
+Account information can continue to be edited through:
+
+**Settings → Account information**
+
+---
+
+# 2. REVIEW ALL ENGLISH IN THE APPLICATION
+
+Go through **every screen, button, label, heading, description, form, error message, confirmation message, empty state, reminder, notification setting, and navigation item**.
+
+Check whether the English is:
+
+* Grammatically correct
+* Natural
+* Clear
+* Easy to understand
+* Consistent
+* Short enough for mobile
+* Appropriate for a general audience
+* Friendly but professional
+* Free from unnecessary technical terminology
+
+Use simple, everyday English.
+
+The user should understand what to do without needing an explanation.
+
+---
+
+# 3. USE SIMPLE, NATURAL LANGUAGE
+
+Prefer language such as:
+
+**What happened?**
+
+instead of complicated alternatives.
+
+**Add health memory**
+
+**Create reminder**
+
+**Did this happen?**
+
+**Yes, I went**
+
+**Not yet**
+
+**Reschedule**
+
+**Mark as missed**
+
+**Save to health history**
+
+**View details**
+
+**Upload report**
+
+**Add medication**
+
+**Add test**
+
+**Add follow-up**
+
+Keep wording direct and action-oriented.
+
+---
+
+# 4. HOME SCREEN COPY
+
+Review the Home screen.
+
+Preferred wording:
+
+### NURA
+
+**Your family's health, remembered.**
+
+**Good morning. Keep the small details close.**
+
+### What happened?
+
+Save a visit, question, report, or health update while it's fresh.
+
+**+ Add health memory**
+
+### Your family
+
+See each person's health memories and upcoming reminders.
+
+Avoid long explanations.
+
+---
+
+# 5. FAMILY MEMBER COPY
+
+When opening a family member:
+
+### Bhuvaneswari
+
+**Health memories**
+
+**Upcoming reminders**
+
+**Health journeys**
+
+**Recent health activity**
+
+**+ Add health memory**
+
+Use clear labels.
+
+Avoid phrases that sound technical or overly formal.
+
+---
+
+# 6. HISTORY SCREEN COPY
+
+Use:
+
+### History
+
+**What happened over time?**
+
+**See your family's health memories in one place.**
+
+Filters:
+
+**All**
+
+**You**
+
+**Mother**
+
+**Son**
+
+Additional family members should use their actual relationship/name.
+
+For a history event:
+
+**Doctor visit**
+
+**What happened**
+
+**Medication**
+
+**Tests**
+
+**Reports**
+
+**Follow-up**
+
+**View details**
+
+Avoid confusing phrases such as "health information record" when "health history" or "details" is clearer.
+
+---
+
+# 7. REMINDERS SCREEN COPY
+
+Use simple language.
+
+### Reminders
+
+**Keep track of upcoming appointments, tests, and follow-ups.**
+
+### Upcoming
+
+**Annual wellness check**
+
+Bhuvaneswari
+
+Aug 14, 2027
+
+**Upcoming**
+
+### Due
+
+**Did this happen?**
+
+**Yes, I went**
+
+**Not yet**
+
+---
+
+# 8. "NOT YET" FLOW
+
+When the user selects Not yet:
+
+### Not completed yet
+
+**What would you like to do?**
+
+Buttons:
+
+**Reschedule**
+
+**Keep for later**
+
+**Mark as missed**
+
+Avoid wording such as:
+
+"What action would you like to take regarding this reminder?"
+
+That is unnecessarily formal.
+
+---
+
+# 9. "YES, I WENT" FLOW
+
+Use:
+
+### What happened?
+
+**Add a few details so you can remember this visit later.**
+
+Fields:
+
+**Doctor or hospital**
+
+**Reason for visit**
+
+**What did the doctor say?**
+
+**Medication prescribed**
+
+**Tests**
+
+**Upload report**
+
+**Follow-up**
+
+Button:
+
+**Save to health history**
+
+After saving:
+
+### Saved to health history
+
+**Your visit details have been added to your health history.**
+
+**View history**
+
+---
+
+# 10. MEDICATION WORDING
+
+Keep medication information simple and consistent.
+
+Use:
+
+**Medication name**
+
+**Dosage**
+
+**Frequency**
+
+**Start date**
+
+**End date**
+
+**Instructions**
+
+**Prescribed by**
+
+Do not use unnecessarily technical alternatives.
+
+---
+
+# 11. TEST / REPORT WORDING
+
+Use:
+
+**Did the doctor ask for any tests?**
+
+**Yes**
+
+**No**
+
+**Add test**
+
+**Upload report**
+
+**Report uploaded**
+
+**View report**
+
+**Remove report**
+
+Avoid confusing terms such as "medical document ingestion" or "diagnostic artifact."
+
+---
+
+# 12. FOLLOW-UP WORDING
+
+Use:
+
+### Follow-up
+
+**Does the doctor want you to come back?**
+
+**Yes**
+
+**No**
+
+**Follow-up date**
+
+**Follow-up note**
+
+**Create reminder**
+
+This is easier for general users to understand than highly formal medical wording.
+
+---
+
+# 13. NOTIFICATION SETTINGS
+
+Use:
+
+### Notifications & reminder preferences
+
+**Health reminders**
+
+Get reminders about upcoming appointments, tests, and follow-ups.
+
+**Notifications**
+
+ON / OFF
+
+### Remind me
+
+**On the day**
+
+**1 day before**
+
+**On the day and 1 day before**
+
+Keep terminology consistent throughout the application.
+
+Do not use "notification reference", "notification preference reference", or other awkward wording.
+
+---
+
+# 14. PROFILE & SETTINGS
+
+The Settings screen should be simple and normal.
+
+Use:
+
+### Profile & Settings
+
+Bhuvaneswari
+
+Family organizer
+
+### Family
+
+**Manage family**
+
+**Add family member**
+
+### Settings
+
+**Notifications & reminder preferences**
+
+**Account information**
+
+**Help & support**
+
+**Feedback**
+
+**About Nura**
+
+**Log out**
+
+Do NOT include:
+
+"Nura is for"
+
+"Remembering the details that are easy to lose"
+
+"Keeping family health history clear and together"
+
+or similar marketing/philosophy statements inside Settings.
+
+Those statements do not belong in a settings screen.
+
+---
+
+# 15. ACCOUNT INFORMATION
+
+Use:
+
+### Account information
+
+**Name**
+
+**Phone number**
+
+**Email address**
+
+**Save changes**
+
+Keep it straightforward.
+
+---
+
+# 16. HELP & SUPPORT
+
+Use:
+
+### Help & support
+
+**How do I add a family member?**
+
+**How do reminders work?**
+
+**How do I add a health memory?**
+
+**How do I upload a medical report?**
+
+**How do I manage notifications?**
+
+**Contact support**
+
+Avoid overly technical FAQ wording.
+
+---
+
+# 17. FEEDBACK
+
+Use:
+
+### Feedback
+
+**How can we improve Nura?**
+
+Options:
+
+**Issue**
+
+**Suggestion**
+
+**Feature request**
+
+**Other**
+
+**Tell us more**
+
+**Submit feedback**
+
+After submission:
+
+### Thank you
+
+**Your feedback has been received.**
+
+**Done**
+
+---
+
+# 18. ABOUT NURA
+
+Keep the Nura explanation here.
+
+### About Nura
+
+**Nura**
+
+**Your family's health, remembered.**
+
+"Nura helps families keep track of visits, medications, tests, reports, and follow-ups in one place."
+
+Keep this page simple.
+
+---
+
+# 19. LOGOUT
+
+Use:
+
+### Log out?
+
+**Are you sure you want to log out?**
+
+Buttons:
+
+**Cancel**
+
+**Log out**
+
+Do not use complicated confirmation wording.
+
+---
+
+# 20. ERROR MESSAGES
+
+Review every error message.
+
+Errors should explain:
+
+1. What went wrong.
+2. What the user can do next.
+
+Example:
+
+Instead of:
+
+**Invalid submission**
+
+Use:
+
+**Please enter a reminder name.**
+
+Instead of:
+
+**Upload failed**
+
+Use:
+
+**We couldn't upload the report. Please try again.**
+
+Keep error messages helpful and friendly.
+
+---
+
+# 21. EMPTY STATES
+
+Use simple language.
+
+Example:
+
+### No health memories yet
+
+**Add your first health memory to start building your family's health history.**
+
+Button:
+
+**+ Add health memory**
+
+For reminders:
+
+### No upcoming reminders
+
+**You don't have any upcoming reminders.**
+
+**+ Create reminder**
+
+---
+
+# 22. CONSISTENCY CHECK
+
+Make sure the same concept always uses the same wording.
+
+For example, use only:
+
+**Health memory**
+
+Do not randomly switch between:
+
+Health memory
+Health note
+Health update
+Medical memory
+Health record
+
+Use:
+
+**Reminder**
+
+instead of switching between:
+
+Reminder
+Task
+Appointment task
+Follow-up task
+
+Use:
+
+**History**
+
+instead of switching between:
+
+History
+Records
+Medical records
+Timeline
+
+Where the UI is specifically about a person's chronological events, "History" is the preferred label.
+
+---
+
+# 23. DATE / TIME LANGUAGE
+
+Keep date formatting consistent throughout the app.
+
+Example:
+
+**Sep 25, 2026**
+
+Use the same format everywhere.
+
+Do not mix:
+
+25/09/2026
+
+September 25th, 2026
+
+Sep 25 2026
+
+Choose one clear format and use it consistently.
+
+---
+
+# 24. CAPITALIZATION
+
+Use normal sentence case for most UI labels.
+
+Examples:
+
+**Add family member**
+
+**Create reminder**
+
+**Account information**
+
+**Notifications & reminder preferences**
+
+Do not unnecessarily capitalize every word.
+
+Keep NURA branding as:
+
+**NURA**
+
+when used as the brand/logo.
+
+---
+
+# 25. FINAL ENGLISH QA
+
+Read every screen as if the user has never seen Nura before.
+
+Ask:
+
+"Would a normal person immediately understand what this means?"
+
+If not, simplify the wording.
+
+Avoid:
+
+* Corporate language
+* Technical jargon
+* AI terminology where unnecessary
+* Long sentences
+* Repeated explanations
+* Confusing medical terminology
+* Grammar mistakes
+* Awkward Indian-English phrasing
+* Duplicate statements
+
+Use natural, modern, simple English.
+
+---
+
+# 26. FINAL UX COPY TEST
+
+Test every major user journey and read the text in context:
+
+Home
+→ Family member
+→ Health memories
+
+Home
+→ Add health memory
+
+Reminders
+→ Create reminder
+
+Reminder
+→ Due
+→ Yes, I went
+
+Reminder
+→ Due
+→ Not yet
+→ Keep for later
+
+Reminder
+→ Not yet
+→ Reschedule
+
+Reminder
+→ Not yet
+→ Mark as missed
+
+Completed reminder
+→ History
+
+History
+→ View details
+
+Profile
+→ Notifications
+
+Profile
+→ Account information
+
+Profile
+→ Help & support
+
+Profile
+→ Feedback
+
+Profile
+→ About Nura
+
+Profile
+→ Log out
+
+Make sure the wording remains natural throughout the entire flow.
+
+---
+
+# 27. FINAL RULE
+
+Do not add more content just because there is available space.
+
+The goal is:
+
+**Simple English.
+Clear actions.
+Easy to understand.
+Consistent terminology.
+Professional but friendly.**
+
+Keep the Nura experience calm, trustworthy, and easy for anyone in a family to use.
+
+After completing the review, provide a brief list of any English/copy changes you made.
+
+Do not change functionality unless a wording change is required for the flow to make sense.
