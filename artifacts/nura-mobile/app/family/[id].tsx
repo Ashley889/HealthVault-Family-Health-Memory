@@ -46,8 +46,9 @@ export default function FamilyMemberScreen() {
         </Card>
       </View>
       <View style={styles.section}>
-        <SectionTitle title="Recent activity" />
-        {events.data.slice(0, 4).map((event) => <View key={event.id} style={styles.activityRow}><View style={[styles.activityDot, { backgroundColor: colors.primary }]} /><View style={styles.activityCopy}><Text style={[styles.activityTitle, { color: colors.foreground }]}>{event.title}</Text><Text style={[styles.activityDetail, { color: colors.mutedForeground }]}>{formatShortDate(event.date)} · {event.description}</Text></View></View>)}
+        <SectionTitle title="Health memories" />
+        <Text style={[styles.sectionIntro, { color: colors.mutedForeground }]}>{events.data.length} {events.data.length === 1 ? 'memory' : 'memories'} saved for {item.name}.</Text>
+        {events.data.slice(0, 4).map((event) => <Card key={event.id} onPress={() => router.push({ pathname: '/event/[id]', params: { id: String(event.id), profileId: String(profileId) } })} style={styles.memoryCard}><View style={[styles.detailIcon, { backgroundColor: colors.accent }]}><Feather name="activity" size={17} color={colors.primary} /></View><View style={styles.activityCopy}><Text style={[styles.activityTitle, { color: colors.foreground }]}>{event.title}</Text><Text style={[styles.activityDetail, { color: colors.mutedForeground }]}>{formatShortDate(event.date)}{event.provider ? ` · ${event.provider}` : ''}</Text><Text style={[styles.viewDetails, { color: colors.primary }]}>View details</Text></View><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>)}
       </View>
       <View style={styles.section}>
         <SectionTitle title="Current medications" />
@@ -69,8 +70,8 @@ export default function FamilyMemberScreen() {
         )) : <Card><Text style={[styles.activityDetail, { color: colors.mutedForeground }]}>Tests and reports will appear here as you save them.</Text></Card>}
       </View>
       <View style={styles.section}>
-        <SectionTitle title="Upcoming" />
-        {upcoming.length ? upcoming.map((reminder) => <Card key={reminder.id} style={styles.detailCard} onPress={() => router.push('/reminders')}><View style={[styles.detailIcon, { backgroundColor: colors.accent }]}><Feather name="calendar" size={17} color={colors.primary} /></View><View style={styles.activityCopy}><Text style={[styles.activityTitle, { color: colors.foreground }]}>{reminder.title}</Text><Text style={[styles.activityDetail, { color: colors.mutedForeground }]}>{formatDate(reminder.date)} · {reminder.detail}</Text></View><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>) : <Card><Text style={[styles.activityDetail, { color: colors.mutedForeground }]}>No upcoming follow-ups.</Text></Card>}
+        <SectionTitle title="Upcoming reminders" />
+        {upcoming.length ? upcoming.map((reminder) => <Card key={reminder.id} style={styles.detailCard} onPress={() => router.push('/reminders')}><View style={[styles.detailIcon, { backgroundColor: colors.accent }]}><Feather name="calendar" size={17} color={colors.primary} /></View><View style={styles.activityCopy}><Text style={[styles.activityTitle, { color: colors.foreground }]}>{reminder.title}</Text><Text style={[styles.activityDetail, { color: colors.mutedForeground }]}>{formatDate(reminder.date)} · {reminder.detail}</Text><Text style={[styles.viewDetails, { color: colors.primary }]}>View reminder</Text></View><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>) : <Card><Text style={[styles.activityDetail, { color: colors.mutedForeground }]}>No upcoming follow-ups.</Text></Card>}
       </View>
       <View style={styles.section}>
         <SectionTitle title="Doctor-ready summary" />
@@ -96,11 +97,12 @@ const styles = StyleSheet.create({
   journeyCopy: { flex: 1, minWidth: 0, gap: 4 },
   journeyTitle: { fontFamily: 'Inter_700Bold', fontSize: 15 },
   journeyDetail: { fontFamily: 'Inter_400Regular', fontSize: 12, lineHeight: 18 },
-  activityRow: { flexDirection: 'row', gap: 12, minHeight: 54 },
-  activityDot: { width: 9, height: 9, borderRadius: 5, marginTop: 5 },
   activityCopy: { flex: 1, minWidth: 0, gap: 4 },
   activityTitle: { fontFamily: 'Inter_600SemiBold', fontSize: 14 },
   activityDetail: { fontFamily: 'Inter_400Regular', fontSize: 12, lineHeight: 18 },
+  sectionIntro: { fontFamily: 'Inter_400Regular', fontSize: 14, lineHeight: 20, marginTop: -5 },
+  memoryCard: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  viewDetails: { fontFamily: 'Inter_700Bold', fontSize: 12 },
   summaryCard: { gap: 15 },
   summaryText: { fontFamily: 'Inter_400Regular', fontSize: 14, lineHeight: 21 },
   detailCard: { flexDirection: 'row', alignItems: 'center', gap: 12 },
