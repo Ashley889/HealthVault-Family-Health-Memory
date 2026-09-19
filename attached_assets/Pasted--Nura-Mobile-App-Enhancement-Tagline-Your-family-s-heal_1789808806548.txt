@@ -1,0 +1,711 @@
+# Nura — Mobile App Enhancement
+
+### Tagline
+
+**Your family's health, remembered.**
+
+Enhance the **existing Nura mobile app prototype**. Do not redesign the product from scratch. Keep the existing design system, visual language, colors, typography, cards, spacing, and overall UX direction because the current design system is good.
+
+The goal is to make the product **more complete, functional, information-rich, and genuinely usable as a mobile application on both Android and iOS.**
+
+---
+
+# 1. Mobile-First Compatibility — HIGH PRIORITY
+
+This must be a **mobile application experience**, not a desktop/web dashboard.
+
+Design and optimize all screens for:
+
+* Android phones
+* iPhones
+* Different screen sizes
+* Small and large mobile screens
+* Portrait orientation primarily
+* Responsive layouts
+
+The UI must never:
+
+* Cut off text
+* Hide important information
+* Crop cards
+* Overflow horizontally
+* Cut buttons
+* Hide bottom navigation
+* Create unusable scrolling areas
+
+Use responsive mobile layouts and allow content to scroll naturally when there is more information.
+
+Do NOT optimize the design around laptop/desktop screens.
+
+---
+
+# 2. Medication Information — MUST BE EXPANDED
+
+The current app does not show enough information about medications.
+
+Medication is a core part of a person's health history.
+
+Whenever a doctor prescribes medication, capture:
+
+### Medication
+
+* Medicine name
+* Dosage
+* Frequency
+* Time of day
+* Start date
+* End date, if applicable
+* Why it was prescribed
+* Doctor who prescribed it
+* Related health issue / journey
+* Instructions
+* Current status
+
+Status should be:
+
+**Active**
+
+**Completed**
+
+**Stopped**
+
+---
+
+## Medication Detail Screen
+
+Example:
+
+### Thyroxine 50 mcg
+
+**Prescribed by**
+Dr. Sharma
+
+**Reason**
+Thyroid management
+
+**Dosage**
+50 mcg
+
+**Frequency**
+Once daily
+
+**Time**
+Morning
+
+**Started**
+June 10, 2026
+
+**End date**
+Ongoing
+
+**Instructions**
+As prescribed by doctor
+
+**Related journey**
+Thyroid
+
+This information should be visible from:
+
+**Family Member → Health Journey → Medications**
+
+and also from:
+
+**Family Member → Health Overview → Current Medications**
+
+---
+
+# 3. Medication History
+
+Do not show only the current medication.
+
+Users should be able to understand:
+
+### Current Medications
+
+Active medications.
+
+### Previous Medications
+
+Medications that were completed or stopped.
+
+Example:
+
+**Medication A**
+June 2026 – Present
+Active
+
+**Medication B**
+March 2026 – May 2026
+Completed
+
+This creates a useful medication history over time.
+
+---
+
+# 4. Reminder Flow — IMPORTANT
+
+The current reminder flow is too simple.
+
+A reminder being created does NOT mean that the task/appointment actually happened.
+
+Every reminder should have a lifecycle.
+
+### Reminder statuses:
+
+**Upcoming**
+
+**Completed**
+
+**Missed**
+
+**Rescheduled**
+
+---
+
+## Example
+
+### Mom's Doctor Appointment
+
+**September 25**
+
+Status:
+
+**Upcoming**
+
+After the date:
+
+Ask:
+
+### “What happened?”
+
+Options:
+
+**Appointment completed**
+
+**Appointment missed**
+
+**Appointment rescheduled**
+
+---
+
+## If Appointment Completed
+
+Show:
+
+### Appointment Completed
+
+Ask:
+
+**What happened during the visit?**
+
+Allow the user to add:
+
+* Doctor
+* Reason for visit
+* Doctor's notes
+* Diagnosis / health issue
+* Medication prescribed
+* Tests requested
+* Follow-up date
+* Upload prescription/report
+
+CTA:
+
+### Save Visit
+
+This should automatically create a new entry in the person's health timeline.
+
+---
+
+## If Appointment Missed
+
+Show:
+
+**Why was it missed?**
+
+Optional note.
+
+Then:
+
+### Reschedule
+
+---
+
+## If Rescheduled
+
+Allow:
+
+**New date**
+
+**New time**
+
+Then the reminder becomes:
+
+**Rescheduled**
+
+This makes reminders part of the actual health journey rather than isolated calendar notifications.
+
+---
+
+# 5. Appointment → Health History Connection
+
+This is important.
+
+A completed reminder should NOT disappear.
+
+Example:
+
+### September 25
+
+**Doctor Appointment — Completed**
+
+↓
+
+User adds visit information
+
+↓
+
+The event appears in:
+
+### Health Timeline
+
+**September 25**
+
+Doctor consultation completed
+
+* Medication updated
+* Blood test requested
+* Follow-up scheduled
+
+This connects:
+
+**Reminder → Doctor Visit → Medication → Tests → Health Journey**
+
+---
+
+# 6. Profile & Settings
+
+The current Profile section needs to be simplified.
+
+Remove:
+
+❌ Data Privacy section
+
+Do not show a complicated privacy management page in this MVP.
+
+Instead, use a standard mobile settings experience.
+
+---
+
+## Profile
+
+Show:
+
+### Bhuvaneswari
+
+Profile photo
+
+Age
+
+Basic profile information
+
+---
+
+### Family
+
+**Manage Family**
+
+Allow:
+
+* Add family member
+* Edit family member
+* Remove family member
+* View family members
+
+CTA:
+
+### + Add Family Member
+
+---
+
+### Settings
+
+Keep only useful standard settings:
+
+* Notifications
+* Reminder preferences
+* Account information
+* Help & Support
+* Feedback
+* About Nura
+* Logout
+
+---
+
+# 7. Feedback
+
+Feedback should actually work as a simple mobile flow.
+
+### Feedback
+
+Title:
+
+**How can we improve Nura?**
+
+Options:
+
+* Something isn't working
+* I have a suggestion
+* I have a feature request
+* Other
+
+Text box:
+
+**Tell us more**
+
+CTA:
+
+### Submit Feedback
+
+After submission:
+
+> **Thank you! Your feedback has been submitted.**
+
+Do not create a complicated feedback system.
+
+---
+
+# 8. Family Management From Settings
+
+Users should be able to manage family members from two places:
+
+### Home
+
+`+ Add Family Member`
+
+and
+
+### Settings → Manage Family
+
+Both should open the same family-management flow.
+
+---
+
+# 9. Information Hierarchy
+
+Make sure information isn't cut or hidden.
+
+Use expandable sections where necessary.
+
+For example:
+
+### Mom
+
+**Health Overview**
+
+**Active Health Journeys**
+
+* Diabetes
+* Blood Pressure
+
+**Current Medications**
+
+* Medication A
+* Medication B
+
+**Recent Tests**
+
+* HbA1c
+* Blood Pressure
+
+**Upcoming**
+
+* Doctor appointment
+
+**Recent Activity**
+
+* Doctor visit
+* Medication update
+* Report uploaded
+
+The user can tap any section to see more.
+
+---
+
+# 10. Health Journey Enhancement
+
+Each long-term health journey should contain four clear sections:
+
+### Overview
+
+Short summary.
+
+### Timeline
+
+Everything that happened chronologically.
+
+### Medications
+
+Current + previous medication history.
+
+### Reports
+
+All reports related to this health issue.
+
+Also show:
+
+**Doctors**
+
+**Appointments**
+
+**Follow-ups**
+
+This gives every long-term issue its own complete story.
+
+---
+
+# 11. Short-Term Issues
+
+Short-term problems should remain lightweight.
+
+Example:
+
+### Left Shoulder Pain
+
+**Started:** September 18
+
+**Status:** Ongoing
+
+**Doctor:** Dr. Sharma
+
+**Medication:** Pain relief medication
+
+**Test:** X-ray
+
+**Follow-up:** September 25
+
+When recovered:
+
+### Mark as Resolved
+
+The issue moves to:
+
+**Past Health Issues**
+
+but remains permanently available in the timeline.
+
+---
+
+# 12. Home Screen
+
+Keep the existing home concept but improve the information hierarchy.
+
+The user should immediately see:
+
+### Family
+
+Family members
+
+### Active Health Journeys
+
+Important ongoing issues
+
+### Upcoming Reminders
+
+Appointments / medications / follow-ups
+
+### Recent Health Activity
+
+Latest events
+
+### + What Happened?
+
+Primary action.
+
+Do not overload the home screen with medical charts.
+
+---
+
+# 13. Mobile Navigation
+
+Use a simple bottom navigation:
+
+### Home
+
+Family overview
+
+### History
+
+Combined health timeline
+
+### Reminders
+
+Upcoming + completed + missed
+
+### Profile
+
+Family + settings
+
+Keep this consistent across Android and iOS.
+
+---
+
+# 14. Responsive Design Requirements
+
+Every screen must be tested conceptually across:
+
+### Small Android
+
+360 × 800
+
+### Standard Android
+
+390 × 844
+
+### iPhone
+
+393 × 852
+
+### Larger phone
+
+430 × 932
+
+Make sure:
+
+* Text wraps naturally
+* Cards expand vertically
+* Buttons remain accessible
+* Bottom navigation stays visible
+* No content is clipped
+* Long medical names do not break the layout
+* Reports and medication information can scroll
+* Long timelines remain usable
+
+---
+
+# 15. Overall UX Principle
+
+Do not remove information just to make the screen look clean.
+
+Instead:
+
+> **Show the most important information first and allow the user to expand for more detail.**
+
+For example:
+
+### Medication
+
+**Thyroxine 50 mcg**
+50 mcg • Once daily • Active
+
+Tap →
+
+Full medication details.
+
+Same principle for:
+
+* Reports
+* Doctor visits
+* Health journeys
+* Appointments
+* Family members
+
+---
+
+# 16. Final Core Flow
+
+The enhanced prototype should demonstrate this complete journey:
+
+**Home**
+
+↓
+
+**Select Family Member**
+
+↓
+
+**Health Overview**
+
+↓
+
+**Select Health Journey**
+
+↓
+
+**View Timeline**
+
+↓
+
+**View Medication**
+
+↓
+
+**View Reports**
+
+↓
+
+**Reminder**
+
+↓
+
+**Appointment Completed**
+
+↓
+
+**Add What Happened**
+
+↓
+
+**Add Medication / Test / Doctor Notes**
+
+↓
+
+**Timeline Automatically Updates**
+
+This should feel like one connected healthcare story.
+
+---
+
+# 17. Most Important Product Principle
+
+Nura should not feel like a collection of separate features.
+
+Everything should connect:
+
+**Doctor Visit**
+
+↓
+
+**Medication**
+
+↓
+
+**Test**
+
+↓
+
+**Report**
+
+↓
+
+**Reminder**
+
+↓
+
+**Follow-up**
+
+↓
+
+**Health Journey**
+
+↓
+
+**Family History**
+
+The user's health information should continuously build on itself.
+
+### Nura
+
+**Your family's health, remembered.**
+
+Keep the existing design system, but make the experience **mobile-first, responsive, complete, and deeply connected to the user's actual health history.**

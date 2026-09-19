@@ -11,6 +11,8 @@ import {
 import { Feather, Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { useColors } from '@/hooks/useColors';
+import { useSegments } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export function Screen({
   children,
@@ -22,8 +24,19 @@ export function Screen({
   contentStyle?: StyleProp<ViewStyle>;
 }) {
   const colors = useColors();
+  const insets = useSafeAreaInsets();
+  const segments = useSegments();
+  const isTabScreen = segments[0] === '(tabs)';
+  const topInset = isTabScreen ? insets.top : 0;
+  const bottomInset = isTabScreen ? 112 + insets.bottom : 36 + insets.bottom;
   const body = (
-    <View style={[styles.screen, { backgroundColor: colors.background }, contentStyle]}>
+    <View
+      style={[
+        styles.screen,
+        { backgroundColor: colors.background, paddingTop: 18 + topInset },
+        contentStyle,
+      ]}
+    >
       {children}
     </View>
   );
@@ -32,7 +45,7 @@ export function Screen({
   return (
     <ScrollView
       style={{ backgroundColor: colors.background }}
-      contentContainerStyle={{ paddingBottom: 36 }}
+      contentContainerStyle={{ paddingBottom: bottomInset }}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
     >
@@ -204,21 +217,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 12,
   },
-  headerCopy: { flex: 1, gap: 5 },
+  headerCopy: { flex: 1, minWidth: 0, gap: 5 },
   eyebrow: { fontSize: 12, fontFamily: 'Inter_700Bold', letterSpacing: 1.2, textTransform: 'uppercase' },
-  title: { fontSize: 30, lineHeight: 36, fontFamily: 'Inter_700Bold', letterSpacing: -0.7 },
-  subtitle: { fontSize: 15, lineHeight: 22, fontFamily: 'Inter_400Regular' },
+  title: { fontSize: 30, lineHeight: 36, fontFamily: 'Inter_700Bold', letterSpacing: -0.7, flexShrink: 1 },
+  subtitle: { fontSize: 15, lineHeight: 22, fontFamily: 'Inter_400Regular', flexShrink: 1 },
   card: { borderWidth: 1, borderRadius: 20, padding: 16 },
   avatar: { alignItems: 'center', justifyContent: 'center' },
   avatarText: { fontFamily: 'Inter_700Bold' },
   primaryButton: { minHeight: 52, borderRadius: 18, paddingHorizontal: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10 },
-  primaryButtonText: { fontFamily: 'Inter_700Bold', fontSize: 15 },
+  primaryButtonText: { fontFamily: 'Inter_700Bold', fontSize: 15, flexShrink: 1, textAlign: 'center' },
   outlineButton: { minHeight: 48, borderRadius: 16, borderWidth: 1, paddingHorizontal: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8 },
-  outlineButtonText: { fontFamily: 'Inter_600SemiBold', fontSize: 14 },
+  outlineButtonText: { fontFamily: 'Inter_600SemiBold', fontSize: 14, flexShrink: 1, textAlign: 'center' },
   pressed: { opacity: 0.75, transform: [{ scale: 0.985 }] },
   disabled: { opacity: 0.5 },
   sectionTitle: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  sectionTitleText: { fontFamily: 'Inter_700Bold', fontSize: 19, letterSpacing: -0.25 },
+  sectionTitleText: { fontFamily: 'Inter_700Bold', fontSize: 19, letterSpacing: -0.25, flexShrink: 1 },
   sectionAction: { fontFamily: 'Inter_700Bold', fontSize: 13 },
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12, padding: 32 },
 });
