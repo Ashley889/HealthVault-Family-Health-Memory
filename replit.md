@@ -1,6 +1,6 @@
-# HealthVault
+# Nura
 
-HealthVault keeps personal and family medical history organized as a clear, chronological memory.
+Nura keeps personal and family medical history organized as a clear, chronological memory.
 
 ## Run & Operate
 
@@ -23,10 +23,10 @@ HealthVault keeps personal and family medical history organized as a clear, chro
 ## Where things live
 
 - `artifacts/healthvault/src/` — routed React app and product UI
-- `artifacts/api-server/src/routes/healthvault.ts` — HealthVault API handlers
+- `artifacts/api-server/src/routes/healthvault.ts` — Nura API handlers
 - `lib/api-spec/openapi.yaml` — API contract and source of truth for generated client hooks
 - `lib/db/src/schema/healthvault.ts` — PostgreSQL schema for profiles, events, and reminders
-- `artifacts/healthvault/src/index.css` — HealthVault visual tokens and global styling
+- `artifacts/healthvault/src/index.css` — Nura visual tokens and global styling
 
 ## Architecture decisions
 

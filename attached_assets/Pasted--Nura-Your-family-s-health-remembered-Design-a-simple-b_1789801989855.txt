@@ -1,0 +1,220 @@
+# Nura — Your family's health, remembered.
+
+Design a **simple, beautiful, modern family health management app called Nura**.
+
+### Tagline
+
+**“Your family's health, remembered.”**
+
+The product should feel **calm, trustworthy, warm, simple, and easy for anyone in a family to understand**.
+
+Do NOT make it look like a complicated medical dashboard or a hospital management system.
+
+The primary goal is:
+
+> **Help families remember, organize, and understand what happened to each family member's health over time.**
+
+---
+
+# 1. Visual Design
+
+Use a **soft sky-blue + white visual theme**.
+
+### Colors
+
+* Very light sky blue
+* Soft blue
+* White
+* Very subtle grey for secondary text
+* Dark navy/blue-grey only for important text
+
+Avoid:
+
+* Dark backgrounds
+* Purple
+* Green-heavy healthcare colors
+* Bright red
+* Strong gradients
+* Heavy shadows
+* Overly colorful cards
+
+The interface should feel **light, spacious, peaceful, and premium**.
+
+Use:
+
+* Rounded cards
+* Soft borders
+* Simple icons
+* Large readable typography
+* Plenty of whitespace
+* Minimal navigation
+
+---
+
+# 2. Main Product Concept
+
+Nura should organize family health around **people + health issues + incidents + timelines**.
+
+There are two types of health situations:
+
+### A. Short-term Health Issue
+
+Example:
+
+* Left shoulder pain
+* Fever
+* Cold
+* Minor injury
+* Temporary infection
+
+These usually have a beginning and an expected recovery.
+
+Nura should ask:
+
+> **“Is this something temporary, or something you may need to manage over a longer period?”**
+
+If temporary:
+
+* Start date
+* What happened
+* Doctor visit
+* Medication
+* Tests/reports
+* Expected recovery
+* Follow-up/reminder
+
+Then the issue can eventually be marked **Resolved**.
+
+---
+
+### B. Long-term Health Journey
+
+Examples:
+
+* Thyroid
+* PCOS / PCOD
+* Diabetes
+* Hypertension
+* Asthma
+* Long-term medication
+* Pregnancy
+* Other ongoing health conditions
+
+For these, Nura should create a **Health Journey**.
+
+A journey should contain:
+
+* When it started
+* Condition / issue name
+* Doctor
+* Hospital / clinic
+* Current medications
+* Tests and reports
+* Important observations
+* Previous consultations
+* Timeline
+* Follow-ups
+* Uploaded files
+
+The user should be able to continuously add updates to that journey.
+
+---
+
+# 3. Home Screen
+
+Keep the home screen extremely simple.
+
+### Header
+
+**Good morning, Sharon 👋**
+
+**Nura**
+*Your family's health, remembered.*
+
+Do NOT show:
+
+* “Personal Vault”
+* “Private Space”
+* “Find People”
+* Social features
+* Community features
+* Complex analytics
+* Unnecessary health scores
+
+---
+
+## Main Home Screen Sections
+
+### Family
+
+Show family members as simple profile cards.
+
+Example:
+
+**Sharon**
+You
+
+**Mom**
+2 ongoing health journeys
+
+**Dad**
+1 ongoing health journey
+
+**Riya**
+Child
+
+Allow the user to add up to **5–10 family members**.
+
+Primary CTA:
+
+### `+ Add Family Member`
+
+That's it.
+
+Do not add a “Find People” feature.
+
+---
+
+# 4. Add Family Member Flow
+
+Make this extremely simple.
+
+### Screen: Add Family Member
+
+Title:
+
+**Who would you like to add?**
+
+Options:
+
+* Myself
+* Mother
+* Father
+* Spouse
+* Child
+* Sibling
+* Other
+
+Then collect only essential information:
+
+* Name
+* Date of birth / age
+* Relationship
+* Gender
+* Optional profile photo
+
+CTA:
+
+**Add Member**
+
+Do not ask for a huge amount of information during onboarding.
+
+The user can add health information later.
+
+---
+
+# 5. “What Happened?” — Core Action
+
+This should be one of the most important actions in the app.
+
+CTA

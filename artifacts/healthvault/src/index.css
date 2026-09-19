@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
@@ -21,25 +21,25 @@
 }
 
 :root {
-  --background: 42 36% 96%; --foreground: 199 34% 20%; --border: 39 23% 86%;
-  --card: 42 42% 99%; --card-foreground: 199 34% 20%; --card-border: 39 23% 86%;
-  --sidebar: 193 47% 18%; --sidebar-foreground: 43 35% 91%; --sidebar-border: 193 38% 27%;
-  --sidebar-primary: 42 78% 68%; --sidebar-primary-foreground: 193 47% 18%; --sidebar-accent: 193 35% 25%; --sidebar-accent-foreground: 42 42% 96%;
-  --primary: 193 47% 18%; --primary-foreground: 42 42% 98%; --secondary: 39 28% 91%; --secondary-foreground: 193 37% 28%;
-  --muted: 39 27% 92%; --muted-foreground: 198 16% 47%; --accent: 42 78% 68%; --accent-foreground: 193 47% 18%;
-  --destructive: 4 62% 50%; --destructive-foreground: 42 42% 98%; --input: 39 23% 82%; --ring: 193 47% 18%;
-  --app-font-sans: 'DM Sans', sans-serif; --app-font-serif: 'Fraunces', Georgia, serif; --app-font-mono: 'Space Mono', monospace;
-  --radius: 1rem; --elevate-1: rgba(25,58,67,.05); --elevate-2: rgba(25,58,67,.09);
+  --background: 207 56% 98%; --foreground: 213 42% 20%; --border: 207 32% 89%;
+  --card: 0 0% 100%; --card-foreground: 213 42% 20%; --card-border: 207 32% 89%;
+  --sidebar: 0 0% 100%; --sidebar-foreground: 213 42% 20%; --sidebar-border: 207 32% 90%;
+  --sidebar-primary: 205 68% 49%; --sidebar-primary-foreground: 0 0% 100%; --sidebar-accent: 207 75% 96%; --sidebar-accent-foreground: 213 42% 20%;
+  --primary: 205 68% 49%; --primary-foreground: 0 0% 100%; --secondary: 207 63% 95%; --secondary-foreground: 213 37% 32%;
+  --muted: 207 42% 95%; --muted-foreground: 213 16% 51%; --accent: 205 78% 91%; --accent-foreground: 205 52% 28%;
+  --destructive: 2 58% 54%; --destructive-foreground: 0 0% 100%; --input: 207 28% 83%; --ring: 205 68% 49%;
+  --app-font-sans: 'DM Sans', sans-serif; --app-font-serif: 'Fraunces', Georgia, serif; --app-font-mono: 'DM Sans', sans-serif;
+  --radius: 1.15rem; --elevate-1: rgba(36,92,132,.06); --elevate-2: rgba(36,92,132,.11);
 }
 .dark {
-  --background: 198 35% 10%; --foreground: 42 42% 95%; --border: 193 25% 24%; --card: 193 31% 15%; --card-foreground: 42 42% 95%; --card-border: 193 25% 24%;
-  --sidebar: 193 47% 8%; --sidebar-foreground: 42 42% 92%; --sidebar-border: 193 32% 17%; --sidebar-primary: 42 78% 68%; --sidebar-primary-foreground: 193 47% 12%; --sidebar-accent: 193 35% 18%; --sidebar-accent-foreground: 42 42% 95%;
-  --primary: 42 78% 68%; --primary-foreground: 193 47% 12%; --secondary: 193 25% 23%; --secondary-foreground: 42 42% 92%; --muted: 193 25% 23%; --muted-foreground: 193 15% 70%; --accent: 42 78% 68%; --accent-foreground: 193 47% 12%; --destructive: 4 62% 56%; --destructive-foreground: 42 42% 98%; --input: 193 25% 27%; --ring: 42 78% 68%;
+  --background: 207 30% 12%; --foreground: 207 24% 94%; --border: 207 20% 25%; --card: 207 27% 16%; --card-foreground: 207 24% 94%; --card-border: 207 20% 25%;
+  --sidebar: 207 30% 10%; --sidebar-foreground: 207 24% 94%; --sidebar-border: 207 20% 22%; --sidebar-primary: 205 68% 60%; --sidebar-primary-foreground: 207 30% 10%; --sidebar-accent: 207 24% 21%; --sidebar-accent-foreground: 207 24% 94%;
+  --primary: 205 68% 60%; --primary-foreground: 207 30% 10%; --secondary: 207 24% 23%; --secondary-foreground: 207 24% 94%; --muted: 207 24% 23%; --muted-foreground: 207 14% 70%; --accent: 205 42% 26%; --accent-foreground: 207 24% 94%; --destructive: 2 58% 58%; --destructive-foreground: 0 0% 100%; --input: 207 20% 30%; --ring: 205 68% 60%;
 }
-@layer base { * { @apply border-border; } body { @apply font-sans antialiased bg-background text-foreground; } }
+@layer base { * { @apply border-border; } body { @apply font-sans antialiased bg-background text-foreground; } button, a, input, select, textarea { font: inherit; } }
 @layer utilities {
   .text-balance { text-wrap: balance; }
-  .grain::after { content:''; position:fixed; inset:0; pointer-events:none; opacity:.035; z-index:50; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E"); }
+  .nura-surface { background: linear-gradient(135deg, hsl(207 75% 97%), hsl(0 0% 100%)); }
 }
 @keyframes rise { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 @keyframes pulse-soft { 0%,100% { opacity:.5; } 50% { opacity:1; } }
