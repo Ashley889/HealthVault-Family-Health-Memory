@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "HealthVault"
+description = "A personal and family health memory app that organizes medical events, medications, tests, and follow-ups into a clear timeline and doctor-ready summary."
+version = "1.0.0"
+id = "artifacts/healthvault"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22213
+
+[services.development]
+run = "pnpm --filter @workspace/healthvault run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/healthvault", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/healthvault/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22213"
+BASE_PATH = "/"

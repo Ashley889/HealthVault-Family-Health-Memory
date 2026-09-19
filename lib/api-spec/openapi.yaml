@@ -10,6 +10,14 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: profiles
+    description: Family health profiles
+  - name: events
+    description: Medical timeline events
+  - name: reminders
+    description: Follow-up reminders
+  - name: summaries
+    description: Doctor-ready health summaries
 paths:
   /healthz:
     get:
@@ -24,7 +32,241 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /dashboard:
+    get:
+      operationId: getDashboard
+      tags: [health]
+      summary: Get the family health dashboard
+      responses:
+        "200":
+          description: Dashboard data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dashboard"
+  /profiles:
+    get:
+      operationId: listProfiles
+      tags: [profiles]
+      summary: List family health profiles
+      responses:
+        "200":
+          description: Profiles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Profile"
+    post:
+      operationId: createProfile
+      tags: [profiles]
+      summary: Create a family health profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfileInput"
+      responses:
+        "201":
+          description: Created profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+  /profiles/{profileId}:
+    get:
+      operationId: getProfile
+      tags: [profiles]
+      summary: Get a profile
+      parameters:
+        - $ref: "#/components/parameters/ProfileId"
+      responses:
+        "200":
+          description: Profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+        "404":
+          description: Profile not found
+    patch:
+      operationId: updateProfile
+      tags: [profiles]
+      summary: Update a profile
+      parameters:
+        - $ref: "#/components/parameters/ProfileId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfileUpdate"
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+    delete:
+      operationId: deleteProfile
+      tags: [profiles]
+      summary: Delete a profile
+      parameters:
+        - $ref: "#/components/parameters/ProfileId"
+      responses:
+        "204":
+          description: Profile deleted
+  /profiles/{profileId}/events:
+    get:
+      operationId: listEvents
+      tags: [events]
+      summary: List timeline events for a profile
+      parameters:
+        - $ref: "#/components/parameters/ProfileId"
+        - name: type
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/EventType"
+      responses:
+        "200":
+          description: Timeline events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HealthEvent"
+    post:
+      operationId: createEvent
+      tags: [events]
+      summary: Add a health timeline event
+      parameters:
+        - $ref: "#/components/parameters/ProfileId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EventInput"
+      responses:
+        "201":
+          description: Created event
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthEvent"
+  /events/{eventId}:
+    patch:
+      operationId: updateEvent
+      tags: [events]
+      summary: Update a timeline event
+      parameters:
+        - $ref: "#/components/parameters/EventId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EventUpdate"
+      responses:
+        "200":
+          description: Updated event
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthEvent"
+    delete:
+      operationId: deleteEvent
+      tags: [events]
+      summary: Delete a timeline event
+      parameters:
+        - $ref: "#/components/parameters/EventId"
+      responses:
+        "204":
+          description: Event deleted
+  /reminders:
+    get:
+      operationId: listReminders
+      tags: [reminders]
+      summary: List upcoming follow-up reminders
+      responses:
+        "200":
+          description: Reminders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Reminder"
+    post:
+      operationId: createReminder
+      tags: [reminders]
+      summary: Add a follow-up reminder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReminderInput"
+      responses:
+        "201":
+          description: Created reminder
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reminder"
+  /reminders/{reminderId}/complete:
+    patch:
+      operationId: completeReminder
+      tags: [reminders]
+      summary: Mark a reminder complete
+      parameters:
+        - $ref: "#/components/parameters/ReminderId"
+      responses:
+        "200":
+          description: Completed reminder
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reminder"
+  /profiles/{profileId}/summary:
+    get:
+      operationId: getProfileSummary
+      tags: [summaries]
+      summary: Get a doctor-ready health summary
+      parameters:
+        - $ref: "#/components/parameters/ProfileId"
+      responses:
+        "200":
+          description: Health summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthSummary"
 components:
+  parameters:
+    ProfileId:
+      name: profileId
+      in: path
+      required: true
+      schema:
+        type: integer
+    EventId:
+      name: eventId
+      in: path
+      required: true
+      schema:
+        type: integer
+    ReminderId:
+      name: reminderId
+      in: path
+      required: true
+      schema:
+        type: integer
   schemas:
     HealthStatus:
       type: object
@@ -33,4 +275,139 @@ components:
           type: string
       required:
         - status
+    EventType:
+      type: string
+      enum: [visit, symptom, medication, test, diagnosis, note]
+    Profile:
+      type: object
+      required: [id, name, relationship, initials, color, eventCount]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        relationship: { type: string }
+        initials: { type: string }
+        color: { type: string }
+        dateOfBirth: { type: ["string", "null"] }
+        bloodGroup: { type: ["string", "null"] }
+        eventCount: { type: integer }
+        lastUpdated: { type: ["string", "null"] }
+    ProfileInput:
+      type: object
+      required: [name, relationship]
+      properties:
+        name: { type: string, minLength: 1 }
+        relationship: { type: string, minLength: 1 }
+        dateOfBirth: { type: ["string", "null"] }
+        bloodGroup: { type: ["string", "null"] }
+        color: { type: ["string", "null"] }
+    ProfileUpdate:
+      type: object
+      properties:
+        name: { type: string, minLength: 1 }
+        relationship: { type: string, minLength: 1 }
+        dateOfBirth: { type: ["string", "null"] }
+        bloodGroup: { type: ["string", "null"] }
+        color: { type: ["string", "null"] }
+    HealthEvent:
+      type: object
+      required: [id, profileId, type, title, date, description, provider, location, medications, tags]
+      properties:
+        id: { type: integer }
+        profileId: { type: integer }
+        type: { $ref: "#/components/schemas/EventType" }
+        title: { type: string }
+        date: { type: string, format: date }
+        description: { type: string }
+        provider: { type: ["string", "null"] }
+        location: { type: ["string", "null"] }
+        medications:
+          type: array
+          items: { type: string }
+        tags:
+          type: array
+          items: { type: string }
+        followUp: { type: ["string", "null"] }
+    EventInput:
+      type: object
+      required: [type, title, date, description]
+      properties:
+        type: { $ref: "#/components/schemas/EventType" }
+        title: { type: string, minLength: 1 }
+        date: { type: string, format: date }
+        description: { type: string }
+        provider: { type: ["string", "null"] }
+        location: { type: ["string", "null"] }
+        medications:
+          type: array
+          items: { type: string }
+        tags:
+          type: array
+          items: { type: string }
+        followUp: { type: ["string", "null"] }
+    EventUpdate:
+      type: object
+      properties:
+        type: { $ref: "#/components/schemas/EventType" }
+        title: { type: string, minLength: 1 }
+        date: { type: string, format: date }
+        description: { type: string }
+        provider: { type: ["string", "null"] }
+        location: { type: ["string", "null"] }
+        medications:
+          type: array
+          items: { type: string }
+        tags:
+          type: array
+          items: { type: string }
+        followUp: { type: ["string", "null"] }
+    Reminder:
+      type: object
+      required: [id, profileId, title, date, detail, completed]
+      properties:
+        id: { type: integer }
+        profileId: { type: integer }
+        title: { type: string }
+        date: { type: string, format: date }
+        detail: { type: string }
+        completed: { type: boolean }
+    ReminderInput:
+      type: object
+      required: [profileId, title, date, detail]
+      properties:
+        profileId: { type: integer }
+        title: { type: string, minLength: 1 }
+        date: { type: string, format: date }
+        detail: { type: string }
+    Dashboard:
+      type: object
+      required: [profiles, eventsThisMonth, upcomingReminders, recentEvents, activeProfileId]
+      properties:
+        profiles:
+          type: array
+          items: { $ref: "#/components/schemas/Profile" }
+        eventsThisMonth: { type: integer }
+        upcomingReminders: { type: integer }
+        recentEvents:
+          type: array
+          items: { $ref: "#/components/schemas/HealthEvent" }
+        activeProfileId: { type: integer }
+    HealthSummary:
+      type: object
+      required: [profile, generatedAt, overview, keyConditions, currentMedications, recentTests, recentVisits]
+      properties:
+        profile: { $ref: "#/components/schemas/Profile" }
+        generatedAt: { type: string, format: date-time }
+        overview: { type: string }
+        keyConditions:
+          type: array
+          items: { type: string }
+        currentMedications:
+          type: array
+          items: { type: string }
+        recentTests:
+          type: array
+          items: { type: string }
+        recentVisits:
+          type: array
+          items: { type: string }
 

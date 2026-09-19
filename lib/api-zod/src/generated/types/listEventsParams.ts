@@ -5,7 +5,8 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { EventType } from './eventType';
 
-export interface HealthStatus {
-  status: string;
-}
+export type ListEventsParams = {
+type?: EventType;
+};
