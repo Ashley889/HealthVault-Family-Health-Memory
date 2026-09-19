@@ -26,7 +26,6 @@ import type {
   HealthEvent,
   HealthStatus,
   HealthSummary,
-  ListEventsParams,
   Profile,
   ProfileInput,
   ProfileUpdate,
@@ -621,29 +620,20 @@ export const useDeleteProfile = <TError = ErrorType<unknown>,
       return useMutation(getDeleteProfileMutationOptions(options));
     }
 
-export const getListEventsUrl = (profileId: number,
-    params?: ListEventsParams,) => {
-  const normalizedParams = new URLSearchParams();
+export const getListEventsUrl = (profileId: number,) => {
 
-  Object.entries(params || {}).forEach(([key, value]) => {
 
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
 
-  const stringifiedParams = normalizedParams.toString();
 
-  return stringifiedParams.length > 0 ? `/api/profiles/${profileId}/events?${stringifiedParams}` : `/api/profiles/${profileId}/events`
+  return `/api/profiles/${profileId}/events`
 }
 
 /**
  * @summary List timeline events for a profile
  */
-export const listEvents = async (profileId: number,
-    params?: ListEventsParams, options?: Parameters<typeof customFetch>[1]): Promise<HealthEvent[]> => {
+export const listEvents = async (profileId: number, options?: Parameters<typeof customFetch>[1]): Promise<HealthEvent[]> => {
 
-  return customFetch<HealthEvent[]>(getListEventsUrl(profileId,params),
+  return customFetch<HealthEvent[]>(getListEventsUrl(profileId),
   {
     ...options,
     method: 'GET'
@@ -656,25 +646,23 @@ export const listEvents = async (profileId: number,
 
 
 
-export const getListEventsQueryKey = (profileId: number,
-    params?: ListEventsParams,) => {
+export const getListEventsQueryKey = (profileId: number,) => {
     return [
-    `/api/profiles/${profileId}/events`, ...(params ? [params] : [])
+    `/api/profiles/${profileId}/events`
     ] as const;
     }
 
 
-export const getListEventsQueryOptions = <TData = Awaited<ReturnType<typeof listEvents>>, TError = ErrorType<unknown>>(profileId: number,
-    params?: ListEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listEvents>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+export const getListEventsQueryOptions = <TData = Awaited<ReturnType<typeof listEvents>>, TError = ErrorType<unknown>>(profileId: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listEvents>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getListEventsQueryKey(profileId,params);
+  const queryKey =  queryOptions?.queryKey ?? getListEventsQueryKey(profileId);
 
 
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listEvents>>> = ({ signal }) => listEvents(profileId,params, { signal, ...requestOptions });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listEvents>>> = ({ signal }) => listEvents(profileId, { signal, ...requestOptions });
 
 
 
@@ -692,12 +680,11 @@ export type ListEventsQueryError = ErrorType<unknown>
  */
 
 export function useListEvents<TData = Awaited<ReturnType<typeof listEvents>>, TError = ErrorType<unknown>>(
- profileId: number,
-    params?: ListEventsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listEvents>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+ profileId: number, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listEvents>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
 
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
-  const queryOptions = getListEventsQueryOptions(profileId,params,options)
+  const queryOptions = getListEventsQueryOptions(profileId,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

@@ -13,7 +13,6 @@ export * from './eventUpdate';
 export * from './healthEvent';
 export * from './healthStatus';
 export * from './healthSummary';
-export * from './listEventsParams';
 export * from './profile';
 export * from './profileInput';
 export * from './profileUpdate';

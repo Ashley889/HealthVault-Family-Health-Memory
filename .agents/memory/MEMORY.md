@@ -1,0 +1,1 @@
+- [OpenAPI client generation](openapi-client-generation.md) — avoid combining a path parameter and query parameter on one operation when generated Zod names collide.

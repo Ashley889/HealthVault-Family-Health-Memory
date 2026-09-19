@@ -165,10 +165,6 @@ export const ListEventsParams = zod.object({
   "profileId": zod.coerce.number().int()
 })
 
-export const ListEventsQueryParams = zod.object({
-  "type": zod.enum(['visit', 'symptom', 'medication', 'test', 'diagnosis', 'note']).optional()
-})
-
 export const ListEventsResponseItem = zod.object({
   "id": zod.number().int(),
   "profileId": zod.number().int(),

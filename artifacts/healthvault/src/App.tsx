@@ -4,6 +4,13 @@ import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
+import DashboardPage from '@/pages/dashboard';
+import TimelinePage from '@/pages/timeline';
+import ProfilesPage from '@/pages/profiles';
+import ProfileDetailPage from '@/pages/profile-detail';
+import SummaryPage from '@/pages/summary';
+import RemindersPage from '@/pages/reminders';
+import { HealthVaultShell } from '@/components/HealthVaultShell';
 import {
   Route,
   Switch,
@@ -13,30 +20,22 @@ import {
 
 const queryClient = new QueryClient();
 
-function Home() {
-  return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gray-50">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold text-gray-900">
-          Replit Agent is building...
-        </h1>
-        <p className="mt-2 text-sm text-gray-600">
-          Your app will appear here once it's ready.
-        </p>
-      </div>
-    </div>
-  );
-}
-
 function Router() {
   return (
     // Keep a shared shell (sidebar, navbar) outside the boundary so it
     // survives a page crash.
     <RoutedErrorBoundary>
-      <Switch>
-        <Route path="/" component={Home} />
+      <HealthVaultShell>
+        <Switch>
+        <Route path="/" component={DashboardPage} />
+        <Route path="/timeline" component={TimelinePage} />
+        <Route path="/profiles" component={ProfilesPage} />
+        <Route path="/profiles/:profileId" component={ProfileDetailPage} />
+        <Route path="/summary/:profileId" component={SummaryPage} />
+        <Route path="/reminders" component={RemindersPage} />
         <Route component={NotFound} />
-      </Switch>
+        </Switch>
+      </HealthVaultShell>
     </RoutedErrorBoundary>
   );
 }

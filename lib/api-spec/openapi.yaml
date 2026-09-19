@@ -126,11 +126,6 @@ paths:
       summary: List timeline events for a profile
       parameters:
         - $ref: "#/components/parameters/ProfileId"
-        - name: type
-          in: query
-          required: false
-          schema:
-            $ref: "#/components/schemas/EventType"
       responses:
         "200":
           description: Timeline events

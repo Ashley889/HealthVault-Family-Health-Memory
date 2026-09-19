@@ -1,6 +1,6 @@
-# [Project name]
+# HealthVault
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+HealthVault keeps personal and family medical history organized as a clear, chronological memory.
 
 ## Run & Operate
 
@@ -22,23 +22,36 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/healthvault/src/` — routed React app and product UI
+- `artifacts/api-server/src/routes/healthvault.ts` — HealthVault API handlers
+- `lib/api-spec/openapi.yaml` — API contract and source of truth for generated client hooks
+- `lib/db/src/schema/healthvault.ts` — PostgreSQL schema for profiles, events, and reminders
+- `artifacts/healthvault/src/index.css` — HealthVault visual tokens and global styling
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Health history is modeled as contextual timeline events rather than as a document-only locker.
+- Calendar dates are stored as PostgreSQL `date` values so a medical day cannot shift across time zones.
+- The shared API server owns the health domain routes; the web artifact consumes generated OpenAPI hooks.
+- The first build uses seeded development data to make the family timeline understandable on first load.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Family dashboard with recent activity and follow-up counts
+- Multiple family profiles with profile-level timelines
+- Create, edit, search, filter, and delete health memories
+- Follow-up reminders with completion flow
+- Doctor-ready health summary with copy and print actions
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+No additional preferences recorded.
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- Run OpenAPI codegen after changing `lib/api-spec/openapi.yaml`.
+- The frontend artifact build needs `PORT` and `BASE_PATH`, which the managed workflow supplies automatically.
+- Authentication, private sharing, and medical document uploads are intentionally next-stage work.
 
 ## Pointers
 

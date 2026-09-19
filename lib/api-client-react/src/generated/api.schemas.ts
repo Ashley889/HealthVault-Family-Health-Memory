@@ -146,7 +146,3 @@ export interface HealthSummary {
   recentVisits: string[];
 }
 
-export type ListEventsParams = {
-type?: EventType;
-};
-
