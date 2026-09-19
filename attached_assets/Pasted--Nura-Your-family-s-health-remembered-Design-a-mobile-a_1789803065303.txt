@@ -1,0 +1,688 @@
+# Nura
+
+### Your family's health, remembered.
+
+Design a **mobile application**, NOT a web application or desktop dashboard.
+
+Nura is a simple, calm, family-focused health memory app that helps people keep track of their family's medical history, health issues, reports, medications, doctors and important health events in one place.
+
+The experience should feel like a **beautiful, modern mobile consumer app**, not hospital software.
+
+---
+
+## 1. Design Direction
+
+Use a **soft sky-blue + white theme**.
+
+### Visual style
+
+* Light sky blue
+* White
+* Very subtle blue-grey
+* Dark blue-grey for text
+* Soft rounded cards
+* Large readable typography
+* Minimal icons
+* Generous whitespace
+* Clean iOS/Android-style mobile UI
+* Subtle borders
+* Very light shadows
+
+Avoid:
+
+* Dark themes
+* Purple
+* Heavy gradients
+* Bright green medical UI
+* Red-heavy medical alerts
+* Complicated dashboards
+* Excessive charts
+* Dense tables
+
+The app should feel:
+
+**Calm • Personal • Trustworthy • Simple • Premium**
+
+---
+
+# 2. Bottom Navigation
+
+Keep navigation extremely simple.
+
+### Home
+
+Family overview
+
+### History
+
+Combined family health timeline
+
+### Reminders
+
+Appointments and follow-ups
+
+### Profile
+
+Account and settings
+
+Do not add:
+
+* Find people
+* Community
+* Social feed
+* Private space
+* Personal vault
+* Unnecessary analytics
+
+---
+
+# 3. Home Screen
+
+The home screen should immediately answer:
+
+> **“What is happening with my family?”**
+
+### Header
+
+**Good morning, Bhuvaneswari 👋**
+
+**Nura**
+
+*Your family's health, remembered.*
+
+---
+
+## Family Section
+
+Show family members as simple horizontal cards or avatars.
+
+Example:
+
+**Bhuvaneswari**
+You
+
+**Mom**
+2 health journeys
+
+**Dad**
+1 health journey
+
+**Spouse**
+No active issues
+
+### CTA
+
+**+ Add Family Member**
+
+Allow the user to add approximately **5–10 family members**.
+
+Do not make the user search for people.
+
+---
+
+# 4. Add Family Member
+
+When the user taps:
+
+### + Add Family Member
+
+Show:
+
+**Who would you like to add?**
+
+* Mother
+* Father
+* Spouse
+* Child
+* Sibling
+* Other
+
+Then:
+
+**Name**
+
+**Age / Date of Birth**
+
+**Relationship**
+
+**Gender**
+
+Optional:
+**Profile photo**
+
+CTA:
+
+### Add Member
+
+Keep onboarding extremely short.
+
+Do not ask for detailed medical information here.
+
+---
+
+# 5. Main Action — “What Happened?”
+
+This should be one of the most prominent actions on the Home screen.
+
+### + What Happened?
+
+When tapped:
+
+**What happened?**
+
+Show simple options:
+
+🩺 Doctor Visit
+💊 Medication
+🧪 Test / Lab Report
+🏥 Hospital Visit
+📄 Upload Report
+🩹 New Health Issue
+📝 General Health Update
+
+The user should be able to enter information naturally.
+
+---
+
+# 6. Important: Short-Term vs Long-Term Health Issues
+
+When the user adds a new health issue, ask:
+
+### “How long do you expect this to need attention?”
+
+Two choices:
+
+### Short-term
+
+**Something temporary that may resolve in weeks or months.**
+
+Examples:
+
+* Fever
+* Shoulder pain
+* Minor injury
+* Infection
+
+### Long-term
+
+**Something that may need ongoing monitoring or management.**
+
+Examples:
+
+* Thyroid
+* PCOS / PCOD
+* Diabetes
+* Hypertension
+* Asthma
+* Pregnancy
+* Other ongoing conditions
+
+This choice determines how Nura organizes the information.
+
+---
+
+# 7. Short-Term Issue
+
+Example:
+
+### Left Shoulder Pain
+
+**Status:** Ongoing
+
+**Started:** September 18
+
+**Reason:** Shoulder pain
+
+**Doctor:** Dr. ___
+
+**Medication:** Add medication
+
+**Tests:** X-ray / Scan
+
+**Expected recovery:** 2–3 weeks
+
+**Follow-up:** September 25
+
+CTA:
+
+### Mark as Resolved
+
+Once resolved, keep the complete history but move it into:
+
+**Past Health Issues**
+
+---
+
+# 8. Long-Term Health Journey
+
+For something like:
+
+### Thyroid
+
+Create a dedicated:
+
+## Health Journey
+
+Show:
+
+**Started:** 2024
+**Status:** Ongoing
+
+### Summary
+
+A short, easy-to-understand summary of the information the user has entered.
+
+### Timeline
+
+**May 2026**
+Blood tests recorded
+
+**June 2026**
+Doctor consultation
+
+**July 2026**
+Medication update
+
+### Tests & Reports
+
+Show relevant tests and uploaded files.
+
+Example:
+
+* TSH
+* T3
+* T4
+* Blood Test
+* Prescription
+
+### Doctors
+
+Doctor name
+Hospital / Clinic
+
+### Medications
+
+Current medications
+
+### + Add Update
+
+The user can continue adding information to the same journey.
+
+---
+
+# 9. Use the Uploaded Health Report as Real Prototype Data
+
+Use the uploaded medical report as **realistic sample information for Bhuvaneswari's profile**.
+
+Do not create a generic fake medical dashboard.
+
+The uploaded report is dated **17 May 2026** and contains a Women's Advanced Healthcare Package with 19 listed tests.
+
+Use relevant information from it to make the mobile screens feel realistic.
+
+For example, create:
+
+### Bhuvaneswari
+
+**Health Overview**
+
+**Recent Health Check**
+17 May 2026
+
+**19 tests completed**
+
+Show grouped sections such as:
+
+### Thyroid
+
+* TSH
+* T3
+* T4
+
+### Vitamins
+
+* Vitamin D
+* Vitamin B12
+
+### Hormones
+
+* Prolactin
+* FSH
+* LH
+* Testosterone
+
+### Diabetes
+
+* Fasting Blood Sugar
+* Average Blood Glucose
+
+### Lipids
+
+* Total Cholesterol
+* HDL
+* LDL
+* Triglycerides
+
+### Liver
+
+* Liver Function Tests
+
+### Kidney
+
+* Kidney Profile
+
+### Blood
+
+* Hemogram
+* Iron Profile
+
+### Reports
+
+Allow the user to open the original report.
+
+Important: **display the report values as recorded data, not as an AI diagnosis.**
+
+---
+
+# 10. Family Member Profile
+
+When the user taps a family member:
+
+## Bhuvaneswari
+
+Show a clean mobile profile.
+
+### Health Overview
+
+**Active journeys**
+
+* Thyroid
+* PCOS / PCOD
+
+**Recent issues**
+
+* Shoulder pain — Ongoing
+
+**Recent tests**
+
+* Thyroid profile
+* Vitamin D
+* Vitamin B12
+* Hemogram
+
+**Medications**
+
+* Current medications
+
+**Upcoming**
+
+* Follow-up reminder
+
+---
+
+## Recent Activity
+
+Show a simple timeline:
+
+**17 May 2026**
+Women's health package completed
+
+**17 May 2026**
+Thyroid tests recorded
+
+**17 May 2026**
+Vitamin D and B12 tests recorded
+
+**September 2026**
+Shoulder pain added
+
+This should make the profile feel like a **living health history**, not a static medical record.
+
+---
+
+# 11. Family History Screen
+
+The History tab should show the health activity of the whole family.
+
+### Family History
+
+Filter:
+
+**All | Me | Mom | Dad | Spouse | Child**
+
+Example:
+
+**September 18**
+Bhuvaneswari — Shoulder pain added
+
+**May 17**
+Bhuvaneswari — Women's health tests completed
+
+**May 10**
+Mom — Doctor consultation
+
+The purpose is:
+
+> **See everything that has happened across the family without opening every person's profile.**
+
+---
+
+# 12. Reminders
+
+Keep reminders simple.
+
+### Upcoming
+
+**Today**
+Medication reminder
+
+**Tomorrow**
+Mom's doctor appointment
+
+**September 25**
+Shoulder pain follow-up
+
+Use simple cards.
+
+Do not turn this into a complicated task-management system.
+
+---
+
+# 13. Reports & Documents
+
+Inside each family member, have:
+
+### Reports
+
+Show documents as simple cards.
+
+Example:
+
+**Women's Health Package**
+17 May 2026
+19 tests
+
+**Prescription**
+July 2026
+
+**X-Ray**
+September 2026
+
+When opened, allow:
+
+**View**
+
+**Share**
+
+**Download**
+
+The user should never need to search through WhatsApp or their phone gallery to find an old medical document.
+
+---
+
+# 14. Doctor Summary
+
+Inside every family profile, provide:
+
+### Generate Doctor Summary
+
+Create a simple summary containing:
+
+* Basic information
+* Active health journeys
+* Relevant past issues
+* Current medications
+* Recent tests
+* Recent doctor visits
+* Important uploaded reports
+* Timeline of relevant events
+
+CTA:
+
+### Share with Doctor
+
+This is one of the key product-value moments.
+
+---
+
+# 15. AI — Keep It Simple
+
+Do not make AI the main screen.
+
+AI should work quietly in the background.
+
+Use AI for:
+
+### Organizing
+
+Convert:
+
+> “Went to doctor because I've been feeling tired. Doctor asked me to do thyroid test.”
+
+into:
+
+**Doctor Visit**
+Reason: Fatigue
+Recommended test: Thyroid profile
+
+### Summarizing
+
+Create a simple summary of a health journey.
+
+### Connecting
+
+Automatically connect a new report to the appropriate health journey.
+
+### Reminders
+
+Identify follow-ups mentioned by the user.
+
+### Missing information
+
+Example:
+
+> “You added a prescription but haven't added the prescribing doctor.”
+
+Do NOT diagnose conditions.
+
+Do NOT recommend changing medication.
+
+Do NOT generate medical treatment plans.
+
+---
+
+# 16. Mobile UX Principle
+
+Every screen should have **one clear purpose**.
+
+### Home
+
+**What is happening with my family?**
+
+### Family Member
+
+**What is happening with this person?**
+
+### Health Journey
+
+**What has happened with this health issue?**
+
+### History
+
+**What happened over time?**
+
+### Add Update
+
+**What happened today?**
+
+---
+
+# 17. Primary Prototype Flow
+
+The main clickable prototype should follow this exact journey:
+
+**Nura Home**
+
+↓
+
+**Family**
+
+↓
+
+**Bhuvaneswari**
+
+↓
+
+**Health Overview**
+
+↓
+
+**Thyroid / Health Journey**
+
+↓
+
+**Timeline + Tests + Reports + Doctors + Medications**
+
+↓
+
+**+ Add Update**
+
+↓
+
+**What Happened?**
+
+↓
+
+**Short-term or Long-term?**
+
+↓
+
+**Save**
+
+↓
+
+**Timeline updates**
+
+↓
+
+**Generate Doctor Summary**
+
+↓
+
+**Share**
+
+This should be the **hero flow for the hackathon demo**.
+
+---
+
+# 18. Final Product Feeling
+
+The app should communicate one simple idea:
+
+> **“I don't have to remember everything about my family's health. Nura remembers it for me.”**
+
+### Nura
+
+**Your family's health, remembered.**
+
+Build this as a **mobile-first consumer app**, with realistic family and medical information based on the uploaded report, rather than a generic web dashboard.

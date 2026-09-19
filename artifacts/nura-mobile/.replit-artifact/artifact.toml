@@ -1,0 +1,24 @@
+kind = "mobile"
+previewPath = "/nura-mobile/"
+title = "Nura Mobile"
+description = "A calm, family-first mobile app for remembering health history, organizing reports, tracking follow-ups, and preparing doctor-ready summaries."
+version = "1.0.0"
+id = "artifacts/nura-mobile"
+router = "expo-domain"
+
+[[services]]
+name = "expo"
+ensurePreviewReachable = "/status"
+paths = [ "/nura-mobile/" ]
+localPort = 25092
+
+[services.development]
+run = "pnpm --filter @workspace/nura-mobile run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/nura-mobile", "run", "build" ]
+run = [ "pnpm", "--filter", "@workspace/nura-mobile", "run", "serve" ]
+
+[services.env]
+PORT = "25092"
+BASE_PATH = "/nura-mobile/"
