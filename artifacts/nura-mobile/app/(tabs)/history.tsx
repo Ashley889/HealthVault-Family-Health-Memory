@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { useGetDashboard } from '@workspace/api-client-react';
 import { Avatar, Card, ErrorState, Header, LoadingState, Screen, SectionTitle } from '@/components/NuraUI';
 import { formatDate } from '@/lib/format';
@@ -8,6 +9,7 @@ import { useColors } from '@/hooks/useColors';
 
 export default function HistoryScreen() {
   const colors = useColors();
+  const router = useRouter();
   const dashboard = useGetDashboard();
   const [filter, setFilter] = useState('All');
   if (dashboard.isLoading) return <Screen scroll={false}><LoadingState /></Screen>;
@@ -36,7 +38,7 @@ export default function HistoryScreen() {
                 <View style={[styles.timelineDot, { backgroundColor: colors.primary }]} />
                 {index < events.length - 1 ? <View style={[styles.timelineLine, { backgroundColor: colors.border }]} /> : null}
               </View>
-              <Card style={styles.timelineCard} onPress={() => profile && undefined}>
+              <Card style={styles.timelineCard} onPress={() => router.push({ pathname: '/event/[id]', params: { id: String(event.id), profileId: String(event.profileId) } })}>
                 <View style={styles.eventHeader}>
                   <Text style={[styles.date, { color: colors.primary }]}>{formatDate(event.date)}</Text>
                   {profile ? <Avatar initials={profile.initials} color={profile.color} size={28} /> : null}

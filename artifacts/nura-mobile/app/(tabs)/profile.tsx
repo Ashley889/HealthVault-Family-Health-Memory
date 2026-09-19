@@ -28,6 +28,7 @@ export default function ProfileScreen() {
       </View>
       <View style={styles.section}>
         <SectionTitle title="Settings" />
+        <Card onPress={() => router.push('/notifications')} style={styles.preference}><Feather name="bell" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Notifications & reminder preferences</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>
         <Card onPress={() => router.push('/account')} style={styles.preference}><Feather name="user" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Account information</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>
         <Card onPress={() => router.push('/help')} style={styles.preference}><Feather name="help-circle" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Help & support</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>
         <Card onPress={() => router.push('/feedback')} style={styles.preference}><Feather name="message-circle" size={18} color={colors.primary} /><Text style={[styles.preferenceText, { color: colors.foreground }]}>Feedback</Text><Feather name="chevron-right" size={17} color={colors.mutedForeground} /></Card>

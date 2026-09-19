@@ -1,0 +1,188 @@
+# Nura — Final Product Flow & Interaction Updates
+
+Keep the **current Nura design system and visual style**. Do not redesign the application.
+
+The goal is to simplify the information architecture and make the existing prototype interactions actually work.
+
+Keep the current:
+
+* Nura branding
+* Blue/white visual system
+* Typography
+* Cards
+* Bottom navigation
+* Mobile-first iPhone layout
+* Existing AI concept/architecture
+
+Do not remove the AI capability from the product. For now, focus on making the current core product flow functional and connected.
+
+---
+
+# 1. HOME SCREEN — SIMPLIFY IT
+
+Remove the **pencil icon** from the "What happened?" section.
+
+The "What happened?" section should remain a primary action, but it should not have a pencil/edit icon.
+
+Use:
+
+## What happened?
+
+Save a visit, question, report, or small health update while it's fresh.
+
+[ + Add health memory ]
+
+The button should be the only primary action.
+
+---
+
+# 2. REMOVE THE LARGE FAMILY MEMBER LIST FROM HOME
+
+Do NOT show a long list of family members directly on the Home screen.
+
+Instead, combine:
+
+**Family + Memories**
+
+into one meaningful section.
+
+Use something like:
+
+## Your family
+
+See what each person has going on.
+
+Then show compact family memory cards.
+
+Example:
+
+### Bhuvaneswari
+
+2 health memories
+1 upcoming reminder
+
+[ View ]
+
+### Meera
+
+4 health memories
+2 upcoming reminders
+
+[ View ]
+
+### Arjun
+
+1 health memory
+No upcoming reminders
+
+[ View ]
+
+The number of memories should be dynamic based on the actual data.
+
+Do not duplicate the same family information in multiple sections.
+
+---
+
+# 3. FAMILY MEMBER DETAIL
+
+When the user clicks:
+
+**Bhuvaneswari**
+
+open Bhuvaneswari's personal health overview.
+
+Example:
+
+# Bhuvaneswari
+
+Your health memories and upcoming care.
+
+---
+
+## Health memories
+
+2 memories
+
+### Recent memory
+
+Blood test
+
+May 17, 2026
+
+Thyrocare
+
+[ View details ]
+
+### Previous memory
+
+Doctor consultation
+
+Apr 12, 2026
+
+[ View details ]
+
+---
+
+## Upcoming reminders
+
+### Thyroid follow-up
+
+Sep 25, 2026
+
+Upcoming
+
+[ View reminder ]
+
+### Repeat blood test
+
+Dec 4, 2026
+
+Upcoming
+
+[ View reminder ]
+
+---
+
+## Health journeys
+
+If the person has ongoing health journeys, show them here.
+
+Example:
+
+### Vitamin D
+
+Active
+
+Started Sep 4, 2026
+
+[ View journey ]
+
+---
+
+## Add memory
+
+[ + Add health memory ]
+
+---
+
+This page should become the **single place for that person's health information**.
+
+Do not duplicate the same information elsewhere unnecessarily.
+
+---
+
+# 4. HOME — FAMILY CARD BEHAVIOUR
+
+The family card should be clickable.
+
+For example:
+
+Bhuvaneswari
+2 memories
+1 upcoming reminder
+
+When clicked:
+
+→ Open Bhuvaneswari's health overview.
+
+This
