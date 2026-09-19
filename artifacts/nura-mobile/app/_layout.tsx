@@ -13,16 +13,22 @@ import {
 } from '@expo-google-fonts/inter';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
+import { setBaseUrl } from '@workspace/api-client-react';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+setBaseUrl(`https://${process.env.EXPO_PUBLIC_DOMAIN}`);
 
 const queryClient = new QueryClient();
 
 function RootLayoutNav() {
   return (
-    <Stack screenOptions={{ headerBackTitle: 'Back' }}>
+    <Stack screenOptions={{ headerBackTitle: 'Back', headerTintColor: '#2784bd', headerTitleStyle: { fontFamily: 'Inter_600SemiBold' } }}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="family/[id]" options={{ title: 'Family member', presentation: 'card' }} />
+      <Stack.Screen name="journey/[id]" options={{ title: 'Health journey', presentation: 'card' }} />
+      <Stack.Screen name="add-update" options={{ title: 'Add health memory', presentation: 'modal' }} />
+      <Stack.Screen name="add-member" options={{ title: 'Add family member', presentation: 'modal' }} />
     </Stack>
   );
 }

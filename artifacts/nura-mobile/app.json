@@ -5,6 +5,11 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
+    "splash": {
+      "backgroundColor": "#f7fbfe",
+      "image": "./assets/images/icon.png",
+      "resizeMode": "contain"
+    },
     "scheme": "nura-mobile",
     "userInterfaceStyle": "automatic",
     "ios": {
